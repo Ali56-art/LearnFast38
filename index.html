@@ -445,7 +445,7 @@
 
         let bahcesehirStudents = JSON.parse(localStorage.getItem('bahcesehir_real_students')) || [];
 
-        // ÖZGÜN VE ÖZEL ÜNİTE İSİMLERİ (HER DERS İÇİN 6 ÜNİTE)
+        // ÖZGÜN VE ÖZEL ÜNİTE İSİMLERİ
         const unitNamesDatabase = {
             "Türkçe": [
                 "1. Harfler ve Alfabe Dünyası",
@@ -489,7 +489,7 @@
             ]
         };
 
-        // DAHA UZUN VE DETAYLI BİLGİLENDİRME METİNLERİ
+        // UZUN VE DETAYLI OKUMA METİNLERİ
         const unityReadDatabase = {
             "Türkçe": [
                 "Türkçe dersimizin bu bölümünde dilimizin en temel yapı taşlarını ve harflerin esrarengiz dünyasını keşfediyoruz. Alfabemizde yer alan ünlü ve ünsüz harfler, kelimeleri oluştururken birbirleriyle harika bir uyum içinde çalışır. Doğru telaffuz ve düzgün konuşma, kendimizi başkalarına en iyi şekilde ifade etmemizin anahtarıdır.",
@@ -510,7 +510,7 @@
             "Fen Bilimleri": [
                 "Dünyamızın katmanları hava küre, su küre, taş küre ve magma tabakasından oluşur. Üzerinde yaşadığımız bu eşsiz gezegenin yapısını bilmek doğayı anlamamız için çok önemlidir.",
                 "Beş duyumuz göz, kulak, burun, dil ve deridir. Çevremizdeki dünyayı görmemizi, duymamızı, koklamamızı, tatmamızı ve dokunmamızı sağlayan organlarımızı korumak en önemli görevimizdir.",
-                "Kuvvet cisimlerin hareket yönünü, hızını değiştiren veya şeklini bozan itme ve çekme etkileridir. Günlük hayatta kapıyı açarken ya da topa vururken hep kuvvet uygularız.",
+                "Kuvvet cisimlerin hareket yönünü, hız değiştiren veya şeklini bozan itme ve çekme etkileridir. Günlük hayatta kapıyı açarken ya da topa vururken hep kuvvet uygularız.",
                 "Maddenin katı, sıvı ve gaz olmak üzere üç temel hali bulunur. Su örneğinde olduğu gibi maddeler ısı alarak veya vererek bir halden diğerine geçebilirler.",
                 "Işık ve ses etrafımızı algılamamızı sağlayan temel enerjilerdir. Işık olmadan göremeyiz, ses olmadan ise işitemeyiz; her ikisi de hayatımızın vazgeçilmez parçalarıdır.",
                 "Canlılar ve yaşam alanları ekosistemin dengesini korur. Bitkiler, hayvanlar ve mikroorganizmalar doğada birbirleriyle uyum içinde yaşayarak muhteşem bir zincir oluştururlar."
@@ -544,32 +544,8 @@
                     "He followed a winding cobblestone path until he reached a tiny, mysterious moss-covered wooden door built right into the hillside.",
                     "Chapter 3: The Secret Chest. Max turned the golden key inside the keyhole. Click! The heavy door opened smoothly to reveal a chest full of magical, glowing apples."
                 ]
-            },
-            {
-                id: "b2", title: "Journey to Space",
-                img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&auto=format&fit=crop&q=80",
-                pages: [
-                    "Part 1: The Backyard Launch. Young Timmy spent his whole summer vacation assembling a shining silver rocket ship using light aluminum plates.",
-                    "Equipped with his astronaut helmet and a bag of freeze-dried snacks, Timmy pressed the red countdown button: Three, Two, One, Blast off!",
-                    "Part 2: Among the Stars. The rocket soared past puffy white clouds and zoomed into the peaceful, dark blue atmosphere.",
-                    "Timmy waved out his window at the glowing full moon and counted hundreds of twinkling distant constellations."
-                ]
             }
         ];
-
-        const quizDatabase = {
-            "Kodlama": [
-                { q: "Web sayfalarının temel yapısını oluşturan dil hangisidir?", options: ["A) HTML", "B) MP3", "C) JPEG"], ans: "A" },
-                { q: "Bir web sayfasında görünen içerikler hangi etiketin içine yazılır?", options: ["A) <head>", "B) <body>", "C) <title>"], ans: "B" }
-            ]
-        };
-
-        const workDatabase = {
-            "Kodlama": [
-                { q: "Web sayfasının ana kemiği hangisidir?", correct: "HTML", options: ["HTML", "CSS", "JS"] },
-                { q: "Tasarım ve stil veren kod?", correct: "CSS", options: ["CSS", "HTML", "PHP"] }
-            ]
-        };
 
         window.onload = function() {
             const savedUser = localStorage.getItem('learnfast_user');
@@ -709,14 +685,8 @@
             const filtered = englishBooksPool.filter(b => b.title.toLowerCase().includes(filterText.toLowerCase()));
 
             filtered.forEach(book => {
-                const prog = bookProgress[book.id] || { read: false, listen: false };
-                const isFullyCompleted = prog.read && prog.listen;
-                const isTeacher = (currentUser.role === 'Teacher');
-
                 container.innerHTML += `
-                    <div class="book-card ${isFullyCompleted ? 'completed' : ''}">
-                        ${isTeacher ? `<div class="book-teacher-three-dots" onclick="alert('İstatistikler')">⋮</div>` : ''}
-                        <div class="completed-tick">✅</div>
+                    <div class="book-card">
                         <img src="${book.img}" alt="${book.title}">
                         <h4>📖 ${book.title}</h4>
                         <button class="action-btn" style="text-align:center; padding:7px; font-size:13px;" onclick="openBookModal('${book.id}', 'read')">📖 Read Myself</button>
@@ -730,11 +700,9 @@
             renderEnglishLibrary(document.getElementById('bookSearchInput').value);
         }
 
-        // KUSURSUZ ÇALIŞAN ÜNİTE RENDER FONKSİYONU
         function renderUnits(subjectName) {
             const container = document.getElementById('unitListContainer');
             container.innerHTML = "";
-            const isTeacher = (currentUser.role === 'Teacher');
             const unitTitles = unitNamesDatabase[subjectName] || [
                 "1. Temel Kavramlar", "2. Gelişmiş Konular", "3. Uygulama ve Örnekler", 
                 "4. Problem Çözme", "5. Proje Çalışması", "6. Genel Tekrar"
@@ -751,15 +719,12 @@
                         <div class="unit-body hidden" id="unitBody-${i}">
                             <div class="action-row">
                                 <button class="action-btn" onclick="openUnityReader(${i})">📖 Unity Yazı Okuma (Otomatik Sesli Asistan)</button>
-                                ${isTeacher ? `<button class="teacher-more-btn" onclick="alert('İstatistikler')">⋮</button>` : ''}
                             </div>
                             <div class="action-row">
                                 <button class="action-btn" onclick="startWork(${i})">📝 Ünite Çalışması (5 Soru)</button>
-                                ${isTeacher ? `<button class="teacher-more-btn" onclick="alert('İstatistikler')">⋮</button>` : ''}
                             </div>
                             <div class="action-row">
                                 <button class="action-btn" onclick="openQuiz(${i})">🎯 Konu Tarama Testi</button>
-                                ${isTeacher ? `<button class="teacher-more-btn" onclick="alert('İstatistikler')">⋮</button>` : ''}
                             </div>
                         </div>
                     </div>
@@ -818,28 +783,11 @@
         }
 
         function startWork(unitNo) {
-            workStep = 1;
-            workAnswers = [];
-            renderWorkQuestion(unitNo);
-        }
-
-        function renderWorkQuestion(unitNo) {
-            const list = workDatabase[currentUser.currentSubject] || workDatabase["Kodlama"];
-            const qData = list[0];
             showModal(`
                 <h3>📝 Ünite ${unitNo} Çalışması</h3>
-                <p><b>Soru:</b> ${qData.q}</p>
-                <div class="drag-container">${qData.options.map(opt => `<div class="draggable-item" draggable="true" ondragstart="drag(event, '${opt}')">${opt}</div>`).join('')}</div>
-                <div class="drop-target" id="dropArea" ondrop="drop(event)" ondragover="event.preventDefault()">Cevabı Buraya Sürükleyin</div>
-                <button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Bitir</button>
+                <p><b>Soru:</b> Bu ders için örnek çalışma sorusudur.</p>
+                <button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Tamamla</button>
             `);
-        }
-
-        function drag(ev, text) { draggedText = text; }
-        function drop(ev) {
-            ev.preventDefault();
-            document.getElementById('dropArea').innerText = `Seçilen: ${draggedText}`;
-            document.getElementById('dropArea').style.background = "#e2e8f0";
         }
 
         function openQuiz(unitNo) {
