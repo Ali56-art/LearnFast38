@@ -111,6 +111,11 @@
         }
         .subject-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15); }
 
+        /* KİLİTLİ/DEVRE DIŞI DERS KARTI STİLİ */
+        .subject-card.disabled-subject {
+            background: #edf2f7; border-color: #cbd5e0; cursor: not-allowed; opacity: 0.5; transform: none !important; box-shadow: none !important;
+        }
+
         .subject-icon { font-size: 38px; margin-bottom: 10px; }
         .subject-title { font-size: 18px; color: #2d3748; font-weight: bold; }
         .subject-sub { font-size: 12px; color: #718096; font-weight: normal; }
@@ -356,27 +361,27 @@
         <div id="subjectListArea">
             <h3 style="text-align: left; margin-bottom: 15px;">Dersinizi Seçin</h3>
             <div class="subject-grid">
-                <div class="subject-card" onclick="openSubjectDetail('Matematik')">
+                <div class="subject-card" id="card-Matematik" onclick="openSubjectDetail('Matematik')">
                     <div class="subject-icon">📐</div>
                     <div class="subject-title">Matematik</div>
                 </div>
-                <div class="subject-card" onclick="openSubjectDetail('Türkçe')">
+                <div class="subject-card" id="card-Türkçe" onclick="openSubjectDetail('Türkçe')">
                     <div class="subject-icon">📚</div>
                     <div class="subject-title">Türkçe</div>
                 </div>
-                <div class="subject-card" onclick="openSubjectDetail('Fen Bilimleri')">
+                <div class="subject-card" id="card-FenBilimleri" onclick="openSubjectDetail('Fen Bilimleri')">
                     <div class="subject-icon">🔬</div>
                     <div class="subject-title">Fen Bilimleri</div>
                 </div>
-                <div class="subject-card" onclick="openSubjectDetail('Hayat Bilgisi')">
+                <div class="subject-card" id="card-HayatBilgisi" onclick="openSubjectDetail('Hayat Bilgisi')">
                     <div class="subject-icon">🌱</div>
                     <div class="subject-title">Hayat Bilgisi</div>
                 </div>
-                <div class="subject-card" onclick="openSubjectDetail('Kodlama')">
+                <div class="subject-card" id="card-Kodlama" onclick="openSubjectDetail('Kodlama')">
                     <div class="subject-icon">💻</div>
                     <div class="subject-title">Kodlama</div>
                 </div>
-                <div class="subject-card" onclick="openSubjectDetail('İngilizce')">
+                <div class="subject-card" id="card-Ingilizce" onclick="openSubjectDetail('İngilizce')">
                     <div class="subject-icon">🇬🇧</div>
                     <div class="subject-title">İngilizce</div>
                     <div class="subject-sub">(Efroomman)</div>
@@ -454,7 +459,6 @@
 
         let bookProgress = {}; 
 
-        // GERÇEK ONLINE ÖĞRENCİ VERİTABANI
         let bahcesehirStudents = JSON.parse(localStorage.getItem('bahcesehir_real_students')) || [];
 
         let englishBooksPool = [
@@ -688,7 +692,6 @@
             currentUser.level = document.querySelector('input[name="branch"]:checked').value;
             currentUser.managedClass = document.getElementById('teacherClassManaged').value.trim();
             
-            // CİNSİYETE GÖRE BEY / HANIM HİTABI OTOMATİK BELİRLEME
             const nameLower = currentUser.name.trim().toLowerCase();
             let honorific = "Bey";
             const femaleEndings = ['a', 'e', 'ü', 'i'];
@@ -718,9 +721,45 @@
             const welcomeMsg = document.getElementById('welcomeMsg');
             if (currentUser.role === 'Teacher') {
                 welcomeMsg.innerText = `Hoş geldiniz ${currentUser.name} ${currentUser.honorific}, (${currentUser.managedClass}) 👨‍🏫`;
+                
+                const isEnglishTeacher = (currentUser.level === 'English Teacher');
+                const subjectCards = ['Matematik', 'Türkçe', 'FenBilimleri', 'HayatBilgisi', 'Kodlama', 'Ingilizce'];
+
+                subjectCards.forEach(subj => {
+                    const card = document.getElementById(`card-${subj}`);
+                    if (!card) return;
+
+                    if (isEnglishTeacher) {
+                        if (subj === 'Ingilizce') {
+                            card.classList.remove('disabled-subject');
+                            card.style.pointerEvents = 'auto';
+                        } else {
+                            card.classList.add('disabled-subject');
+                            card.style.pointerEvents = 'none';
+                        }
+                    } else {
+                        if (subj === 'Ingilizce') {
+                            card.classList.add('disabled-subject');
+                            card.style.pointerEvents = 'none';
+                        } else {
+                            card.classList.remove('disabled-subject');
+                            card.style.pointerEvents = 'auto';
+                        }
+                    }
+                });
+
             } else {
                 welcomeMsg.innerText = `Hoş geldin ${currentUser.name}! 🚀`;
+                const subjectCards = ['Matematik', 'Türkçe', 'FenBilimleri', 'HayatBilgisi', 'Kodlama', 'Ingilizce'];
+                subjectCards.forEach(subj => {
+                    const card = document.getElementById(`card-${subj}`);
+                    if (card) {
+                        card.classList.remove('disabled-subject');
+                        card.style.pointerEvents = 'auto';
+                    }
+                });
             }
+
             document.getElementById('badgeInfo').innerText = `Profil: ${currentUser.level}`;
         }
 
@@ -1321,15 +1360,15 @@
             if (isEng) {
                 chatBody.innerHTML = `
                     <div class="ai-message bot">
-                        Hello! I am your English AI tutor. You can chat with me or practice English! 💡
+                        Hello! I am your English AI tutor. You can chat with me or ask questions about English! 💡
                         <br><span class="speak-btn" onclick="speakText('Hello! I am your English AI tutor.')">🔊 Listen</span>
                     </div>
                 `;
             } else {
                 chatBody.innerHTML = `
                     <div class="ai-message bot">
-                        Merhaba! Ben sizin kişisel öğretici yapay zekanızım. Benimle konuşabilir veya sorular sorabilirsin! 💡
-                        <br><span class="speak-btn" onclick="speakText('Merhaba! Ben sizin kişisel öğretici yapay zekanızım.')">🔊 Sesli Oku</span>
+                        Merhaba! Ben LearnFast portalının yapay zekasıyım. Benimle dersler hakkında sohbet edebilir, sorular sorabilirsin! 💡
+                        <br><span class="speak-btn" onclick="speakText('Merhaba! Ben LearnFast portalının yapay zekasıyım.')">🔊 Sesli Oku</span>
                     </div>
                 `;
             }
@@ -1354,32 +1393,38 @@
             input.value = '';
 
             const status = document.getElementById('typingStatus');
-            status.innerText = isEng ? "English AI is typing..." : "Öğretici Yapay Zeka yazıyor...";
+            status.innerText = isEng ? "AI is typing..." : "Yapay Zeka yazıyor...";
 
             setTimeout(() => {
                 status.innerText = "";
                 let botReply = "";
                 const lowerText = text.toLowerCase();
 
-                if (isEng) {
-                    if (lowerText.includes('code') || lowerText.includes('write program')) {
-                        botReply = "Sorry, I am a basic educational AI. I cannot write full code for you, but I can guide you with coding concepts.";
-                    } else if (lowerText.includes('hello') || lowerText.includes('hi')) {
-                        botReply = `Hello ${currentUser.name || 'student'}! How can I help you with your English today?`;
-                    } else if (lowerText.includes('how are you')) {
-                        botReply = "I am doing great, thank you! How is your learning going?";
-                    } else {
-                        botReply = "That is a great sentence! Keep reading English stories in the library.";
-                    }
+                // Konu dışı kontrolü ve istenen tam cümle yapısı
+                const isAppRelated = lowerText.includes('ders') || lowerText.includes('matematik') || lowerText.includes('türkçe') || 
+                                     lowerText.includes('fen') || lowerText.includes('hayat') || lowerText.includes('kod') || 
+                                     lowerText.includes('ingilizce') || lowerText.includes('kitap') || lowerText.includes('test') || 
+                                     lowerText.includes('merhaba') || lowerText.includes('nasıl') || lowerText.includes('yardım');
+
+                if (!isAppRelated) {
+                    botReply = `Üzgünüm, bu dediğinizi yerine getiremiyorum ama bu dediğinizle ilgili bilgi verebilirim: "${text}" konusunda genel olarak şunları söyleyebilirim ki, eğitim ve merak her zaman hayatımızın çok önemli bir parçasıdır!`;
                 } else {
-                    if (lowerText.includes('kod yaz') || lowerText.includes('program yaz') || lowerText.includes('html yaz')) {
-                        botReply = "Üzgünüm, ben sadece temel ve yazı yazabilen bir botum, yani bir yapay zekayım. O yüzden bu istediğinizi yerine getiremem ama kodlarla size bilgi verebilirim.";
-                    } else if (lowerText.includes('merhaba') || lowerText.includes('selam')) {
-                        botReply = `Selam ${currentUser.name || 'öğrencim'}! Harika bir gün, ders çalışmaya hazır mısın?`;
-                    } else if (lowerText.includes('nasılsın') || lowerText.includes('iyi misin')) {
-                        botReply = "Çok teşekkür ederim, harikayım! Sen nasılsın, derslerin nasıl gidiyor?";
+                    if (isEng) {
+                        if (lowerText.includes('hello') || lowerText.includes('hi')) {
+                            botReply = `Hello ${currentUser.name || 'student'}! How can I help you with your English learning today?`;
+                        } else if (lowerText.includes('how are you')) {
+                            botReply = "I am doing great, thank you! Ready to read and practice English?";
+                        } else {
+                            botReply = "That's wonderful! Keep reading books and practicing in the English library to improve your skills.";
+                        }
                     } else {
-                        botReply = "Anladım! Derslerinde başarılı olmak için ünite çalışmalarını yapman çok faydalı olacaktır.";
+                        if (lowerText.includes('merhaba') || lowerText.includes('selam')) {
+                            botReply = `Selam ${currentUser.name || 'öğrencim'}! LearnFast portalında bugün hangi dersi çalışmak istiyorsun?`;
+                        } else if (lowerText.includes('nasılsın')) {
+                            botReply = "Çok teşekkür ederim, harikayım! Sen nasılsın, derslerin ve testlerin nasıl gidiyor?";
+                        } else {
+                            botReply = "Harika bir soru! Bahçeşehir Koleji derslerinde ve ünite çalışmalarında başarılı olman için sana her zaman rehberlik etmeye hazırım.";
+                        }
                     }
                 }
 
