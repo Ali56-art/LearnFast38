@@ -302,7 +302,7 @@
 
             <div class="input-group">
                 <label for="teacherCode">Öğretmen Güvenlik Şifresi</label>
-                <input type="password" id="teacherCode" placeholder="Teacher şifresi">
+                <input type="password" id="teacherCode" placeholder="Teacher şifresi (teacher§tap)">
             </div>
 
             <button type="submit" class="btn-submit">Öğretmen Girişini Tamamla</button>
@@ -344,7 +344,7 @@
             </div>
             <div class="header-actions">
                 <button class="ai-assistant-btn" id="aiBtnText" onclick="toggleAiDrawer()">🤖 Öğretici Yapay Zeka</button>
-                <button onclick="location.reload()" style="padding: 8px 12px; background:#e2e8f0; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Çıkış Yap</button>
+                <button onclick="logoutApp()" style="padding: 8px 12px; background:#e2e8f0; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Çıkış Yap</button>
             </div>
         </div>
 
@@ -460,7 +460,7 @@
             { id: 7, name: "Can Arslan", class: "5A", readBooks: ["b3", "b6", "b7"], listenedBooks: ["b3", "b7"], doneWorks: ["Matematik_U1"], doneQuizzes: ["Matematik_U1"] }
         ];
 
-        // UZUN VE DETAYLI İNGİLİZCE KİTAPLAR HAVUZU (SONSUZ TEKRAR İÇİN GENİŞLETİLDİ)
+        // UZUN VE DETAYLI İNGİLİZCE KİTAPLAR HAVUZU (SONSUZ TEKRAR İÇİN)
         let englishBooksPool = [
             {
                 id: "b1",
@@ -666,14 +666,33 @@
             showDashboard();
         }
 
+        // ÖĞRETMEN İSMİNE GÖRE OTOMATİK BEY / HANIM TESPİTİ
         function completeTeacherRegistration(event) {
             event.preventDefault();
             if (document.getElementById('teacherCode').value !== "teacher§tap") {
-                alert("Hatalı öğretmen şifresi!");
+                alert("Hatalı öğretmen şifresi! Şifre: teacher§tap");
                 return;
             }
             currentUser.role = 'Teacher';
             currentUser.level = document.querySelector('input[name="branch"]:checked').value;
+            
+            // İsim kadın ismine mi bitiyor yoksa Bey/Hanım içeriyor mu kontrol edelim
+            const nameLower = currentUser.name.toLowerCase();
+            let honorific = "Bey";
+            
+            // Eğer isim Fatma, Zeynep, Ayşe, Elif, Merve, Sena gibi genelde 'a/e' biten veya kadın unvanı içeren biriyse Hanım yapalım
+            const femaleEndings = ['a', 'e', 'ü', 'i'];
+            const lastChar = nameLower.slice(-1);
+            
+            if (nameLower.includes('hanım') || nameLower.includes('kadın')) {
+                honorific = "";
+            } else if (nameLower.includes('bey')) {
+                honorific = "";
+            } else if (femaleEndings.includes(lastChar) && !nameLower.includes('ali') && !nameLower.includes('berke') && !nameLower.includes('emre')) {
+                honorific = "Hanım";
+            }
+
+            currentUser.honorific = honorific;
             localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
             showDashboard();
         }
@@ -686,11 +705,29 @@
 
             const welcomeMsg = document.getElementById('welcomeMsg');
             if (currentUser.role === 'Teacher') {
-                welcomeMsg.innerText = `Hoş geldiniz Sayın ${currentUser.name} Öğretmenim 👨‍🏫`;
+                const titleSuffix = currentUser.honorific ? ` ${currentUser.honorific}` : '';
+                welcomeMsg.innerText = `Hoş geldiniz Sayın ${currentUser.name}${titleSuffix} Öğretmenim 👨‍🏫`;
             } else {
                 welcomeMsg.innerText = `Hoş geldin ${currentUser.name}! 🚀`;
             }
             document.getElementById('badgeInfo').innerText = `Profil: ${currentUser.level}`;
+        }
+
+        // PÜRÜZSÜZ ÇIKIŞ
+        function logoutApp() {
+            window.speechSynthesis.cancel();
+            localStorage.removeItem('learnfast_user');
+            currentUser = { name: '', role: '', level: '', currentSubject: '' };
+            
+            document.getElementById('dashboardStep').classList.add('hidden');
+            document.getElementById('subjectDetailArea').classList.add('hidden');
+            document.getElementById('subjectListArea').classList.remove('hidden');
+            
+            document.getElementById('loginStep').classList.remove('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('robotCheck').checked = false;
         }
 
         function openSubjectDetail(subjectName) {
@@ -824,7 +861,6 @@
             `);
         }
 
-        // KİTABI TAMamladiğinda (OKU + DİNLE BİTTİĞİNDE) KİTABI KALDIR VE YENİSİNİ EKLE
         function completeBookTask(bookId) {
             window.speechSynthesis.cancel();
             if (!bookProgress[bookId]) {
@@ -838,13 +874,11 @@
             if (prog.read && prog.listen) {
                 alert("🎉 Awesome! You completed BOTH reading and listening! Book completed and replaced with a new one!");
                 
-                // KİTABI HAVUZDAN ÇIKAR VE YENİ BİR KİTAP EKLE (SONSUZ TEKRAR / DÖNGÜ)
                 const index = englishBooksPool.findIndex(b => b.id === bookId);
                 if (index !== -1) {
-                    englishBooksPool.splice(index, 1); // Eski tamamlanan kitabı kaldır
+                    englishBooksPool.splice(index, 1);
                 }
 
-                // Havuzda yeni kitap kalmadıysa sıfırdan tekrar çeşitlendir
                 if (englishBooksPool.length === 0) {
                     alert("Amazing! You read all books! Refilling the library with fresh stories!");
                     location.reload();
