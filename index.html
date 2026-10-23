@@ -141,4 +141,789 @@
         }
         .action-btn:hover { background: var(--primary); color: white; }
 
-        .teacher
+        .teacher-more-btn {
+            background: #edf2f7; border: 2px solid #cbd5e0; color: #2d3748;
+            padding: 12px 15px; border-radius: 8px; font-weight: bold; cursor: pointer;
+            font-size: 16px; transition: all 0.2s;
+        }
+        .teacher-more-btn:hover { background: #cbd5e0; }
+
+        .grade-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: #4a5568; }
+        .back-btn { background: #e2e8f0; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); display: flex; justify-content: center; align-items: center; z-index: 1000;
+        }
+
+        .modal-content {
+            background: white; padding: 30px; border-radius: 12px;
+            width: 90%; max-width: 580px; max-height: 85vh; overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal-x {
+            position: absolute; top: 15px; right: 20px; background: #e2e8f0; border: none;
+            width: 30px; height: 30px; border-radius: 50%; font-weight: bold; cursor: pointer;
+        }
+
+        /* YAPAY ZEKA PANELİ */
+        .ai-drawer {
+            position: fixed; top: 0; right: -420px; width: 380px; height: 100%;
+            background: white; box-shadow: -5px 0 25px rgba(0,0,0,0.2); z-index: 2000;
+            transition: right 0.3s ease; display: flex; flex-direction: column;
+        }
+        .ai-drawer.open { right: 0; }
+        .ai-drawer-header {
+            background: var(--primary); color: white; padding: 20px;
+            display: flex; justify-content: space-between; align-items: center; font-weight: bold;
+        }
+        .ai-close-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+        .ai-chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #f7fafc; display: flex; flex-direction: column; gap: 10px; }
+        
+        .ai-message { padding: 10px 14px; border-radius: 10px; max-width: 80%; font-size: 14px; line-height: 1.4; position: relative; }
+        .ai-message.bot { background: #e2e8f0; color: #2d3748; align-self: flex-start; }
+        .ai-message.user { background: var(--primary); color: white; align-self: flex-end; }
+        
+        .speak-btn {
+            display: inline-block; margin-top: 5px; font-size: 11px; background: rgba(0,0,0,0.08);
+            padding: 2px 6px; border-radius: 4px; cursor: pointer; font-weight: bold;
+        }
+
+        .typing-indicator {
+            font-size: 12px; color: #4a5568; font-style: italic; padding: 4px 15px; min-height: 22px; background: #edf2f7;
+        }
+
+        .ai-drawer-footer { padding: 12px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 6px; flex-direction: column; }
+        .input-row { display: flex; gap: 6px; }
+        .input-row input { flex: 1; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; }
+        .input-row button { padding: 10px 14px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+
+        /* KÜTÜPHANE VE DÜRBÜNLÜ ARAMA */
+        .library-scroll-container { max-height: 520px; overflow-y: auto; padding-right: 5px; }
+        .search-box-wrapper { position: relative; margin-bottom: 15px; }
+        .search-box-wrapper span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; }
+        .search-box-input { width: 100%; padding: 12px 12px 12px 42px; border: 2px solid #cbd5e0; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
+        .book-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .book-card { background: #f8fafc; border: 2px solid #cbd5e0; border-radius: 10px; padding: 12px; text-align: center; position: relative; }
+        .book-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 6px; margin-bottom: 8px; }
+        .book-card h4 { margin: 5px 0 8px 0; color: #2b6cb0; font-size: 15px; }
+        
+        .book-teacher-three-dots {
+            position: absolute; top: 8px; left: 8px; background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #cbd5e0; border-radius: 50%; width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .completed-tick { position: absolute; top: 8px; right: 8px; font-size: 22px; display: none; background: white; border-radius: 50%; padding: 2px; }
+        .book-card.completed .completed-tick { display: block; }
+        
+        .task-status-badge { font-size: 10px; font-weight: bold; padding: 3px 6px; border-radius: 12px; background: #e2e8f0; color: #4a5568; margin-bottom: 8px; display: inline-block; }
+        .task-status-badge.done { background: #c6f6d5; color: #22543d; }
+
+        /* SÜRÜKLE BIRAK VE QUIZ */
+        .drag-container { display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
+        .draggable-item { padding: 10px 15px; background: #e2e8f0; border-radius: 6px; cursor: grab; font-weight: bold; user-select: none; }
+        .drop-target { min-height: 45px; border: 2px dashed #667eea; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #f4f6ff; font-weight: bold; color: #4a5568; margin-top: 10px; }
+        .quiz-option { padding: 8px 12px; border: 1px solid #cbd5e0; border-radius: 6px; margin-top: 5px; cursor: pointer; background: #f7fafc; }
+        .quiz-option.selected { background: #667eea; color: white; border-color: #5a6fd6; }
+
+        /* ÖĞRETMEN ANALİZ TABLOSU */
+        .teacher-analytics-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        .teacher-analytics-table th, .teacher-analytics-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
+        .teacher-analytics-table th { background: #edf2f7; color: #2d3748; }
+        .status-tag { padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; }
+        .status-tag.yes { background: #c6f6d5; color: #22543d; }
+        .status-tag.no { background: #fed7d7; color: #742a2a; }
+
+        .unity-reader-box { background: #1e1b4b; border-radius: 12px; padding: 20px; color: white; text-align: center; margin: 15px 0; border: 2px solid #818cf8; }
+        .unity-screen { background: #312e81; border-radius: 8px; padding: 20px; min-height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; color: #e0e7ff; line-height: 1.5; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. GİRİŞ EKRANI -->
+    <div class="card-container" id="loginStep">
+        <h2 style="text-align: center;">LearnFast'e Giriş Yap</h2>
+        <div class="sub-title">🏫 Bahçeşehir Koleji Portalı</div>
+        
+        <form onsubmit="goToBranchSelection(event)">
+            <div class="input-group">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text" id="username" required placeholder="Adınız Soyadınız">
+            </div>
+            
+            <div class="input-group">
+                <label for="email">E-posta Adresi</label>
+                <input type="email" id="email" required placeholder="ornek@bahcesehir.k12.tr">
+            </div>
+
+            <div class="input-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+
+            <div class="captcha-box">
+                <input type="checkbox" id="robotCheck" required>
+                <label for="robotCheck">Ben robot değilim</label>
+            </div>
+
+            <button type="submit" class="btn-submit">Devam Et ➔</button>
+        </form>
+    </div>
+
+    <!-- 2. ROL SEÇİM EKRANI -->
+    <div class="card-container hidden" id="roleStep">
+        <h2 style="text-align: center;">Hoş Geldin! 👋</h2>
+        <p class="sub-title">Lütfen platformdaki rolünüzü seçin</p>
+
+        <button type="button" class="student-btn" onclick="startStudentFlow()">
+            🎓 Ben Öğrenciyim
+        </button>
+
+        <div class="divider">VEYA ÖĞRETMEN GİRİŞİ</div>
+
+        <form onsubmit="completeTeacherRegistration(event)">
+            <div class="input-group">
+                <label>Branşınız</label>
+                <div class="option-card"><input type="radio" name="branch" id="english" value="English Teacher" required><label for="english">🇬🇧 English Teacher</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="turkish" value="Türkçe Öğretmeni"><label for="turkish">🇹🇷 Türkçe Öğretmeni</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="german" value="Deutsch Lehrerin"><label for="german">🇩🇪 Deutsch Lehrerin</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="coding" value="Kodlama Öğretmeni"><label for="coding">💻 Kodlama Öğretmeni</label></div>
+            </div>
+
+            <div class="input-group">
+                <label for="teacherClassManaged">Yönettiğiniz Sınıf / Şube (Örn: 3A, 3B vb.)</label>
+                <input type="text" id="teacherClassManaged" required placeholder="Örn: 3A">
+            </div>
+
+            <div class="input-group">
+                <label for="teacherCode">Öğretmen Güvenlik Şifresi</label>
+                <input type="password" id="teacherCode" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Öğretmen Girişini Tamamla</button>
+        </form>
+    </div>
+
+    <!-- 3. ÖĞRENCİ SEVİYE EKRANI -->
+    <div class="card-container hidden" id="studentStep">
+        <h2 style="text-align: center;">Öğrenci Bilgileri 🎓</h2>
+        <p class="sub-title">Sana özel içerikleri hazırlayabilmemiz için seviyeni seç</p>
+
+        <form onsubmit="completeStudentRegistration(event)">
+            <div class="input-group">
+                <label for="studentClass">Sınıfınız / Seviyeniz</label>
+                <select id="studentClass" required>
+                    <option value="">Seçiniz...</option>
+                    <option value="3. Sınıf">3. Sınıf</option>
+                    <option value="4. Sınıf">4. Sınıf</option>
+                    <option value="5. Sınıf">5. Sınıf</option>
+                    <option value="Lise Seviyesi">Lise (Zor Sorular)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="studentBranch">Şubeniz (3A, 3B, 4A vb.)</label>
+                <input type="text" id="studentBranch" required placeholder="Örn: 3A veya 4B">
+            </div>
+
+            <button type="submit" class="btn-submit">Platforma Giriş Yap 🚀</button>
+        </form>
+    </div>
+
+    <!-- 4. ANA DERS EKRANI -->
+    <div class="card-container dashboard-container hidden" id="dashboardStep">
+        <div class="welcome-header">
+            <div>
+                <h3 id="welcomeMsg" style="margin:0; text-align:left;"></h3>
+                <span id="badgeInfo" class="grade-badge"></span>
+            </div>
+            <div class="header-actions">
+                <button class="ai-assistant-btn" id="aiBtnText" onclick="toggleAiDrawer()">🤖 Öğretici Yapay Zeka</button>
+                <button onclick="logoutApp()" style="padding: 8px 12px; background:#e2e8f0; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <div id="subjectListArea">
+            <h3 style="text-align: left; margin-bottom: 15px;">Dersinizi Seçin</h3>
+            <div class="subject-grid">
+                <div class="subject-card" id="card-Matematik" onclick="openSubjectDetail('Matematik')">
+                    <div class="subject-icon">📐</div>
+                    <div class="subject-title">Matematik</div>
+                </div>
+                <div class="subject-card" id="card-Türkçe" onclick="openSubjectDetail('Türkçe')">
+                    <div class="subject-icon">📚</div>
+                    <div class="subject-title">Türkçe</div>
+                </div>
+                <div class="subject-card" id="card-FenBilimleri" onclick="openSubjectDetail('Fen Bilimleri')">
+                    <div class="subject-icon">🔬</div>
+                    <div class="subject-title">Fen Bilimleri</div>
+                </div>
+                <div class="subject-card" id="card-HayatBilgisi" onclick="openSubjectDetail('Hayat Bilgisi')">
+                    <div class="subject-icon">🌱</div>
+                    <div class="subject-title">Hayat Bilgisi</div>
+                </div>
+                <div class="subject-card" id="card-Kodlama" onclick="openSubjectDetail('Kodlama')">
+                    <div class="subject-icon">💻</div>
+                    <div class="subject-title">Kodlama</div>
+                </div>
+                <div class="subject-card" id="card-Ingilizce" onclick="openSubjectDetail('İngilizce')">
+                    <div class="subject-icon">🇬🇧</div>
+                    <div class="subject-title">İngilizce</div>
+                    <div class="subject-sub">(Efroomman)</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="subjectDetailArea" class="hidden">
+            <button class="back-btn" id="backBtnText" onclick="goBackToSubjects()">⬅️ Derslere Geri Dön</button>
+            <h3 id="selectedSubjectTitle" style="text-align: left; color: var(--primary);"></h3>
+
+            <!-- İNGİLİZCE KÜTÜPHANE -->
+            <div id="englishLibraryArea" class="hidden">
+                <p style="color: #4a5568; font-weight: bold; margin-bottom: 8px;">📚 World English Library - Read & Listen Books</p>
+                <div class="search-box-wrapper">
+                    <span>🔍</span>
+                    <input type="text" id="bookSearchInput" class="search-box-input" placeholder="Search book name..." oninput="filterEnglishBooks()">
+                </div>
+                <div class="library-scroll-container">
+                    <div class="book-grid" id="bookGridContainer"></div>
+                </div>
+            </div>
+
+            <!-- ÜNİTE LİSTESİ -->
+            <div id="unitSectionArea">
+                <p id="unitSubHeader" style="color: #718096; font-size: 14px;">Çalışmak istediğiniz üniteye tıklayın:</p>
+                <div class="unit-list" id="unitListContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- YAPAY ZEKA PANELİ -->
+    <div class="ai-drawer" id="aiDrawer">
+        <div class="ai-drawer-header">
+            <span id="aiHeaderTitle">🤖 Öğretici Yapay Zeka</span>
+            <button class="ai-close-btn" onclick="toggleAiDrawer()">✕</button>
+        </div>
+        <div class="ai-chat-body" id="aiChatBody"></div>
+        <div class="typing-indicator" id="typingStatus"></div>
+        <div class="ai-drawer-footer">
+            <div class="input-row">
+                <input type="text" id="aiUserInput" placeholder="Mesajınızı yazın..." oninput="handleUserTyping()" onkeypress="if(event.key === 'Enter') sendAiMessage()">
+                <button onclick="startVoiceRecognition()" title="Mikrofon ile Konuş">🎤</button>
+                <button id="sendBtnText" onclick="sendAiMessage()">Gönder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div id="contentModal" class="modal-overlay hidden">
+        <div class="modal-content" id="modalBox">
+            <button class="close-modal-x" onclick="closeModal()">✕</button>
+            <div id="modalInnerContent"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = { name: '', role: '', level: '', currentSubject: '', managedClass: '', honorific: '' };
+        let quizAnswers = {};
+        let workStep = 1;
+        let workAnswers = [];
+        let draggedText = '';
+        let typingTimer;
+        let currentUnityTexts = [];
+        let currentUnityIndex = 0;
+        
+        let currentBook = null;
+        let currentBookPageIndex = 0;
+        let currentBookMode = ''; 
+        let isBookListeningPaused = false;
+        let bookProgress = {}; 
+
+        let bahcesehirStudents = JSON.parse(localStorage.getItem('bahcesehir_real_students')) || [];
+
+        // ÖZGÜN VE ÖZEL ÜNİTE İSİMLERİ (HER DERS İÇİN 6 ÜNİTE)
+        const unitNamesDatabase = {
+            "Türkçe": [
+                "1. Harfler ve Alfabe Dünyası",
+                "2. Eş ve Zıt Anlamlı Kelimeler",
+                "3. Noktalama İşaretleri",
+                "4. Yazım Kuralları",
+                "5. Hikaye ve Metin Çözümleme",
+                "6. Şiir ve Düş Gücü"
+            ],
+            "Matematik": [
+                "1. Doğal Sayılar ve Basamaklar",
+                "2. Toplama ve Çıkarma İşlemleri",
+                "3. Çarpma ve Bölme Dünyası",
+                "4. Kesirler ve Bütünler",
+                "5. Geometrik Şekiller",
+                "6. Ölçme ve Tartma"
+            ],
+            "Fen Bilimleri": [
+                "1. Dünyamızın Katmanları",
+                "2. Beş Duyumuz ve Organlarımız",
+                "3. Kuvvetin Etkileri",
+                "4. Maddenin Hallerine Yolculuk",
+                "5. Işık ve Ses Enerjisi",
+                "6. Canlılar ve Yaşam Alanları"
+            ],
+            "Hayat Bilgisi": [
+                "1. Okul Kuralları ve Dostluk",
+                "2. Evimizdeki Sorumluluklar",
+                "3. Sağlıklı Yaşam ve Beslenme",
+                "4. Güvenli Hayat ve Kurallar",
+                "5. Doğayı ve Çevreyi Koruma",
+                "6. Ülkemizi Tanıyalım"
+            ],
+            "Kodlama": [
+                "1. HTML Temel Yapısı ve Etiketler",
+                "2. Sayfa Başlıkları ve Meta Bilgileri",
+                "3. Body ve İçerik Yönetimi",
+                "4. CSS ile Renk ve Tasarım",
+                "5. JavaScript ile Hareket Katma",
+                "6. Web Projesi Geliştirme"
+            ]
+        };
+
+        // DAHA UZUN VE DETAYLI BİLGİLENDİRME METİNLERİ
+        const unityReadDatabase = {
+            "Türkçe": [
+                "Türkçe dersimizin bu bölümünde dilimizin en temel yapı taşlarını ve harflerin esrarengiz dünyasını keşfediyoruz. Alfabemizde yer alan ünlü ve ünsüz harfler, kelimeleri oluştururken birbirleriyle harika bir uyum içinde çalışır. Doğru telaffuz ve düzgün konuşma, kendimizi başkalarına en iyi şekilde ifade etmemizin anahtarıdır.",
+                "Eş anlamlı kelimeler yazılışları farklı olsa bile aynı anlamı taşıyan harika sözcüklerdir. Zıt anlamlı kelimeler ise birbirinin tam tersini ifade eder. Bu kelimeleri bilmek hikayelerimizi ve yazılarımızı çok daha renkli, zengin ve etkileyici hale getirmemizi sağlar.",
+                "Noktalama işaretleri cümlelerimizin sessiz kahramanlarıdır. Virgül, nokta, soru işareti ve ünlem gibi işaretler olmasaydı cümleleri okurken nerede nefes alacağımızı veya cümlenin duygusunu anlamakta çok zorlanırdık. Noktalama işaretleri yazılı anlatımın düzenini ve anlamını korur.",
+                "Yazım kuralları, dilimizin kurallarına uygun ve hatasız yazmamız için rehberlik eder. Büyük harflerin yerleri, 'de' ve 'da' bağlaçlarının yazılışı veya sayıların yazımı gibi kuralları öğrenmek metinlerimizin her zaman temiz ve profesyonel görünmesini sağlar.",
+                "Hikaye ve metin çözümleme yaparken metnin ana fikrini, yardımcı düşüncelerini ve kahramanların özelliklerini dikkatlice inceleriz. Okuduğumuz bir metni derinden anlamak ve ondan ders çıkarabilmek iyi bir okurun en önemli özelliğidir.",
+                "Şiir ve düş gücü dünyası kelimelerin ezgisiyle doludur. Mısralar, kıtalar ve kafiyeler sayesinde hayal gücümüzün sınırlarını zorlar, duygularımızı en sanatsal ve güzel biçimde kağıda dökme fırsatı buluruz."
+            ],
+            "Matematik": [
+                "Doğal sayılar ve basamak değerleri matematiğin temelini oluşturur. Birler, onlar ve yüzler basamağını öğrenerek büyük sayıları kolayca okuyabilir ve yazabiliriz. Sayıların hayatımızdaki yeri oldukça büyüktür.",
+                "Toplama ve çıkarma işlemleri günlük hayatımızda alışveriş yaparken, oyun oynarken veya plan yaparken en çok kullandığımız matematiksel becerilerdir. Pratik yapmak zihinden işlem yapma yeteneğimizi artırır.",
+                "Çarpım tablosu ve bölme işlemleri sayesinde büyük grupları hızlıca hesaplayabiliriz. Çarpma, aslında hızlı toplama yapmanın en pratik yoludur ve matematik problemlerini çözerken büyük hız kazandırır.",
+                "Kesirler bir bütünün eşit parçalarını ifade etmek için kullanılır. Yarım, çeyrek ve bütün kavramları özellikle yemek paylaşırken veya uzunluk ölçerken sıkça karşımıza çıkar.",
+                "Geometrik şekiller etrafımızdaki tüm nesnelerin temelini oluşturur. Üçgenler, kareler, dikdörtgenler ve çemberlerin alan ve çevre hesaplamalarını öğrenmek uzamsal düşünme becerimizi geliştirir.",
+                "Ölçme ve tartma ünitelerinde uzunluk, ağırlık ve zaman kavramlarını detaylıca inceleriz. Metre, kilogram ve saat gibi ölçü birimleri hayatımızı düzenli tutmamıza yardımcı olur."
+            ],
+            "Fen Bilimleri": [
+                "Dünyamızın katmanları hava küre, su küre, taş küre ve magma tabakasından oluşur. Üzerinde yaşadığımız bu eşsiz gezegenin yapısını bilmek doğayı anlamamız için çok önemlidir.",
+                "Beş duyumuz göz, kulak, burun, dil ve deridir. Çevremizdeki dünyayı görmemizi, duymamızı, koklamamızı, tatmamızı ve dokunmamızı sağlayan organlarımızı korumak en önemli görevimizdir.",
+                "Kuvvet cisimlerin hareket yönünü, hızını değiştiren veya şeklini bozan itme ve çekme etkileridir. Günlük hayatta kapıyı açarken ya da topa vururken hep kuvvet uygularız.",
+                "Maddenin katı, sıvı ve gaz olmak üzere üç temel hali bulunur. Su örneğinde olduğu gibi maddeler ısı alarak veya vererek bir halden diğerine geçebilirler.",
+                "Işık ve ses etrafımızı algılamamızı sağlayan temel enerjilerdir. Işık olmadan göremeyiz, ses olmadan ise işitemeyiz; her ikisi de hayatımızın vazgeçilmez parçalarıdır.",
+                "Canlılar ve yaşam alanları ekosistemin dengesini korur. Bitkiler, hayvanlar ve mikroorganizmalar doğada birbirleriyle uyum içinde yaşayarak muhteşem bir zincir oluştururlar."
+            ],
+            "Hayat Bilgisi": [
+                "Okulumuzda ve sınıfımızda uymamız gereken kurallar, ortak yaşam alanında huzurlu ve güvenli olmamızı sağlar. Arkadaşlık ilişkilerimizde saygı ve sevgi her zaman ön planda olmalıdır.",
+                "Evimizde ailemize destek olmak için yatağımızı toplamak, odamızı düzenlemek gibi bazı sorumluluklar üstleniriz. Bu görevler bizi sorumluluk sahibi bireyler yapar.",
+                "Sağlığımızı korumak için dengeli beslenmeli, bol su içmeli ve kişisel temizliğimize azami dikkat göstermeliyiz. Sağlam kafa sağlam vücutta bulunur.",
+                "Trafikte güvenle yürümek için yaya geçitlerini kullanmalı ve trafik ışıklarına mutlaka uymalıyız. Güvenli hayat kuralları hayat kurtarır.",
+                "Ülkemizin doğasını, ormanlarını, hayvanlarını ve tarihi değerlerini korumak her vatandaşın en temel görevidir. Çevre bilinci küçük yaşta başlar.",
+                "Ülkemizi tanıyalım ünitesinde başkentimizi, bayrağımızı, kültürel değerlerimizi ve komşularımızı öğrenerek vatan sevgimizi pekiştiririz."
+            ],
+            "Kodlama": [
+                "HTML, web sayfalarının iskeletini oluşturan temel işaretleme dilidir. Sayfanın yapısını kurmak için etiket adı verilen özel komutlar kullanılır.",
+                "Head etiketleri arasına web sayfasının arama motorlarında görünen başlığı ve meta bilgileri yazılır. Burası sayfanın görünmeyen ama akıllı kısmıdır.",
+                "Body etiketleri içerisine web sitesini ziyaret edenlerin ekranda gördüğü tüm metinler, resimler ve butonlar yerleştirilir.",
+                "CSS kullanarak web sitelerimize renk, arka plan, şık yazı tipleri ve muazzam tasarımlar kazandırarak onları görsel açıdan çekici hale getiririz.",
+                "JavaScript, web sayfalarına hareket, animasyon ve kullanıcıyla etkileşim kurma yeteneği kazandıran güçlü bir programlama dilidir.",
+                "Web projesi geliştirme aşamasında öğrendiğimiz tüm bu HTML, CSS ve JS becerilerini birleştirerek kendi harika web sitemizi inşa ederiz."
+            ]
+        };
+
+        const englishBooksPool = [
+            {
+                id: "b1", title: "The Little Adventurer",
+                img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Chapter 1: The Mysterious Forest. Deep in the green heart of Oak Valley, a little curious puppy named Max loved exploring new trails every single morning.",
+                    "While sniffing near an ancient, giant oak tree, Max noticed something shimmering underneath a pile of golden autumn leaves.",
+                    "Chapter 2: The Golden Key. It was a beautiful golden key with delicate star-shaped engravings. Max picked it up carefully with his mouth.",
+                    "He followed a winding cobblestone path until he reached a tiny, mysterious moss-covered wooden door built right into the hillside.",
+                    "Chapter 3: The Secret Chest. Max turned the golden key inside the keyhole. Click! The heavy door opened smoothly to reveal a chest full of magical, glowing apples."
+                ]
+            },
+            {
+                id: "b2", title: "Journey to Space",
+                img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Part 1: The Backyard Launch. Young Timmy spent his whole summer vacation assembling a shining silver rocket ship using light aluminum plates.",
+                    "Equipped with his astronaut helmet and a bag of freeze-dried snacks, Timmy pressed the red countdown button: Three, Two, One, Blast off!",
+                    "Part 2: Among the Stars. The rocket soared past puffy white clouds and zoomed into the peaceful, dark blue atmosphere.",
+                    "Timmy waved out his window at the glowing full moon and counted hundreds of twinkling distant constellations."
+                ]
+            }
+        ];
+
+        const quizDatabase = {
+            "Kodlama": [
+                { q: "Web sayfalarının temel yapısını oluşturan dil hangisidir?", options: ["A) HTML", "B) MP3", "C) JPEG"], ans: "A" },
+                { q: "Bir web sayfasında görünen içerikler hangi etiketin içine yazılır?", options: ["A) <head>", "B) <body>", "C) <title>"], ans: "B" }
+            ]
+        };
+
+        const workDatabase = {
+            "Kodlama": [
+                { q: "Web sayfasının ana kemiği hangisidir?", correct: "HTML", options: ["HTML", "CSS", "JS"] },
+                { q: "Tasarım ve stil veren kod?", correct: "CSS", options: ["CSS", "HTML", "PHP"] }
+            ]
+        };
+
+        window.onload = function() {
+            const savedUser = localStorage.getItem('learnfast_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showDashboard();
+            }
+        };
+
+        function goToBranchSelection(event) {
+            event.preventDefault();
+            if (!document.getElementById('robotCheck').checked) {
+                alert("Lütfen robot olmadığınızı doğrulayın!");
+                return;
+            }
+            currentUser.name = document.getElementById('username').value;
+            document.getElementById('loginStep').classList.add('hidden');
+            document.getElementById('roleStep').classList.remove('hidden');
+        }
+
+        function startStudentFlow() {
+            currentUser.role = 'Student';
+            document.getElementById('roleStep').classList.add('hidden');
+            document.getElementById('studentStep').classList.remove('hidden');
+        }
+
+        function completeStudentRegistration(event) {
+            event.preventDefault();
+            const studentBranchVal = document.getElementById('studentBranch').value.trim();
+            currentUser.level = `${document.getElementById('studentClass').value} - Şube: ${studentBranchVal}`;
+            currentUser.branchName = studentBranchVal;
+            
+            let existingStudent = bahcesehirStudents.find(st => st.name === currentUser.name);
+            if (!existingStudent) {
+                bahcesehirStudents.push({
+                    name: currentUser.name, class: studentBranchVal,
+                    readBooks: [], listenedBooks: [], doneWorks: [], doneQuizzes: []
+                });
+                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
+            }
+
+            localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
+            showDashboard();
+        }
+
+        function completeTeacherRegistration(event) {
+            event.preventDefault();
+            if (document.getElementById('teacherCode').value !== "teacher§tap") {
+                alert("Hatalı öğretmen şifresi!");
+                return;
+            }
+            currentUser.role = 'Teacher';
+            currentUser.level = document.querySelector('input[name="branch"]:checked').value;
+            currentUser.managedClass = document.getElementById('teacherClassManaged').value.trim();
+            
+            const nameLower = currentUser.name.trim().toLowerCase();
+            let honorific = (nameLower.includes('hanım') || nameLower.includes('kadın')) ? "Hanım" : "Bey";
+            currentUser.honorific = honorific;
+            
+            localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
+            showDashboard();
+        }
+
+        function showDashboard() {
+            document.getElementById('loginStep').classList.add('hidden');
+            document.getElementById('roleStep').classList.add('hidden');
+            document.getElementById('studentStep').classList.add('hidden');
+            document.getElementById('dashboardStep').classList.remove('hidden');
+
+            const welcomeMsg = document.getElementById('welcomeMsg');
+            if (currentUser.role === 'Teacher') {
+                welcomeMsg.innerText = `Hoş geldiniz ${currentUser.name} ${currentUser.honorific}, (${currentUser.managedClass}) 👨‍🏫`;
+                const isEnglishTeacher = (currentUser.level === 'English Teacher');
+                const subjectCards = ['Matematik', 'Türkçe', 'FenBilimleri', 'HayatBilgisi', 'Kodlama', 'Ingilizce'];
+
+                subjectCards.forEach(subj => {
+                    const card = document.getElementById(`card-${subj}`);
+                    if (!card) return;
+                    if (isEnglishTeacher) {
+                        if (subj === 'Ingilizce') { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
+                        else { card.classList.add('disabled-subject'); card.style.pointerEvents = 'none'; }
+                    } else {
+                        if (subj === 'Ingilizce') { card.classList.add('disabled-subject'); card.style.pointerEvents = 'none'; }
+                        else { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
+                    }
+                });
+            } else {
+                welcomeMsg.innerText = `Hoş geldin ${currentUser.name}! 🚀`;
+                ['Matematik', 'Türkçe', 'FenBilimleri', 'HayatBilgisi', 'Kodlama', 'Ingilizce'].forEach(subj => {
+                    const card = document.getElementById(`card-${subj}`);
+                    if (card) { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
+                });
+            }
+            document.getElementById('badgeInfo').innerText = `Profil: ${currentUser.level}`;
+        }
+
+        function logoutApp() {
+            window.speechSynthesis.cancel();
+            localStorage.removeItem('learnfast_user');
+            currentUser = { name: '', role: '', level: '', currentSubject: '', managedClass: '', honorific: '' };
+            document.getElementById('dashboardStep').classList.add('hidden');
+            document.getElementById('subjectDetailArea').classList.add('hidden');
+            document.getElementById('subjectListArea').classList.remove('hidden');
+            document.getElementById('loginStep').classList.remove('hidden');
+        }
+
+        function openSubjectDetail(subjectName) {
+            currentUser.currentSubject = subjectName;
+            document.getElementById('subjectListArea').classList.add('hidden');
+            document.getElementById('subjectDetailArea').classList.remove('hidden');
+
+            if (subjectName === 'İngilizce') {
+                document.getElementById('selectedSubjectTitle').innerText = `English Course (Efroomman)`;
+                document.getElementById('englishLibraryArea').classList.remove('hidden');
+                document.getElementById('unitSectionArea').classList.add('hidden');
+                renderEnglishLibrary();
+            } else {
+                document.getElementById('selectedSubjectTitle').innerText = `${subjectName} Dersi (6 Ünite)`;
+                document.getElementById('englishLibraryArea').classList.add('hidden');
+                document.getElementById('unitSectionArea').classList.remove('hidden');
+                renderUnits(subjectName);
+            }
+            resetChatDrawer();
+        }
+
+        function goBackToSubjects() {
+            window.speechSynthesis.cancel();
+            currentUser.currentSubject = '';
+            document.getElementById('subjectDetailArea').classList.add('hidden');
+            document.getElementById('subjectListArea').classList.remove('hidden');
+            resetChatDrawer();
+        }
+
+        function renderEnglishLibrary(filterText = '') {
+            const container = document.getElementById('bookGridContainer');
+            container.innerHTML = "";
+            const filtered = englishBooksPool.filter(b => b.title.toLowerCase().includes(filterText.toLowerCase()));
+
+            filtered.forEach(book => {
+                const prog = bookProgress[book.id] || { read: false, listen: false };
+                const isFullyCompleted = prog.read && prog.listen;
+                const isTeacher = (currentUser.role === 'Teacher');
+
+                container.innerHTML += `
+                    <div class="book-card ${isFullyCompleted ? 'completed' : ''}">
+                        ${isTeacher ? `<div class="book-teacher-three-dots" onclick="alert('İstatistikler')">⋮</div>` : ''}
+                        <div class="completed-tick">✅</div>
+                        <img src="${book.img}" alt="${book.title}">
+                        <h4>📖 ${book.title}</h4>
+                        <button class="action-btn" style="text-align:center; padding:7px; font-size:13px;" onclick="openBookModal('${book.id}', 'read')">📖 Read Myself</button>
+                        <button class="action-btn" style="text-align:center; padding:7px; font-size:13px; background:#48bb78; color:white; border:none; margin-top:5px;" onclick="openBookModal('${book.id}', 'listen')">🎧 Listen to AI</button>
+                    </div>
+                `;
+            });
+        }
+
+        function filterEnglishBooks() {
+            renderEnglishLibrary(document.getElementById('bookSearchInput').value);
+        }
+
+        // KUSURSUZ ÇALIŞAN ÜNİTE RENDER FONKSİYONU
+        function renderUnits(subjectName) {
+            const container = document.getElementById('unitListContainer');
+            container.innerHTML = "";
+            const isTeacher = (currentUser.role === 'Teacher');
+            const unitTitles = unitNamesDatabase[subjectName] || [
+                "1. Temel Kavramlar", "2. Gelişmiş Konular", "3. Uygulama ve Örnekler", 
+                "4. Problem Çözme", "5. Proje Çalışması", "6. Genel Tekrar"
+            ];
+
+            for (let i = 1; i <= 6; i++) {
+                const unitTitleText = unitTitles[i - 1] || `${i}. Ünite`;
+                container.innerHTML += `
+                    <div class="unit-card">
+                        <div class="unit-header" onclick="toggleUnit(${i})">
+                            <span>📌 ${unitTitleText}</span>
+                            <span id="unitIcon-${i}">➕</span>
+                        </div>
+                        <div class="unit-body hidden" id="unitBody-${i}">
+                            <div class="action-row">
+                                <button class="action-btn" onclick="openUnityReader(${i})">📖 Unity Yazı Okuma (Otomatik Sesli Asistan)</button>
+                                ${isTeacher ? `<button class="teacher-more-btn" onclick="alert('İstatistikler')">⋮</button>` : ''}
+                            </div>
+                            <div class="action-row">
+                                <button class="action-btn" onclick="startWork(${i})">📝 Ünite Çalışması (5 Soru)</button>
+                                ${isTeacher ? `<button class="teacher-more-btn" onclick="alert('İstatistikler')">⋮</button>` : ''}
+                            </div>
+                            <div class="action-row">
+                                <button class="action-btn" onclick="openQuiz(${i})">🎯 Konu Tarama Testi</button>
+                                ${isTeacher ? `<button class="teacher-more-btn" onclick="alert('İstatistikler')">⋮</button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleUnit(unitId) {
+            const body = document.getElementById(`unitBody-${unitId}`);
+            const icon = document.getElementById(`unitIcon-${unitId}`);
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                icon.innerText = "➖";
+            } else {
+                body.classList.add('hidden');
+                icon.innerText = "➕";
+            }
+        }
+
+        function openUnityReader(unitNo) {
+            const texts = unityReadDatabase[currentUser.currentSubject] || unityReadDatabase["Türkçe"];
+            currentUnityTexts = texts;
+            currentUnityIndex = 0;
+
+            showModal(`
+                <h3>📖 Ünite ${unitNo} - ${currentUser.currentSubject} Uzun Okuma</h3>
+                <div class="unity-reader-box">
+                    <div class="unity-screen" id="unityTextDisplay">Yazılar okunuyor...</div>
+                    <button class="btn-submit" style="background:#e53e3e; width:auto; padding:8px 16px;" onclick="closeModal()">Kapat</button>
+                </div>
+            `);
+            playNextUnityText();
+        }
+
+        function playNextUnityText() {
+            window.speechSynthesis.cancel();
+            if (currentUnityIndex >= currentUnityTexts.length) {
+                document.getElementById('unityTextDisplay').innerHTML += "<br><br><b>🎉 Tüm yazılar başarıyla okundu!</b>";
+                return;
+            }
+            const textToRead = currentUnityTexts[currentUnityIndex];
+            document.getElementById('unityTextDisplay').innerHTML = `<b>[Bölüm ${currentUnityIndex + 1} / ${currentUnityTexts.length}]</b><br><br>${textToRead}`;
+
+            const utterance = new SpeechSynthesisUtterance(textToRead);
+            utterance.lang = 'tr-TR';
+            utterance.rate = 0.95;
+            utterance.onend = function() {
+                currentUnityIndex++;
+                if (currentUnityIndex < currentUnityTexts.length) {
+                    setTimeout(() => { playNextUnityText(); }, 1000);
+                } else {
+                    document.getElementById('unityTextDisplay').innerHTML += "<br><br><b>🎉 Tüm yazılar başarıyla okundu!</b>";
+                }
+            };
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function startWork(unitNo) {
+            workStep = 1;
+            workAnswers = [];
+            renderWorkQuestion(unitNo);
+        }
+
+        function renderWorkQuestion(unitNo) {
+            const list = workDatabase[currentUser.currentSubject] || workDatabase["Kodlama"];
+            const qData = list[0];
+            showModal(`
+                <h3>📝 Ünite ${unitNo} Çalışması</h3>
+                <p><b>Soru:</b> ${qData.q}</p>
+                <div class="drag-container">${qData.options.map(opt => `<div class="draggable-item" draggable="true" ondragstart="drag(event, '${opt}')">${opt}</div>`).join('')}</div>
+                <div class="drop-target" id="dropArea" ondrop="drop(event)" ondragover="event.preventDefault()">Cevabı Buraya Sürükleyin</div>
+                <button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Bitir</button>
+            `);
+        }
+
+        function drag(ev, text) { draggedText = text; }
+        function drop(ev) {
+            ev.preventDefault();
+            document.getElementById('dropArea').innerText = `Seçilen: ${draggedText}`;
+            document.getElementById('dropArea').style.background = "#e2e8f0";
+        }
+
+        function openQuiz(unitNo) {
+            showModal(`
+                <h3>🎯 Ünite ${unitNo} Konu Tarama Testi</h3>
+                <p><b>Soru 1:</b> Bu ders için örnek tarama testi sorusudur.</p>
+                <div class="quiz-option" onclick="this.style.background='#667eea'; this.style.color='white';">A) Doğru Seçenek</div>
+                <div class="quiz-option" onclick="this.style.background='#e53e3e'; this.style.color='white';">B) Yanlış Seçenek</div>
+                <button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Testi Tamamla</button>
+            `);
+        }
+
+        function openBookModal(bookId, mode) {
+            currentBook = englishBooksPool.find(b => b.id === bookId);
+            showModal(`
+                <h3>📖 ${currentBook.title} (${mode})</h3>
+                <div class="unity-reader-box">
+                    <div class="unity-screen">${currentBook.pages[0]}</div>
+                    <button class="btn-submit" style="background:#28a745; width:auto; padding:8px 16px;" onclick="closeModal()">Tamamla / Kapat</button>
+                </div>
+            `);
+        }
+
+        function toggleAiDrawer() { document.getElementById('aiDrawer').classList.toggle('open'); }
+
+        function resetChatDrawer() {
+            document.getElementById('aiChatBody').innerHTML = `
+                <div class="ai-message bot">
+                    Merhaba! Ben LearnFast yapay zekasıyım. Dersler hakkında sorular sorabilirsin! 💡
+                </div>
+            `;
+        }
+
+        function handleUserTyping() {
+            clearTimeout(typingTimer);
+            document.getElementById('typingStatus').innerText = "Yazıyorsunuz...";
+            typingTimer = setTimeout(() => { document.getElementById('typingStatus').innerText = ""; }, 1000);
+        }
+
+        function sendAiMessage() {
+            const input = document.getElementById('aiUserInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chatBody = document.getElementById('aiChatBody');
+            chatBody.innerHTML += `<div class="ai-message user">${text}</div>`;
+            input.value = '';
+
+            setTimeout(() => {
+                let botReply = `Üzgünüm, bu dediğinizi yerine getiremiyorum ama bu dediğinizle ilgili bilgi verebilirim: "${text}" konusunda eğitim her zaman çok değerlidir!`;
+                if (text.toLowerCase().includes('merhaba') || text.toLowerCase().includes('ders')) {
+                    botReply = "Harika! LearnFast portalında ders çalışmaya ve test çözmeye devam edebilirsin.";
+                }
+                chatBody.innerHTML += `<div class="ai-message bot">${botReply}</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.speak(new SpeechSynthesisUtterance(botReply));
+                }
+            }, 1000);
+        }
+
+        function startVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window) {
+                const recognition = new webkitSpeechRecognition();
+                recognition.lang = 'tr-TR';
+                recognition.onresult = function(event) {
+                    document.getElementById('aiUserInput').value = event.results[0][0].transcript;
+                    sendAiMessage();
+                };
+                recognition.start();
+            } else {
+                alert("Tarayıcınız ses tanımayı desteklemiyor.");
+            }
+        }
+
+        function showModal(content) {
+            document.getElementById('modalInnerContent').innerHTML = content;
+            document.getElementById('contentModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            window.speechSynthesis.cancel();
+            document.getElementById('contentModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
