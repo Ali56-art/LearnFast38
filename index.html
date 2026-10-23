@@ -141,13 +141,6 @@
         }
         .action-btn:hover { background: var(--primary); color: white; }
 
-        .teacher-more-btn {
-            background: #edf2f7; border: 2px solid #cbd5e0; color: #2d3748;
-            padding: 12px 15px; border-radius: 8px; font-weight: bold; cursor: pointer;
-            font-size: 16px; transition: all 0.2s;
-        }
-        .teacher-more-btn:hover { background: #cbd5e0; }
-
         .grade-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: #4a5568; }
         .back-btn { background: #e2e8f0; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
 
@@ -209,34 +202,13 @@
         .book-card { background: #f8fafc; border: 2px solid #cbd5e0; border-radius: 10px; padding: 12px; text-align: center; position: relative; }
         .book-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 6px; margin-bottom: 8px; }
         .book-card h4 { margin: 5px 0 8px 0; color: #2b6cb0; font-size: 15px; }
-        
-        .book-teacher-three-dots {
-            position: absolute; top: 8px; left: 8px; background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #cbd5e0; border-radius: 50%; width: 28px; height: 28px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .completed-tick { position: absolute; top: 8px; right: 8px; font-size: 22px; display: none; background: white; border-radius: 50%; padding: 2px; }
-        .book-card.completed .completed-tick { display: block; }
-        
-        .task-status-badge { font-size: 10px; font-weight: bold; padding: 3px 6px; border-radius: 12px; background: #e2e8f0; color: #4a5568; margin-bottom: 8px; display: inline-block; }
-        .task-status-badge.done { background: #c6f6d5; color: #22543d; }
 
         /* SÜRÜKLE BIRAK VE QUIZ */
         .drag-container { display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
         .draggable-item { padding: 10px 15px; background: #e2e8f0; border-radius: 6px; cursor: grab; font-weight: bold; user-select: none; }
         .drop-target { min-height: 45px; border: 2px dashed #667eea; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #f4f6ff; font-weight: bold; color: #4a5568; margin-top: 10px; }
-        .quiz-option { padding: 8px 12px; border: 1px solid #cbd5e0; border-radius: 6px; margin-top: 5px; cursor: pointer; background: #f7fafc; }
+        .quiz-option { padding: 10px 14px; border: 1px solid #cbd5e0; border-radius: 8px; margin-top: 8px; cursor: pointer; background: #f7fafc; font-weight: 500; }
         .quiz-option.selected { background: #667eea; color: white; border-color: #5a6fd6; }
-
-        /* ÖĞRETMEN ANALİZ TABLOSU */
-        .teacher-analytics-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-        .teacher-analytics-table th, .teacher-analytics-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
-        .teacher-analytics-table th { background: #edf2f7; color: #2d3748; }
-        .status-tag { padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: bold; }
-        .status-tag.yes { background: #c6f6d5; color: #22543d; }
-        .status-tag.no { background: #fed7d7; color: #742a2a; }
 
         .unity-reader-box { background: #1e1b4b; border-radius: 12px; padding: 20px; color: white; text-align: center; margin: 15px 0; border: 2px solid #818cf8; }
         .unity-screen { background: #312e81; border-radius: 8px; padding: 20px; min-height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; color: #e0e7ff; line-height: 1.5; margin-bottom: 15px; }
@@ -438,14 +410,8 @@
         let currentUnityIndex = 0;
         
         let currentBook = null;
-        let currentBookPageIndex = 0;
-        let currentBookMode = ''; 
-        let isBookListeningPaused = false;
-        let bookProgress = {}; 
+        let currentUnitId = 1;
 
-        let bahcesehirStudents = JSON.parse(localStorage.getItem('bahcesehir_real_students')) || [];
-
-        // ÖZGÜN VE ÖZEL ÜNİTE İSİMLERİ
         const unitNamesDatabase = {
             "Türkçe": [
                 "1. Harfler ve Alfabe Dünyası",
@@ -459,7 +425,7 @@
                 "1. Doğal Sayılar ve Basamaklar",
                 "2. Toplama ve Çıkarma İşlemleri",
                 "3. Çarpma ve Bölme Dünyası",
-                "4. Kesirler ve Bütünler",
+                "4. Kesirler dan Bütünler",
                 "5. Geometrik Şekiller",
                 "6. Ölçme ve Tartma"
             ],
@@ -489,63 +455,151 @@
             ]
         };
 
-        // UZUN VE DETAYLI OKUMA METİNLERİ
         const unityReadDatabase = {
             "Türkçe": [
-                "Türkçe dersimizin bu bölümünde dilimizin en temel yapı taşlarını ve harflerin esrarengiz dünyasını keşfediyoruz. Alfabemizde yer alan ünlü ve ünsüz harfler, kelimeleri oluştururken birbirleriyle harika bir uyum içinde çalışır. Doğru telaffuz ve düzgün konuşma, kendimizi başkalarına en iyi şekilde ifade etmemizin anahtarıdır.",
-                "Eş anlamlı kelimeler yazılışları farklı olsa bile aynı anlamı taşıyan harika sözcüklerdir. Zıt anlamlı kelimeler ise birbirinin tam tersini ifade eder. Bu kelimeleri bilmek hikayelerimizi ve yazılarımızı çok daha renkli, zengin ve etkileyici hale getirmemizi sağlar.",
-                "Noktalama işaretleri cümlelerimizin sessiz kahramanlarıdır. Virgül, nokta, soru işareti ve ünlem gibi işaretler olmasaydı cümleleri okurken nerede nefes alacağımızı veya cümlenin duygusunu anlamakta çok zorlanırdık. Noktalama işaretleri yazılı anlatımın düzenini ve anlamını korur.",
-                "Yazım kuralları, dilimizin kurallarına uygun ve hatasız yazmamız için rehberlik eder. Büyük harflerin yerleri, 'de' ve 'da' bağlaçlarının yazılışı veya sayıların yazımı gibi kuralları öğrenmek metinlerimizin her zaman temiz ve profesyonel görünmesini sağlar.",
-                "Hikaye ve metin çözümleme yaparken metnin ana fikrini, yardımcı düşüncelerini ve kahramanların özelliklerini dikkatlice inceleriz. Okuduğumuz bir metni derinden anlamak ve ondan ders çıkarabilmek iyi bir okurun en önemli özelliğidir.",
-                "Şiir ve düş gücü dünyası kelimelerin ezgisiyle doludur. Mısralar, kıtalar ve kafiyeler sayesinde hayal gücümüzün sınırlarını zorlar, duygularımızı en sanatsal ve güzel biçimde kağıda dökme fırsatı buluruz."
+                "Türkçe dersimizin bu bölümünde dilimizin en temel yapı taşlarını ve harflerin esrarengiz dünyasını keşfediyoruz. Alfabemizde yer alan ünlü ve ünsüz harfler, kelimeleri oluştururken birbirleriyle harika bir uyum içinde çalışır.",
+                "Eş anlamlı kelimeler yazılışları farklı olsa bile aynı anlamı taşıyan harika sözcüklerdir. Zıt anlamlı kelimeler ise birbirinin tam tersini ifade eder.",
+                "Noktalama işaretleri cümlelerimizin sessiz kahramanlarıdır. Virgül, nokta, soru işareti ve ünlem gibi işaretler olmasaydı cümleleri okurken çok zorlanırdık.",
+                "Yazım kuralları, dilimizin kurallarına uygun ve hatasız yazmamız için rehberlik eder. Büyük harflerin yerleri ve bağlaçların yazılışı çok önemlidir.",
+                "Hikaye ve metin çözümleme yaparken metnin ana fikrini, yardımcı düşüncelerini ve kahramanların özelliklerini dikkatlice inceleriz.",
+                "Şiir ve düş gücü dünyası kelimelerin ezgisiyle doludur. Mısralar, kıtalar ve kafiyeler sayesinde hayal gücümüzün sınırlarını zorlarız."
             ],
             "Matematik": [
-                "Doğal sayılar ve basamak değerleri matematiğin temelini oluşturur. Birler, onlar ve yüzler basamağını öğrenerek büyük sayıları kolayca okuyabilir ve yazabiliriz. Sayıların hayatımızdaki yeri oldukça büyüktür.",
-                "Toplama ve çıkarma işlemleri günlük hayatımızda alışveriş yaparken, oyun oynarken veya plan yaparken en çok kullandığımız matematiksel becerilerdir. Pratik yapmak zihinden işlem yapma yeteneğimizi artırır.",
-                "Çarpım tablosu ve bölme işlemleri sayesinde büyük grupları hızlıca hesaplayabiliriz. Çarpma, aslında hızlı toplama yapmanın en pratik yoludur ve matematik problemlerini çözerken büyük hız kazandırır.",
-                "Kesirler bir bütünün eşit parçalarını ifade etmek için kullanılır. Yarım, çeyrek ve bütün kavramları özellikle yemek paylaşırken veya uzunluk ölçerken sıkça karşımıza çıkar.",
-                "Geometrik şekiller etrafımızdaki tüm nesnelerin temelini oluşturur. Üçgenler, kareler, dikdörtgenler ve çemberlerin alan ve çevre hesaplamalarını öğrenmek uzamsal düşünme becerimizi geliştirir.",
-                "Ölçme ve tartma ünitelerinde uzunluk, ağırlık ve zaman kavramlarını detaylıca inceleriz. Metre, kilogram ve saat gibi ölçü birimleri hayatımızı düzenli tutmamıza yardımcı olur."
+                "Doğal sayılar ve basamak değerleri matematiğin temelini oluşturur. Birler, onlar ve yüzler basamağını öğrenerek büyük sayıları kolayca okuyabiliriz.",
+                "Toplama ve çıkarma işlemleri günlük hayatımızda alışveriş yaparken veya oyun oynarken en çok kullandığımız matematiksel becerilerdir.",
+                "Çarpım tablosu ve bölme işlemleri sayesinde büyük grupları hızlıca hesaplayabiliriz. Çarpma, hızlı toplama yapmanın en pratik yoludur.",
+                "Kesirler bir bütünün eşit parçalarını ifade etmek için kullanılır. Yarım, çeyrek ve bütün kavramları karşımıza çıkar.",
+                "Geometrik şekiller etrafımızdaki tüm nesnelerin temelini oluşturur. Üçgenler, kareler, dikdörtgenler ve çemberler.",
+                "Ölçme ve tartma ünitelerinde uzunluk, ağırlık ve zaman kavramlarını detaylıca inceleriz. Metre ve kilogram ölçü birimleridir."
             ],
             "Fen Bilimleri": [
-                "Dünyamızın katmanları hava küre, su küre, taş küre ve magma tabakasından oluşur. Üzerinde yaşadığımız bu eşsiz gezegenin yapısını bilmek doğayı anlamamız için çok önemlidir.",
-                "Beş duyumuz göz, kulak, burun, dil ve deridir. Çevremizdeki dünyayı görmemizi, duymamızı, koklamamızı, tatmamızı ve dokunmamızı sağlayan organlarımızı korumak en önemli görevimizdir.",
-                "Kuvvet cisimlerin hareket yönünü, hız değiştiren veya şeklini bozan itme ve çekme etkileridir. Günlük hayatta kapıyı açarken ya da topa vururken hep kuvvet uygularız.",
-                "Maddenin katı, sıvı ve gaz olmak üzere üç temel hali bulunur. Su örneğinde olduğu gibi maddeler ısı alarak veya vererek bir halden diğerine geçebilirler.",
-                "Işık ve ses etrafımızı algılamamızı sağlayan temel enerjilerdir. Işık olmadan göremeyiz, ses olmadan ise işitemeyiz; her ikisi de hayatımızın vazgeçilmez parçalarıdır.",
-                "Canlılar ve yaşam alanları ekosistemin dengesini korur. Bitkiler, hayvanlar ve mikroorganizmalar doğada birbirleriyle uyum içinde yaşayarak muhteşem bir zincir oluştururlar."
+                "Dünyamızın katmanları hava küre, su küre, taş küre ve magma tabakasından oluşur. Üzerinde yaşadığımız bu gezegenin yapısı.",
+                "Beş duyumuz göz, kulak, burun, dil ve deridir. Çevremizi algılamamızı sağlayan organlarımızı korumak en önemli görevimizdir.",
+                "Kuvvet cisimlerin hareket yönünü, hızını değiştiren itme ve çekme etkileridir. Günlük hayatta kapıyı açarken kuvvet uygularız.",
+                "Maddenin katı, sıvı ve gaz olmak üzere üç temel hali bulunur. Maddeler ısı alarak bir halden diğerine geçebilirler.",
+                "Işık ve ses etrafımızı algılamamızı sağlayan temel enerjilerdir. Işık olmadan göremeyiz, ses olmadan işitemeyiz.",
+                "Canlılar ve yaşam alanları ekosistemin dengesini korur. Bitkiler, hayvanlar ve mikroorganizmalar uyum içinde yaşar."
             ],
             "Hayat Bilgisi": [
-                "Okulumuzda ve sınıfımızda uymamız gereken kurallar, ortak yaşam alanında huzurlu ve güvenli olmamızı sağlar. Arkadaşlık ilişkilerimizde saygı ve sevgi her zaman ön planda olmalıdır.",
-                "Evimizde ailemize destek olmak için yatağımızı toplamak, odamızı düzenlemek gibi bazı sorumluluklar üstleniriz. Bu görevler bizi sorumluluk sahibi bireyler yapar.",
-                "Sağlığımızı korumak için dengeli beslenmeli, bol su içmeli ve kişisel temizliğimize azami dikkat göstermeliyiz. Sağlam kafa sağlam vücutta bulunur.",
-                "Trafikte güvenle yürümek için yaya geçitlerini kullanmalı ve trafik ışıklarına mutlaka uymalıyız. Güvenli hayat kuralları hayat kurtarır.",
-                "Ülkemizin doğasını, ormanlarını, hayvanlarını ve tarihi değerlerini korumak her vatandaşın en temel görevidir. Çevre bilinci küçük yaşta başlar.",
-                "Ülkemizi tanıyalım ünitesinde başkentimizi, bayrağımızı, kültürel değerlerimizi ve komşularımızı öğrenerek vatan sevgimizi pekiştiririz."
+                "Okulumuzda ve sınıfımızda uymamız gereken kurallar, ortak yaşam alanında huzurlu olmamızı sağlar. Saygı çok önemlidir.",
+                "Evimizde ailemize destek olmak için yatağımızı toplamak gibi bazı sorumluluklar üstleniriz. Sorumluluk sahibi bireyler oluruz.",
+                "Sağlığımızı korumak için dengeli beslenmeli, bol su içmeli ve temizliğimize dikkat etmeliyiz.",
+                "Trafikte güvenle yürümek için yaya geçitlerini kullanmalı ve trafik ışıklarına uymalıyız.",
+                "Ülkemizin doğasını, ormanlarını ve tarihi değerlerini korumak her vatandaşın temel görevidir.",
+                "Ülkemizi tanıyalım ünitesinde başkentimizi, bayrağımızı ve kültürel değerlerimizi öğreniriz."
             ],
             "Kodlama": [
-                "HTML, web sayfalarının iskeletini oluşturan temel işaretleme dilidir. Sayfanın yapısını kurmak için etiket adı verilen özel komutlar kullanılır.",
-                "Head etiketleri arasına web sayfasının arama motorlarında görünen başlığı ve meta bilgileri yazılır. Burası sayfanın görünmeyen ama akıllı kısmıdır.",
-                "Body etiketleri içerisine web sitesini ziyaret edenlerin ekranda gördüğü tüm metinler, resimler ve butonlar yerleştirilir.",
-                "CSS kullanarak web sitelerimize renk, arka plan, şık yazı tipleri ve muazzam tasarımlar kazandırarak onları görsel açıdan çekici hale getiririz.",
-                "JavaScript, web sayfalarına hareket, animasyon ve kullanıcıyla etkileşim kurma yeteneği kazandıran güçlü bir programlama dilidir.",
-                "Web projesi geliştirme aşamasında öğrendiğimiz tüm bu HTML, CSS ve JS becerilerini birleştirerek kendi harika web sitemizi inşa ederiz."
+                "HTML, web sayfalarının iskeletini oluşturan temel işaretleme dilidir. Etiketler yardımıyla sayfa oluşturulur.",
+                "Head etiketleri arasına web sayfasının arama motorlarında görünen başlığı ve meta bilgileri yazılır.",
+                "Body etiketleri içerisine web sitesini ziyaret edenlerin ekranda gördüğü metinler ve resimler yerleştirilir.",
+                "CSS kullanarak web sitelerimize renk, arka plan ve şık yazı tipleri kazandırarak tasarımlar yaparız.",
+                "JavaScript, web sayfalarına hareket ve kullanıcıyla etkileşim kurma yeteneği kazandıran dildir.",
+                "Web projesi geliştirme aşamasında HTML, CSS ve JS becerilerini birleştirerek web sitemizi kurarız."
             ]
         };
 
-        const englishBooksPool = [
-            {
-                id: "b1", title: "The Little Adventurer",
-                img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80",
-                pages: [
-                    "Chapter 1: The Mysterious Forest. Deep in the green heart of Oak Valley, a little curious puppy named Max loved exploring new trails every single morning.",
-                    "While sniffing near an ancient, giant oak tree, Max noticed something shimmering underneath a pile of golden autumn leaves.",
-                    "Chapter 2: The Golden Key. It was a beautiful golden key with delicate star-shaped engravings. Max picked it up carefully with his mouth.",
-                    "He followed a winding cobblestone path until he reached a tiny, mysterious moss-covered wooden door built right into the hillside.",
-                    "Chapter 3: The Secret Chest. Max turned the golden key inside the keyhole. Click! The heavy door opened smoothly to reveal a chest full of magical, glowing apples."
-                ]
-            }
-        ];
+        // TAM 5 SORULUK SÜRÜKLE-BIRAK ÜNİTE ÇALIŞMALARI
+        const workDatabase = {
+            "Türkçe": [
+                { q: "Alfabemizin ilk harfi hangisidir?", correct: "A", options: ["A", "Z", "M"] },
+                { q: "Yazılışları farklı ama anlamları aynı olan kelimeler?", correct: "Eş Anlamlı", options: ["Eş Anlamlı", "Zıt Anlamlı", "Sayı"] },
+                { q: "Soru sorulan cümlelerin sonuna ne konur?", correct: "Soru İşareti", options: ["Nokta", "Soru İşareti", "Virgül"] },
+                { q: "Özel isimlerin baş harfi nasıl yazılır?", correct: "Büyük Harf", options: ["Büyük Harf", "Küçük Harf", "Eğik"] },
+                { q: "Bir metnin ana düşüncesini bulmaya ne denir?", correct: "Ana Fikir", options: ["Ana Fikir", "Rakam", "Hece"] }
+            ],
+            "Matematik": [
+                { q: "En küçük iki basamaklı doğal sayı kaçtır?", correct: "10", options: ["1", "10", "100"] },
+                { q: "5 ile 4'ün çarpımı kaç eder?", correct: "20", options: ["9", "20", "25"] },
+                { q: "Bir bütünün 4 eş parçasından 1 tanesine ne denir?", correct: "Çeyrek", options: ["Yarım", "Çeyrek", "Bütün"] },
+                { q: "4 kenarı ve 4 eşit uzunluğu olan geometrik şekil?", correct: "Kare", options: ["Üçgen", "Kare", "Çember"] },
+                { q: "1 kilogram kaç gramdır?", correct: "1000", options: ["100", "1000", "10"] }
+            ],
+            "Fen Bilimleri": [
+                { q: "Üzerinde yaşadığımız dünyanın dış katmanı?", correct: "Taş Küre", options: ["Taş Küre", "Magma", "Güneş"] },
+                { q: "Görme duyumuzu hangi organımızla yaparız?", correct: "Göz", options: ["Kulak", "Göz", "Burun"] },
+                { q: "Cisimleri hareket ettiren itme ve çekme kuvvetine ne denir?", correct: "Kuvvet", options: ["Kuvvet", "Işık", "Ses"] },
+                { q: "Maddenin en sert hali hangisidir?", correct: "Katı", options: ["Katı", "Sıvı", "Gaz"] },
+                { q: "Karanlıkta etrafı görmemizi sağlayan enerji?", correct: "Işık", options: ["Ses", "Işık", "Rüzgar"] }
+            ],
+            "Hayat Bilgisi": [
+                { q: "Okulda uymamız gereken kurallara ne denir?", correct: "Okul Kuralı", options: ["Trafik", "Okul Kuralı", "Yasa"] },
+                { q: "Sağlığımız için düzenli yapılması gereken şey?", correct: "Dengeli Beslenme", options: ["Dengeli Beslenme", "Uykusuzluk", "Koşmak"] },
+                { q: "Karşıdan karşıya geçerken nereden geçmeliyiz?", correct: "Yaya Geçidi", options: ["Yol Ortası", "Yaya Geçidi", "Orman"] },
+                { q: "Ülkemizin başkenti neresidir?", correct: "Ankara", options: ["İstanbul", "Ankara", "İzmir"] },
+                { q: "Evde ailemize yardım etmeye ne denir?", correct: "Sorumluluk", options: ["Sorumluluk", "Oyun", "Tatil"] }
+            ],
+            "Kodlama": [
+                { q: "Web sayfasının ana iskeletini kuran dil?", correct: "HTML", options: ["HTML", "CSS", "JS"] },
+                { q: "Web sitelerine renk ve tasarım veren dil?", correct: "CSS", options: ["PHP", "CSS", "HTML"] },
+                { q: "Görünen içeriklerin yazıldığı etiket?", correct: "Body", options: ["Head", "Body", "Title"] },
+                { q: "Paragraf açmak için kullanılan etiket?", correct: "<p>", options: ["<h1>", "<p>", "<a>"] },
+                { q: "Web sayfalarına hareket katan dil?", correct: "JavaScript", options: ["JavaScript", "Python", "C++"] }
+            ]
+        };
+
+        // TAM 10 SORULUK KONU TARAMA TESTLERİ
+        const quizDatabase = {
+            "Türkçe": [
+                { q: "Alfabemizde toplam kaç harf vardır?", options: ["A) 28", "B) 29", "C) 30"], ans: "B" },
+                { q: "Hangisi bir ünlü harftir?", options: ["A) B", "B) K", "C) A"], ans: "C" },
+                { q: "'Ak Kara' kelimeleri birbirinin nesidir?", options: ["A) Eş anlamlı", "B) Zıt anlamlı", "C) Eş sesli"], ans: "B" },
+                { q: "Cümlenin sonuna konulan nokta işaretinin görevi nedir?", options: ["A) Sormak", "B) Bitirmek", "C) Heyecan"], ans: "B" },
+                { q: "Hangisi özel isimdir?", options: ["A) Ankara", "B) kalem", "C) kedi"], ans: "A" },
+                { q: "Hikaye unsurları arasında hangisi yer almaz?", options: ["A) Olay", "B) Kahraman", "C) Bilgisayar"], ans: "C" },
+                { q: "'Okul' kelimesinin eş anlamlısı nedir?", options: ["A) Mektep", "B) Ev", "C) Park"], ans: "A" },
+                { q: "Şiirlerde satırlara ne ad verilir?", options: ["A) Kıta", "B) Mısra", "C) Paragraf"], ans: "B" },
+                { q: "Hangisinde yazım yanlışı vardır?", options: ["A) Ankara'ya", "B) Atatürk", "C) Türkiye de"], ans: "C" },
+                { q: "Duygu ve düşüncelerin sözlü ya da yazılı ifade edilmesine ne denir?", options: ["A) İletişim", "B) Sayı", "C) Renk"], ans: "A" }
+            ],
+            "Matematik": [
+                { q: "3 onluk ve 5 birlikten oluşan sayı kaçtır?", options: ["A) 35", "B) 53", "C) 305"], ans: "A" },
+                { q: "12 + 18 işleminin sonucu kaçtır?", options: ["A) 20", "B) 30", "C) 40"], ans: "B" },
+                { q: "50'den 14 çıkarsa kaç kalır?", options: ["A) 36", "B) 44", "C) 34"], ans: "A" },
+                { q: "Çarpım tablosuna göre 6 x 7 kaçtır?", options: ["A) 42", "B) 48", "C) 36"], ans: "A" },
+                { q: "Yarım saat kaç dakikadır?", options: ["A) 60", "B) 30", "C) 15"], ans: "B" },
+                { q: "Üç kenarı olan geometrik şekil?", options: ["A) Kare", "B) Üçgen", "C) Dikdörtgen"], ans: "B" },
+                { q: "Bir bütünün 2 eşit parçasından her birine ne denir?", options: ["A) Yarım", "B) Çeyrek", "C) Tam"], ans: "A" },
+                { q: "20 liranın yarısı kaç liradır?", options: ["A) 10", "B) 5", "C) 15"], ans: "A" },
+                { q: "1 metre kaç santimetredir?", options: ["A) 10", "B) 100", "C) 1000"], ans: "B" },
+                { q: "Hangi sayı çift sayıdır?", options: ["A) 13", "B) 25", "C) 18"], ans: "C" }
+            ],
+            "Fen Bilimleri": [
+                { q: "Dünyamızın tabakalarından su küre neleri oluşturur?", options: ["A) Okyanus ve göller", "B) Dağlar", "C) Bulutlar"], ans: "A" },
+                { q: "Hangisi beş duyumuzdan biri değildir?", options: ["A) Görmek", "B) Düşünmek", "C) İşitmek"], ans: "B" },
+                { q: "Esnek cisimlere kuvvet uygulandığında ne olur?", options: ["A) Şekli değişir", "B) Yok olur", "C) Taşlaşır"], ans: "A" },
+                { q: "Hangisi maddenin sıvı haline örnektir?", options: ["A) Taş", "B) Su", "C) Hava"], ans: "B" },
+                { q: "Güneş bizim için ne kaynağıdır?", options: ["A) Işık ve ısı", "B) Sadece ses", "C) Su"], ans: "A" },
+                { q: "Sesin yayıldığı ortam hangisidir?", options: ["A) Boşluk", "B) Hava", "C) Taş"], ans: "B" },
+                { q: "Bitkilerin besin ürettiği organı hangisidir?", options: ["A) Kök", "B) Yaprak", "C) Toprak"], ans: "B" },
+                { q: "Hangisi doğal çevreye örnektir?", options: ["A) Akarsu", "B) Baraj", "C) Park"], ans: "A" },
+                { q: "Mıknatıs hangi maddeyi çeker?", options: ["A) Demir", "B) Tahta", "C) Plastik"], ans: "A" },
+                { q: "Temiz havada bolca bulunan gaz nedir?", options: ["A) Oksijen", "B) Karbon", "C) Duman"], ans: "A" }
+            ],
+            "Hayat Bilgisi": [
+                { q: "Sınıf kurallarına uymak bize ne sağlar?", options: ["A) Huzur ve düzen", "B) Gürültü", "C) Cezalandırma"], ans: "A" },
+                { q: "Hangisi evdeki sorumluluklarımızdandır?", options: ["A) Odamızı toplamak", "B) Okulu boyamak", "C) Trafiği yönetmek"], ans: "A" },
+                { q: "Kişisel bakımımız için hangisini yapmalıyız?", options: ["A) Diş fırçalamak", "B) Ellerimizi yıkamamak", "C) Banyodan kaçmak"], ans: "A" },
+                { q: "Trafik ışıklarında kırmızı ne anlama gelir?", options: ["A) Geç", "B) Dur", "C) Hazırlan"], ans: "B" },
+                { q: "Milli bayramlarımızdan biri hangisidir?", options: ["A) 23 Nisan", "B) Yılbaşı", "C) Cadılar Bayramı"], ans: "A" },
+                { q: "Doğal afetler sırasında hangisi yapılmalıdır?", options: ["A) Sakin kalıp korunmak", "B) Koşarak bağırmak", "C) Cam kenarına çıkmak"], ans: "A" },
+                { q: "Atatürk'ün doğduğu şehir hangisidir?", options: ["A) Selanik", "B) Ankara", "C) İstanbul"], ans: "A" },
+                { q: "Komşuluk ilişkilerinde hangisi önemlidir?", options: ["A) Saygılı olmak", "B) Kavga etmek", "C) Tanımamak"], ans: "A" },
+                { q: "Su kaynaklarını korumak için ne yapmalıyız?", options: ["A) Musluğu kapatmak", "B) Boşa akıtmak", "C) Kirletmek"], ans: "A" },
+                { q: "Okulumuzun adını ve yerini öğrenmek hangi dersin konusudur?", options: ["A) Hayat Bilgisi", "B) Fizik", "C) Kimya"], ans: "A" }
+            ],
+            "Kodlama": [
+                { q: "Web sayfalarının temel işaretleme dili?", options: ["A) HTML", "B) Word", "C) Excel"], ans: "A" },
+                { q: "HTML dosyaları hangi uzantıyla kaydedilir?", options: ["A) .html", "B) .exe", "C) .jpg"], ans: "A" },
+                { q: "Başlık ve meta bilgilerin yazıldığı etiket?", options: ["A) <head>", "B) <body>", "C) <br>"], ans: "A" },
+                { q: "Web sitesinde görünen içeriklerin yeri?", options: ["A) <body>", "B) <title>", "C) <hr>"], ans: "A" },
+                { q: "Sayfalara stil ve renk veren dil?", options: ["A) CSS", "B) HTML", "C) USB"], ans: "A" },
+                { q: "Web sayfasına hareket katan dil?", options: ["A) JavaScript", "B) PDF", "C) PNG"], ans: "A" },
+                { q: "Paragraf oluşturma etiketi?", options: ["A) <p>", "B) <h1>", "C) <img>"], ans: "A" },
+                { q: "Resim ekleme etiketi?", options: ["A) <img>", "B) <a>", "C) <p>"], ans: "A" },
+                { q: "İnternette site gezmek için kullanılan program?", options: ["A) Tarayıcı (Browser)", "B) Klavye", "C) Yazıcı"], ans: "A" },
+                { q: "Kodlama öğrenmek bize ne kazandırır?", options: ["A) Problem çözme becerisi", "B) Yemek tarifleri", "C) Şarkı söyleme"], ans: "A" }
+            ]
+        };
 
         window.onload = function() {
             const savedUser = localStorage.getItem('learnfast_user');
@@ -577,16 +631,6 @@
             const studentBranchVal = document.getElementById('studentBranch').value.trim();
             currentUser.level = `${document.getElementById('studentClass').value} - Şube: ${studentBranchVal}`;
             currentUser.branchName = studentBranchVal;
-            
-            let existingStudent = bahcesehirStudents.find(st => st.name === currentUser.name);
-            if (!existingStudent) {
-                bahcesehirStudents.push({
-                    name: currentUser.name, class: studentBranchVal,
-                    readBooks: [], listenedBooks: [], doneWorks: [], doneQuizzes: []
-                });
-                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
-            }
-
             localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
             showDashboard();
         }
@@ -600,11 +644,7 @@
             currentUser.role = 'Teacher';
             currentUser.level = document.querySelector('input[name="branch"]:checked').value;
             currentUser.managedClass = document.getElementById('teacherClassManaged').value.trim();
-            
-            const nameLower = currentUser.name.trim().toLowerCase();
-            let honorific = (nameLower.includes('hanım') || nameLower.includes('kadın')) ? "Hanım" : "Bey";
-            currentUser.honorific = honorific;
-            
+            currentUser.honorific = (currentUser.name.toLowerCase().includes('hanım')) ? "Hanım" : "Bey";
             localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
             showDashboard();
         }
@@ -619,9 +659,7 @@
             if (currentUser.role === 'Teacher') {
                 welcomeMsg.innerText = `Hoş geldiniz ${currentUser.name} ${currentUser.honorific}, (${currentUser.managedClass}) 👨‍🏫`;
                 const isEnglishTeacher = (currentUser.level === 'English Teacher');
-                const subjectCards = ['Matematik', 'Türkçe', 'FenBilimleri', 'HayatBilgisi', 'Kodlama', 'Ingilizce'];
-
-                subjectCards.forEach(subj => {
+                ['Matematik', 'Türkçe', 'FenBilimleri', 'HayatBilgisi', 'Kodlama', 'Ingilizce'].forEach(subj => {
                     const card = document.getElementById(`card-${subj}`);
                     if (!card) return;
                     if (isEnglishTeacher) {
@@ -679,53 +717,34 @@
             resetChatDrawer();
         }
 
-        function renderEnglishLibrary(filterText = '') {
-            const container = document.getElementById('bookGridContainer');
-            container.innerHTML = "";
-            const filtered = englishBooksPool.filter(b => b.title.toLowerCase().includes(filterText.toLowerCase()));
-
-            filtered.forEach(book => {
-                container.innerHTML += `
-                    <div class="book-card">
-                        <img src="${book.img}" alt="${book.title}">
-                        <h4>📖 ${book.title}</h4>
-                        <button class="action-btn" style="text-align:center; padding:7px; font-size:13px;" onclick="openBookModal('${book.id}', 'read')">📖 Read Myself</button>
-                        <button class="action-btn" style="text-align:center; padding:7px; font-size:13px; background:#48bb78; color:white; border:none; margin-top:5px;" onclick="openBookModal('${book.id}', 'listen')">🎧 Listen to AI</button>
-                    </div>
-                `;
-            });
-        }
-
-        function filterEnglishBooks() {
-            renderEnglishLibrary(document.getElementById('bookSearchInput').value);
+        function renderEnglishLibrary() {
+            document.getElementById('bookGridContainer').innerHTML = `
+                <div class="book-card">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80" alt="Book">
+                    <h4>📖 The Little Adventurer</h4>
+                    <button class="action-btn" style="text-align:center; padding:7px; font-size:13px;" onclick="openBookModal()">📖 Read Book</button>
+                </div>
+            `;
         }
 
         function renderUnits(subjectName) {
             const container = document.getElementById('unitListContainer');
             container.innerHTML = "";
             const unitTitles = unitNamesDatabase[subjectName] || [
-                "1. Temel Kavramlar", "2. Gelişmiş Konular", "3. Uygulama ve Örnekler", 
-                "4. Problem Çözme", "5. Proje Çalışması", "6. Genel Tekrar"
+                "1. Temel Kavramlar", "2. Gelişmiş Konular", "3. Uygulama", "4. Problem Çözme", "5. Proje", "6. Tekrar"
             ];
 
             for (let i = 1; i <= 6; i++) {
-                const unitTitleText = unitTitles[i - 1] || `${i}. Ünite`;
                 container.innerHTML += `
                     <div class="unit-card">
                         <div class="unit-header" onclick="toggleUnit(${i})">
-                            <span>📌 ${unitTitleText}</span>
+                            <span>📌 ${unitTitles[i - 1]}</span>
                             <span id="unitIcon-${i}">➕</span>
                         </div>
                         <div class="unit-body hidden" id="unitBody-${i}">
-                            <div class="action-row">
-                                <button class="action-btn" onclick="openUnityReader(${i})">📖 Unity Yazı Okuma (Otomatik Sesli Asistan)</button>
-                            </div>
-                            <div class="action-row">
-                                <button class="action-btn" onclick="startWork(${i})">📝 Ünite Çalışması (5 Soru)</button>
-                            </div>
-                            <div class="action-row">
-                                <button class="action-btn" onclick="openQuiz(${i})">🎯 Konu Tarama Testi</button>
-                            </div>
+                            <div class="action-row"><button class="action-btn" onclick="openUnityReader(${i})">📖 Unity Yazı Okuma (Sesli Asistan)</button></div>
+                            <div class="action-row"><button class="action-btn" onclick="startWork(${i})">📝 Ünite Çalışması (Sürüklemeli 5 Soru)</button></div>
+                            <div class="action-row"><button class="action-btn" onclick="openQuiz(${i})">🎯 Konu Tarama Testi (10 Soru)</button></div>
                         </div>
                     </div>
                 `;
@@ -748,7 +767,6 @@
             const texts = unityReadDatabase[currentUser.currentSubject] || unityReadDatabase["Türkçe"];
             currentUnityTexts = texts;
             currentUnityIndex = 0;
-
             showModal(`
                 <h3>📖 Ünite ${unitNo} - ${currentUser.currentSubject} Uzun Okuma</h3>
                 <div class="unity-reader-box">
@@ -767,46 +785,126 @@
             }
             const textToRead = currentUnityTexts[currentUnityIndex];
             document.getElementById('unityTextDisplay').innerHTML = `<b>[Bölüm ${currentUnityIndex + 1} / ${currentUnityTexts.length}]</b><br><br>${textToRead}`;
-
             const utterance = new SpeechSynthesisUtterance(textToRead);
             utterance.lang = 'tr-TR';
-            utterance.rate = 0.95;
-            utterance.onend = function() {
+            utterance.onend = () => {
                 currentUnityIndex++;
-                if (currentUnityIndex < currentUnityTexts.length) {
-                    setTimeout(() => { playNextUnityText(); }, 1000);
-                } else {
-                    document.getElementById('unityTextDisplay').innerHTML += "<br><br><b>🎉 Tüm yazılar başarıyla okundu!</b>";
-                }
+                if (currentUnityIndex < currentUnityTexts.length) setTimeout(playNextUnityText, 1000);
             };
             window.speechSynthesis.speak(utterance);
         }
 
+        // SÜRÜKLE-BIRAK 5 SORULUK ÜNİTE ÇALIŞMASI
         function startWork(unitNo) {
+            workStep = 1;
+            workAnswers = [];
+            renderWorkQuestion(unitNo);
+        }
+
+        function renderWorkQuestion(unitNo) {
+            const list = workDatabase[currentUser.currentSubject] || workDatabase["Türkçe"];
+            const qData = list[workStep - 1];
+
+            let optionsHtml = qData.options.map(opt => `
+                <div class="draggable-item" draggable="true" ondragstart="drag(event, '${opt}')">${opt}</div>
+            `).join('');
+
             showModal(`
-                <h3>📝 Ünite ${unitNo} Çalışması</h3>
-                <p><b>Soru:</b> Bu ders için örnek çalışma sorusudur.</p>
-                <button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Tamamla</button>
+                <h3>📝 Ünite ${unitNo} Çalışması (${workStep} / 5)</h3>
+                <p style="font-size:16px;"><b>Soru ${workStep}:</b> ${qData.q}</p>
+                <p style="font-size:13px; color:#718096;">Doğru cevabı kutunun içine sürükleyin:</p>
+                <div class="drag-container">${optionsHtml}</div>
+                <div class="drop-target" id="dropArea" ondrop="drop(event)" ondragover="event.preventDefault()">Cevabı Buraya Sürükleyin</div>
+                <div style="margin-top:20px;">
+                    ${workStep < 5 
+                        ? `<button class="btn-submit" onclick="nextWorkQuestion(${unitNo})">Sonraki Soruya Geç ➔</button>`
+                        : `<button class="btn-submit" style="background:#28a745;" onclick="finishWork()">Sonuçları Gör 📊</button>`
+                    }
+                </div>
             `);
         }
 
+        function drag(ev, text) { draggedText = text; }
+        function drop(ev) {
+            ev.preventDefault();
+            document.getElementById('dropArea').innerText = `Seçilen: ${draggedText}`;
+            document.getElementById('dropArea').style.background = "#e2e8f0";
+            workAnswers[workStep - 1] = draggedText;
+        }
+
+        function nextWorkQuestion(unitNo) {
+            if (!workAnswers[workStep - 1]) { alert("Lütfen cevabı kutuya sürükleyin!"); return; }
+            workStep++;
+            renderWorkQuestion(unitNo);
+        }
+
+        function finishWork() {
+            if (!workAnswers[4]) { alert("Lütfen son soruyu da cevaplayın!"); return; }
+            const list = workDatabase[currentUser.currentSubject] || workDatabase["Türkçe"];
+            let html = `<h3>📊 Çalışma Sonuçları</h3>`;
+            list.forEach((item, i) => {
+                const ok = workAnswers[i] === item.correct;
+                html += `<div style="padding:8px; margin-bottom:5px; background:${ok ? '#c6f6d5' : '#fed7d7'}; border-radius:5px;">Soru ${i+1}: Sizin: ${workAnswers[i]} | Doğru: ${item.correct} ${ok ? '✅' : '❌'}</div>`;
+            });
+            html += `<button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Kapat</button>`;
+            showModal(html);
+        }
+
+        // 10 SORULUK KONU TARAMA TESTİ
         function openQuiz(unitNo) {
-            showModal(`
-                <h3>🎯 Ünite ${unitNo} Konu Tarama Testi</h3>
-                <p><b>Soru 1:</b> Bu ders için örnek tarama testi sorusudur.</p>
-                <div class="quiz-option" onclick="this.style.background='#667eea'; this.style.color='white';">A) Doğru Seçenek</div>
-                <div class="quiz-option" onclick="this.style.background='#e53e3e'; this.style.color='white';">B) Yanlış Seçenek</div>
-                <button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Testi Tamamla</button>
-            `);
+            quizAnswers = {};
+            const list = quizDatabase[currentUser.currentSubject] || quizDatabase["Türkçe"];
+            let html = `<h3>🎯 Ünite ${unitNo} - Konu Tarama Testi (10 Soru)</h3>`;
+
+            list.forEach((item, index) => {
+                const qNum = index + 1;
+                html += `
+                    <div style="margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                        <b>Soru ${qNum}:</b> ${item.q}
+                        ${item.options.map(opt => `
+                            <div class="quiz-option" id="q_${qNum}_${opt[0]}" onclick="selectAnswer(${qNum}, '${opt[0]}')">${opt}</div>
+                        `).join('')}
+                    </div>
+                `;
+            });
+            html += `<button class="btn-submit" onclick="finishQuiz()">Testi Bitir ve Puanı Gör</button>`;
+            showModal(html);
         }
 
-        function openBookModal(bookId, mode) {
-            currentBook = englishBooksPool.find(b => b.id === bookId);
+        function selectAnswer(qNum, option) {
+            quizAnswers[qNum] = option;
+            ['A', 'B', 'C'].forEach(opt => {
+                const el = document.getElementById(`q_${qNum}_${opt}`);
+                if (el) el.classList.remove('selected');
+            });
+            document.getElementById(`q_${qNum}_${option}`).classList.add('selected');
+        }
+
+        function finishQuiz() {
+            if (Object.keys(quizAnswers).length < 10) { alert("Lütfen 10 sorunun hepsini cevaplayın!"); return; }
+            const list = quizDatabase[currentUser.currentSubject] || quizDatabase["Türkçe"];
+            let correctCount = 0;
+            let html = `<h3>📊 Test Sonuçları</h3>`;
+
+            list.forEach((item, index) => {
+                const qNum = index + 1;
+                const userAns = quizAnswers[qNum];
+                const isCorrect = userAns === item.ans;
+                if (isCorrect) correctCount++;
+                html += `<div style="padding:8px; margin-bottom:5px; background:${isCorrect ? '#c6f6d5' : '#fed7d7'}; border-radius:5px;">Soru ${qNum}: Sizin: ${userAns} | Doğru: ${item.ans} ${isCorrect ? '✅' : '❌'}</div>`;
+            });
+
+            html = `<h4>Toplam Doğru: ${correctCount} / 10</h4>` + html;
+            html += `<button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Tamamla</button>`;
+            showModal(html);
+        }
+
+        function openBookModal() {
             showModal(`
-                <h3>📖 ${currentBook.title} (${mode})</h3>
+                <h3>📖 The Little Adventurer</h3>
                 <div class="unity-reader-box">
-                    <div class="unity-screen">${currentBook.pages[0]}</div>
-                    <button class="btn-submit" style="background:#28a745; width:auto; padding:8px 16px;" onclick="closeModal()">Tamamla / Kapat</button>
+                    <div class="unity-screen">Chapter 1: The Mysterious Forest. Deep in the green heart of Oak Valley, a little puppy named Max loved exploring new trails.</div>
+                    <button class="btn-submit" style="background:#28a745; width:auto; padding:8px 16px;" onclick="closeModal()">Kapat</button>
                 </div>
             `);
         }
