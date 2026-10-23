@@ -301,6 +301,11 @@
             </div>
 
             <div class="input-group">
+                <label for="teacherClassManaged">Yönettiğiniz Sınıf / Şube (Örn: 3A, 3B vb.)</label>
+                <input type="text" id="teacherClassManaged" required placeholder="Örn: 3A">
+            </div>
+
+            <div class="input-group">
                 <label for="teacherCode">Öğretmen Güvenlik Şifresi</label>
                 <input type="password" id="teacherCode" placeholder="••••••••" required>
             </div>
@@ -433,7 +438,7 @@
     </div>
 
     <script>
-        let currentUser = { name: '', role: '', level: '', currentSubject: '' };
+        let currentUser = { name: '', role: '', level: '', currentSubject: '', managedClass: '', honorific: '' };
         let quizAnswers = {};
         let workStep = 1;
         let workAnswers = [];
@@ -449,18 +454,9 @@
 
         let bookProgress = {}; 
 
-        // BAHÇEŞEHİR KOLEJİ GERÇEK ÖĞRENCİ VERİ TABANI
-        const bahcesehirStudents = [
-            { id: 1, name: "Kerem Yılmaz", class: "3A", readBooks: ["b1", "b2", "b5"], listenedBooks: ["b1", "b3"], doneWorks: ["Matematik_U1", "Kodlama_U1"], doneQuizzes: ["Kodlama_U1"] },
-            { id: 2, name: "Zeynep Demir", class: "3A", readBooks: ["b1", "b3", "b4", "b6"], listenedBooks: ["b1", "b2", "b6"], doneWorks: ["Türkçe_U1", "Kodlama_U1"], doneQuizzes: ["Türkçe_U1"] },
-            { id: 3, name: "Ali Kaya", class: "3B", readBooks: ["b2", "b7"], listenedBooks: ["b2"], doneWorks: ["Fen Bilimleri_U1"], doneQuizzes: [] },
-            { id: 4, name: "Elif Şahin", class: "4A", readBooks: ["b1", "b2", "b3", "b8"], listenedBooks: ["b1", "b2", "b3", "b8"], doneWorks: ["Kodlama_U1", "Matematik_U1"], doneQuizzes: ["Kodlama_U1"] },
-            { id: 5, name: "Mert Öztürk", class: "4B", readBooks: ["b5", "b8"], listenedBooks: ["b5"], doneWorks: ["Hayat Bilgisi_U1"], doneQuizzes: ["Hayat Bilgisi_U1"] },
-            { id: 6, name: "Selin Çelik", class: "3A", readBooks: ["b1", "b4"], listenedBooks: ["b1"], doneWorks: ["Kodlama_U1"], doneQuizzes: ["Kodlama_U1"] },
-            { id: 7, name: "Can Arslan", class: "5A", readBooks: ["b3", "b6", "b7"], listenedBooks: ["b3", "b7"], doneWorks: ["Matematik_U1"], doneQuizzes: ["Matematik_U1"] }
-        ];
+        // GERÇEK ONLINE ÖĞRENCİ VERİTABANI
+        let bahcesehirStudents = JSON.parse(localStorage.getItem('bahcesehir_real_students')) || [];
 
-        // UZUN VE DETAYLI İNGİLİZCE KİTAPLAR HAVUZU (SONSUZ TEKRAR İÇİN)
         let englishBooksPool = [
             {
                 id: "b1",
@@ -661,7 +657,23 @@
 
         function completeStudentRegistration(event) {
             event.preventDefault();
-            currentUser.level = `${document.getElementById('studentClass').value} - Şube: ${document.getElementById('studentBranch').value}`;
+            const studentBranchVal = document.getElementById('studentBranch').value.trim();
+            currentUser.level = `${document.getElementById('studentClass').value} - Şube: ${studentBranchVal}`;
+            currentUser.branchName = studentBranchVal;
+            
+            let existingStudent = bahcesehirStudents.find(st => st.name === currentUser.name);
+            if (!existingStudent) {
+                bahcesehirStudents.push({
+                    name: currentUser.name,
+                    class: studentBranchVal,
+                    readBooks: [],
+                    listenedBooks: [],
+                    doneWorks: [],
+                    doneQuizzes: []
+                });
+                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
+            }
+
             localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
             showDashboard();
         }
@@ -674,18 +686,22 @@
             }
             currentUser.role = 'Teacher';
             currentUser.level = document.querySelector('input[name="branch"]:checked').value;
+            currentUser.managedClass = document.getElementById('teacherClassManaged').value.trim();
             
-            const nameLower = currentUser.name.toLowerCase();
+            // CİNSİYETE GÖRE BEY / HANIM HİTABI OTOMATİK BELİRLEME
+            const nameLower = currentUser.name.trim().toLowerCase();
             let honorific = "Bey";
             const femaleEndings = ['a', 'e', 'ü', 'i'];
             const lastChar = nameLower.slice(-1);
             
             if (nameLower.includes('hanım') || nameLower.includes('kadın')) {
-                honorific = "";
-            } else if (nameLower.includes('bey')) {
-                honorific = "";
-            } else if (femaleEndings.includes(lastChar) && !nameLower.includes('ali') && !nameLower.includes('berke') && !nameLower.includes('emre')) {
                 honorific = "Hanım";
+            } else if (nameLower.includes('bey')) {
+                honorific = "Bey";
+            } else if (femaleEndings.includes(lastChar) && !nameLower.includes('ali') && !nameLower.includes('berke') && !nameLower.includes('emre') && !nameLower.includes('fatih')) {
+                honorific = "Hanım";
+            } else {
+                honorific = "Bey";
             }
 
             currentUser.honorific = honorific;
@@ -701,8 +717,7 @@
 
             const welcomeMsg = document.getElementById('welcomeMsg');
             if (currentUser.role === 'Teacher') {
-                const titleSuffix = currentUser.honorific ? ` ${currentUser.honorific}` : '';
-                welcomeMsg.innerText = `Hoş geldiniz Sayın ${currentUser.name}${titleSuffix} Öğretmenim 👨‍🏫`;
+                welcomeMsg.innerText = `Hoş geldiniz ${currentUser.name} ${currentUser.honorific}, (${currentUser.managedClass}) 👨‍🏫`;
             } else {
                 welcomeMsg.innerText = `Hoş geldin ${currentUser.name}! 🚀`;
             }
@@ -712,7 +727,7 @@
         function logoutApp() {
             window.speechSynthesis.cancel();
             localStorage.removeItem('learnfast_user');
-            currentUser = { name: '', role: '', level: '', currentSubject: '' };
+            currentUser = { name: '', role: '', level: '', currentSubject: '', managedClass: '', honorific: '' };
             
             document.getElementById('dashboardStep').classList.add('hidden');
             document.getElementById('subjectDetailArea').classList.add('hidden');
@@ -808,33 +823,41 @@
             let readCount = 0;
             let listenCount = 0;
 
-            let rowsHtml = bahcesehirStudents.map(st => {
-                const hasRead = st.readBooks.includes(bookId);
-                const hasListened = st.listenedBooks.includes(bookId);
-                if (hasRead) readCount++;
-                if (hasListened) listenCount++;
+            const teacherClass = currentUser.managedClass ? currentUser.managedClass.toLowerCase() : "";
+            const classStudents = bahcesehirStudents.filter(st => st.class.toLowerCase() === teacherClass);
 
-                return `
-                    <tr>
-                        <td><b>${st.name}</b></td>
-                        <td>${st.class}</td>
-                        <td><span class="status-tag ${hasRead ? 'yes' : 'no'}">${hasRead ? 'Tamamladı ✅' : 'Okumadı ❌'}</span></td>
-                        <td><span class="status-tag ${hasListened ? 'yes' : 'no'}">${hasListened ? 'Dinledi ✅' : 'Dinlemedi ❌'}</span></td>
-                    </tr>
-                `;
-            }).join('');
+            let rowsHtml = "";
+            if (classStudents.length === 0) {
+                rowsHtml = `<tr><td colspan="4" style="text-align:center; color:#718096; padding:15px;">Daha okuyan kişi yok</td></tr>`;
+            } else {
+                rowsHtml = classStudents.map(st => {
+                    const hasRead = st.readBooks && st.readBooks.includes(bookId);
+                    const hasListened = st.listenedBooks && st.listenedBooks.includes(bookId);
+                    if (hasRead) readCount++;
+                    if (hasListened) listenCount++;
+
+                    return `
+                        <tr>
+                            <td><b>${st.name}</b></td>
+                            <td>${st.class}</td>
+                            <td><span class="status-tag ${hasRead ? 'yes' : 'no'}">${hasRead ? 'Tamamladı ✅' : 'Okumadı ❌'}</span></td>
+                            <td><span class="status-tag ${hasListened ? 'yes' : 'no'}">${hasListened ? 'Dinledi ✅' : 'Dinlemedi ❌'}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+            }
 
             showModal(`
-                <h3>📊 Bahçeşehir Koleji İstatistikleri</h3>
+                <h3>📊 Bahçeşehir Koleji İstatistikleri (${currentUser.managedClass} Şubesi)</h3>
                 <p style="color:#4a5568;"><b>Kitap:</b> ${bookTitle}</p>
                 
                 <div style="display:flex; gap:10px; margin-bottom:15px;">
                     <div style="background:#ebf8ff; padding:10px; border-radius:8px; flex:1; text-align:center;">
-                        <span style="font-size:20px; font-weight:bold; color:#2b6cb0;">${readCount} / ${bahcesehirStudents.length}</span><br>
+                        <span style="font-size:20px; font-weight:bold; color:#2b6cb0;">${readCount} / ${classStudents.length}</span><br>
                         <span style="font-size:12px; color:#4a5568;">Okuyan Öğrenci</span>
                     </div>
                     <div style="background:#f0fff4; padding:10px; border-radius:8px; flex:1; text-align:center;">
-                        <span style="font-size:20px; font-weight:bold; color:#276749;">${listenCount} / ${bahcesehirStudents.length}</span><br>
+                        <span style="font-size:20px; font-weight:bold; color:#276749;">${listenCount} / ${classStudents.length}</span><br>
                         <span style="font-size:12px; color:#4a5568;">Dinleyen Öğrenci</span>
                     </div>
                 </div>
@@ -862,6 +885,13 @@
 
             if (currentBookMode === 'read') bookProgress[bookId].read = true;
             if (currentBookMode === 'listen') bookProgress[bookId].listen = true;
+
+            let st = bahcesehirStudents.find(s => s.name === currentUser.name);
+            if (st) {
+                if (currentBookMode === 'read' && !st.readBooks.includes(bookId)) st.readBooks.push(bookId);
+                if (currentBookMode === 'listen' && !st.listenedBooks.includes(bookId)) st.listenedBooks.push(bookId);
+                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
+            }
 
             const prog = bookProgress[bookId];
             if (prog.read && prog.listen) {
@@ -936,31 +966,39 @@
             const key = `${subject}_U${unitNo}`;
             let doneCount = 0;
 
-            let rowsHtml = bahcesehirStudents.map(st => {
-                let isDone = false;
-                if (activityType === 'Konu Tarama Testi') {
-                    isDone = st.doneQuizzes.includes(key);
-                } else {
-                    isDone = st.doneWorks.includes(key);
-                }
+            const teacherClass = currentUser.managedClass ? currentUser.managedClass.toLowerCase() : "";
+            const classStudents = bahcesehirStudents.filter(st => st.class.toLowerCase() === teacherClass);
 
-                if (isDone) doneCount++;
+            let rowsHtml = "";
+            if (classStudents.length === 0) {
+                rowsHtml = `<tr><td colspan="3" style="text-align:center; color:#718096; padding:15px;">Daha okuyan kişi yok</td></tr>`;
+            } else {
+                rowsHtml = classStudents.map(st => {
+                    let isDone = false;
+                    if (activityType === 'Konu Tarama Testi') {
+                        isDone = st.doneQuizzes && st.doneQuizzes.includes(key);
+                    } else {
+                        isDone = st.doneWorks && st.doneWorks.includes(key);
+                    }
 
-                return `
-                    <tr>
-                        <td><b>${st.name}</b></td>
-                        <td>${st.class}</td>
-                        <td><span class="status-tag ${isDone ? 'yes' : 'no'}">${isDone ? 'Tamamladı ✅' : 'Yapmadı ❌'}</span></td>
-                    </tr>
-                `;
-            }).join('');
+                    if (isDone) doneCount++;
+
+                    return `
+                        <tr>
+                            <td><b>${st.name}</b></td>
+                            <td>${st.class}</td>
+                            <td><span class="status-tag ${isDone ? 'yes' : 'no'}">${isDone ? 'Tamamladı ✅' : 'Yapmadı ❌'}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+            }
 
             showModal(`
-                <h3>📊 Bahçeşehir Koleji Okul Analizi</h3>
+                <h3>📊 Bahçeşehir Koleji Okul Analizi (${currentUser.managedClass} Şubesi)</h3>
                 <p><b>Ders:</b> ${subject} | <b>Ünite:</b> ${unitNo} | <b>Etkinlik:</b> ${activityType}</p>
                 
                 <div style="background:#edf2f7; padding:12px; border-radius:8px; text-align:center; margin-bottom:15px;">
-                    <span style="font-size:22px; font-weight:bold; color:var(--primary);">${doneCount} / ${bahcesehirStudents.length} Öğrenci</span>
+                    <span style="font-size:22px; font-weight:bold; color:var(--primary);">${doneCount} / ${classStudents.length} Öğrenci</span>
                     <br><span style="font-size:12px; color:#4a5568;">Bu çalışmayı online olarak tamamladı.</span>
                 </div>
 
@@ -1184,6 +1222,13 @@
                 return;
             }
 
+            let st = bahcesehirStudents.find(s => s.name === currentUser.name);
+            if (st) {
+                const key = `${currentUser.currentSubject}_U${workStep}`;
+                if (!st.doneWorks.includes(key)) st.doneWorks.push(key);
+                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
+            }
+
             const list = workDatabase[currentUser.currentSubject] || workDatabase["Hayat Bilgisi"];
             let resultHtml = `<h3>📊 Ünite Çalışması Sonuçları</h3>`;
 
@@ -1236,6 +1281,13 @@
             if (Object.keys(quizAnswers).length < 10) {
                 alert("Lütfen tüm soruları cevaplayın.");
                 return;
+            }
+
+            let st = bahcesehirStudents.find(s => s.name === currentUser.name);
+            if (st) {
+                const key = `${currentUser.currentSubject}_U1`;
+                if (!st.doneQuizzes.includes(key)) st.doneQuizzes.push(key);
+                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
             }
 
             const list = quizDatabase[currentUser.currentSubject] || quizDatabase["Hayat Bilgisi"];
