@@ -221,6 +221,13 @@
         .status-tag.yes { background: #c6f6d5; color: #22543d; }
         .status-tag.no { background: #fed7d7; color: #742a2a; }
 
+        .class-select-btn {
+            background: white; border: 2px solid var(--primary); color: var(--primary);
+            padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 8px;
+            width: 100%; text-align: center; font-size: 15px; transition: all 0.2s;
+        }
+        .class-select-btn:hover { background: var(--primary); color: white; }
+
         .unity-reader-box { background: #1e1b4b; border-radius: 12px; padding: 20px; color: white; text-align: center; margin: 15px 0; border: 2px solid #818cf8; }
         .unity-screen { background: #312e81; border-radius: 8px; padding: 20px; min-height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; color: #e0e7ff; line-height: 1.5; margin-bottom: 15px; }
     </style>
@@ -278,8 +285,8 @@
             </div>
 
             <div class="input-group">
-                <label for="teacherClassManaged">Yönettiğiniz Sınıf / Şube (Örn: 3A, 3B vb.)</label>
-                <input type="text" id="teacherClassManaged" required placeholder="Örn: 3A">
+                <label for="teacherClassManaged">Yönettiğiniz Sınıf / Şubeler (Virgülle ayırın, Örn: 3A, 3B, 4C)</label>
+                <input type="text" id="teacherClassManaged" required placeholder="Örn: 3A, 3B, 4B">
             </div>
 
             <div class="input-group">
@@ -419,10 +426,12 @@
         let typingTimer;
         let currentUnityTexts = [];
         let currentUnityIndex = 0;
-        
+        let currentUnitId = 1;
+
         let bahcesehirStudents = JSON.parse(localStorage.getItem('bahcesehir_real_students')) || [
             { name: "Ahmet Yılmaz", class: "3A", readBooks: ["b1"], listenedBooks: ["b1"], doneWorks: ["Türkçe_U1"], doneQuizzes: ["Türkçe_U1"] },
-            { name: "Zeynep Demir", class: "3A", readBooks: [], listenedBooks: [], doneWorks: [], doneQuizzes: [] }
+            { name: "Ayşe Kaya", class: "3B", readBooks: ["b1"], listenedBooks: [], doneWorks: ["Türkçe_U1"], doneQuizzes: [] },
+            { name: "Mehmet Demir", class: "4B", readBooks: [], listenedBooks: [], doneWorks: [], doneQuizzes: ["Türkçe_U1"] }
         ];
 
         let englishBooksPool = [
@@ -575,7 +584,7 @@
 
         function completeStudentRegistration(event) {
             event.preventDefault();
-            const studentBranchVal = document.getElementById('studentBranch').value.trim();
+            const studentBranchVal = document.getElementById('studentBranch').value.trim().toUpperCase();
             currentUser.level = `${document.getElementById('studentClass').value} - Şube: ${studentBranchVal}`;
             currentUser.branchName = studentBranchVal;
             
@@ -597,7 +606,7 @@
             }
             currentUser.role = 'Teacher';
             currentUser.level = document.querySelector('input[name="branch"]:checked').value;
-            currentUser.managedClass = document.getElementById('teacherClassManaged').value.trim();
+            currentUser.managedClass = document.getElementById('teacherClassManaged').value.trim().toUpperCase();
             currentUser.honorific = (currentUser.name.toLowerCase().includes('hanım')) ? "Hanım" : "Bey";
             localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
             showDashboard();
@@ -680,7 +689,7 @@
             englishBooksPool.forEach(book => {
                 container.innerHTML += `
                     <div class="book-card">
-                        ${isTeacher ? `<div class="book-teacher-three-dots" title="Öğrenci İstatistikleri" onclick="showBookTeacherAnalytics('${book.id}', '${book.title}')">⋮</div>` : ''}
+                        ${isTeacher ? `<div class="book-teacher-three-dots" title="Öğrenci İstatistikleri" onclick="triggerTeacherClassSelection('book', '${book.id}', '${book.title}')">⋮</div>` : ''}
                         <img src="${book.img}" alt="${book.title}">
                         <h4>📖 ${book.title}</h4>
                         <button class="action-btn" style="text-align:center; padding:7px; font-size:13px;" onclick="openBookModal('${book.id}')">📖 Read Book</button>
@@ -689,13 +698,34 @@
             });
         }
 
-        function showBookTeacherAnalytics(bookId, bookTitle) {
-            const teacherClass = currentUser.managedClass ? currentUser.managedClass.toLowerCase().trim() : "";
-            const classStudents = bahcesehirStudents.filter(st => st.class.toLowerCase().trim() === teacherClass);
+        // ÖĞRETMEN BİRDEN FAZLA SINIF YÖNETİYORSA SINIF SEÇİM EKRANI
+        function triggerTeacherClassSelection(type, id, title, subject = '') {
+            const managedClasses = currentUser.managedClass.split(',').map(c => c.trim().toUpperCase()).filter(c => c);
+
+            if (managedClasses.length === 1) {
+                if (type === 'book') showBookTeacherAnalytics(id, title, managedClasses[0]);
+                else showUnitAnalytics(subject, id, title, managedClasses[0]);
+            } else {
+                let btnsHtml = managedClasses.map(cls => `
+                    <button class="class-select-btn" onclick="${type === 'book' ? `showBookTeacherAnalytics('${id}', '${title}', '${cls}')` : `showUnitAnalytics('${subject}', '${id}', '${title}', '${cls}')`}">
+                        🏫 ${cls} Sınıfı Öğrencilerini İncele
+                    </button>
+                `).join('');
+
+                showModal(`
+                    <h3>🏫 Lütfen İncelemek İstediğiniz Sınıfı Seçin</h3>
+                    <p style="color:#718096;">Yönettiğiniz sınıflar listelendi:</p>
+                    <div style="margin-top:15px;">${btnsHtml}</div>
+                `);
+            }
+        }
+
+        function showBookTeacherAnalytics(bookId, bookTitle, targetClass) {
+            const classStudents = bahcesehirStudents.filter(st => st.class.trim().toUpperCase() === targetClass);
 
             let rowsHtml = "";
             if (classStudents.length === 0) {
-                rowsHtml = `<tr><td colspan="3" style="text-align:center; color:#718096; padding:15px;">Bu şubede kayıtlı öğrenci yok (${currentUser.managedClass})</td></tr>`;
+                rowsHtml = `<tr><td colspan="3" style="text-align:center; color:#718096; padding:15px;">${targetClass} şubesinde henüz kayıtlı öğrenci yok</td></tr>`;
             } else {
                 rowsHtml = classStudents.map(st => {
                     const hasRead = st.readBooks && st.readBooks.includes(bookId);
@@ -710,7 +740,7 @@
             }
 
             showModal(`
-                <h3>📊 Öğrenci Kitap Takibi (${currentUser.managedClass} Şubesi)</h3>
+                <h3>📊 Öğrenci Kitap Takibi (${targetClass} Şubesi)</h3>
                 <p><b>Kitap:</b> ${bookTitle}</p>
                 <table class="teacher-analytics-table">
                     <thead><tr><th>Öğrenci Adı</th><th>Şube</th><th>Durum</th></tr></thead>
@@ -737,15 +767,15 @@
                         <div class="unit-body hidden" id="unitBody-${i}">
                             <div class="action-row">
                                 <button class="action-btn" onclick="openUnityReader(${i})">📖 Unity Yazı Okuma</button>
-                                ${isTeacher ? `<button class="teacher-more-btn" onclick="showUnitAnalytics('${subjectName}', ${i}, 'Yazı Okuma')">⋮</button>` : ''}
+                                ${isTeacher ? `<button class="teacher-more-btn" onclick="triggerTeacherClassSelection('unit', ${i}, 'Yazı Okuma', '${subjectName}')">⋮</button>` : ''}
                             </div>
                             <div class="action-row">
                                 <button class="action-btn" onclick="startWork(${i})">📝 Ünite Çalışması (5 Soru)</button>
-                                ${isTeacher ? `<button class="teacher-more-btn" onclick="showUnitAnalytics('${subjectName}', ${i}, 'Çalışma')">⋮</button>` : ''}
+                                ${isTeacher ? `<button class="teacher-more-btn" onclick="triggerTeacherClassSelection('unit', ${i}, 'Çalışma', '${subjectName}')">⋮</button>` : ''}
                             </div>
                             <div class="action-row">
                                 <button class="action-btn" onclick="openQuiz(${i})">🎯 Konu Tarama Testi (10 Soru)</button>
-                                ${isTeacher ? `<button class="teacher-more-btn" onclick="showUnitAnalytics('${subjectName}', ${i}, 'Test')">⋮</button>` : ''}
+                                ${isTeacher ? `<button class="teacher-more-btn" onclick="triggerTeacherClassSelection('unit', ${i}, 'Test', '${subjectName}')">⋮</button>` : ''}
                             </div>
                         </div>
                     </div>
@@ -753,14 +783,13 @@
             }
         }
 
-        function showUnitAnalytics(subject, unitNo, type) {
+        function showUnitAnalytics(subject, unitNo, type, targetClass) {
             const key = `${subject}_U${unitNo}`;
-            const teacherClass = currentUser.managedClass ? currentUser.managedClass.toLowerCase().trim() : "";
-            const classStudents = bahcesehirStudents.filter(st => st.class.toLowerCase().trim() === teacherClass);
+            const classStudents = bahcesehirStudents.filter(st => st.class.trim().toUpperCase() === targetClass);
 
             let rowsHtml = "";
             if (classStudents.length === 0) {
-                rowsHtml = `<tr><td colspan="3" style="text-align:center; color:#718096; padding:15px;">Bu şubede kayıtlı öğrenci yok (${currentUser.managedClass})</td></tr>`;
+                rowsHtml = `<tr><td colspan="3" style="text-align:center; color:#718096; padding:15px;">${targetClass} şubesinde henüz kayıtlı öğrenci yok</td></tr>`;
             } else {
                 rowsHtml = classStudents.map(st => {
                     let isDone = false;
@@ -779,7 +808,7 @@
 
             showModal(`
                 <h3>📊 ${subject} - Ünite ${unitNo} (${type}) Takibi</h3>
-                <p><b>Şube:</b> ${currentUser.managedClass}</p>
+                <p><b>Şube:</b> ${targetClass}</p>
                 <table class="teacher-analytics-table">
                     <thead><tr><th>Öğrenci Adı</th><th>Şube</th><th>Durum</th></tr></thead>
                     <tbody>${rowsHtml}</tbody>
@@ -830,7 +859,7 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // DOKUNMATİK UYUMLU 5 SORULUK ÜNİTE ÇALIŞMASI (HEM SÜRÜKLE HEM DOKUN-SEÇ)
+        // DOKUNMATİK UYUMLU 5 SORULUK ÜNİTE ÇALIŞMASI
         function startWork(unitNo) {
             currentUnitId = unitNo;
             workStep = 1;
@@ -1039,5 +1068,3 @@
             document.getElementById('contentModal').classList.add('hidden');
         }
     </script>
-</body>
-</html>
