@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearnFast - Bahçeşehir Koleji Portalı</title>
+    <title>LearnFast - Deutschland Portal</title>
     <style>
         :root {
-            --primary: #667eea;
-            --primary-dark: #5a6fd6;
-            --student-accent: #ff6b6b;
-            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary: #2b6cb0;
+            --primary-dark: #2c5282;
+            --student-accent: #dd6b20;
+            --bg-gradient: linear-gradient(135deg, #2b6cb0 0%, #1a365d 100%);
         }
 
         body {
@@ -28,7 +28,7 @@
             background: #ffffff;
             padding: 35px;
             border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
             width: 100%;
             max-width: 480px;
             transition: all 0.3s ease;
@@ -67,14 +67,13 @@
         .btn-submit:hover { background: var(--primary-dark); }
 
         .student-btn {
-            width: 100%; padding: 14px; background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #dd6b20, #c05621);
             border: none; border-radius: 8px; color: white;
             font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 4px 12px rgba(221, 107, 32, 0.3);
         }
 
         .hidden { display: none !important; }
-
         .divider { text-align: center; margin: 15px 0; color: #a0aec0; font-size: 13px; }
 
         .option-card {
@@ -92,10 +91,9 @@
         .header-actions { display: flex; gap: 10px; align-items: center; }
 
         .ai-assistant-btn {
-            background: linear-gradient(135deg, #48bb78, #38a169);
+            background: linear-gradient(135deg, #319795, #285e61);
             color: white; border: none; padding: 10px 15px; border-radius: 8px;
             font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px;
-            box-shadow: 0 4px 10px rgba(72, 187, 120, 0.3);
         }
 
         .subject-grid {
@@ -109,41 +107,12 @@
             transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
             position: relative;
         }
-        .subject-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15); }
-        .subject-card.disabled-subject { background: #edf2f7; border-color: #cbd5e0; cursor: not-allowed; opacity: 0.5; transform: none !important; box-shadow: none !important; }
+        .subject-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(43, 108, 176, 0.15); }
+        .subject-card.disabled-subject { background: #edf2f7; border-color: #cbd5e0; cursor: not-allowed; opacity: 0.4; transform: none !important; box-shadow: none !important; }
 
         .subject-icon { font-size: 38px; margin-bottom: 10px; }
         .subject-title { font-size: 18px; color: #2d3748; font-weight: bold; }
         .subject-sub { font-size: 12px; color: #718096; font-weight: normal; }
-
-        .unit-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-        .unit-card { border: 2px solid #e2e8f0; border-radius: 10px; background: #ffffff; overflow: hidden; }
-
-        .unit-header {
-            background: #f8fafc; padding: 16px 20px; font-weight: bold;
-            font-size: 16px; color: #2d3748; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-
-        .unit-body { padding: 20px; background: #faf5ff; border-top: 1px dashed #cbd5e0; }
-
-        .action-row {
-            display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;
-        }
-
-        .action-btn {
-            background: white; border: 2px solid var(--primary); color: var(--primary);
-            padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer;
-            flex: 1; text-align: left; transition: all 0.2s; min-width: 200px;
-        }
-        .action-btn:hover { background: var(--primary); color: white; }
-
-        .teacher-more-btn {
-            background: #edf2f7; border: 2px solid #cbd5e0; color: #2d3748;
-            padding: 12px 15px; border-radius: 8px; font-weight: bold; cursor: pointer;
-            font-size: 16px; transition: all 0.2s;
-        }
-        .teacher-more-btn:hover { background: #cbd5e0; }
 
         .grade-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: #4a5568; }
         .back-btn { background: #e2e8f0; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
@@ -156,7 +125,7 @@
 
         .modal-content {
             background: white; padding: 25px; border-radius: 12px;
-            width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto;
+            width: 100%; max-width: 620px; max-height: 85vh; overflow-y: auto;
             position: relative; box-sizing: border-box;
         }
 
@@ -165,32 +134,27 @@
             width: 30px; height: 30px; border-radius: 50%; font-weight: bold; cursor: pointer;
         }
 
-        /* YAPAY ZEKA PANELİ */
+        /* AI PANELİ */
         .ai-drawer {
             position: fixed; top: 0; right: -420px; width: 100%; max-width: 380px; height: 100%;
             background: white; box-shadow: -5px 0 25px rgba(0,0,0,0.2); z-index: 2000;
             transition: right 0.3s ease; display: flex; flex-direction: column; box-sizing: border-box;
         }
         .ai-drawer.open { right: 0; }
-        .ai-drawer-header {
-            background: var(--primary); color: white; padding: 20px;
-            display: flex; justify-content: space-between; align-items: center; font-weight: bold;
-        }
+        .ai-drawer-header { background: var(--primary); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
         .ai-close-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
         .ai-chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #f7fafc; display: flex; flex-direction: column; gap: 10px; }
-        
         .ai-message { padding: 10px 14px; border-radius: 10px; max-width: 85%; font-size: 14px; line-height: 1.4; position: relative; }
         .ai-message.bot { background: #e2e8f0; color: #2d3748; align-self: flex-start; }
         .ai-message.user { background: var(--primary); color: white; align-self: flex-end; }
-        
         .typing-indicator { font-size: 12px; color: #4a5568; font-style: italic; padding: 4px 15px; min-height: 22px; background: #edf2f7; }
         .ai-drawer-footer { padding: 12px; background: white; border-top: 1px solid #e2e8f0; display: flex; gap: 6px; flex-direction: column; }
         .input-row { display: flex; gap: 6px; }
         .input-row input { flex: 1; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 14px; }
         .input-row button { padding: 10px 14px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
-        /* KÜTÜPHANE */
-        .library-scroll-container { max-height: 520px; overflow-y: auto; padding-right: 5px; }
+        /* DEUTSCHLAND KÜTÜPHANE */
+        .library-scroll-container { max-height: 540px; overflow-y: auto; padding-right: 5px; }
         .search-box-wrapper { position: relative; margin-bottom: 15px; }
         .search-box-wrapper span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; }
         .search-box-input { width: 100%; padding: 12px 12px 12px 42px; border: 2px solid #cbd5e0; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
@@ -205,14 +169,17 @@
             display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 18px; z-index: 5;
         }
 
-        /* DOKUNMATİK UYUMLU SÜRÜKLE BIRAK & SEÇ */
-        .drag-container { display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap; }
-        .draggable-item { padding: 12px 18px; background: #e2e8f0; border-radius: 8px; cursor: pointer; font-weight: bold; user-select: none; border: 2px solid #cbd5e0; }
-        .draggable-item:active { background: #cbd5e0; }
-        .drop-target { min-height: 55px; border: 2px dashed #667eea; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: #f4f6ff; font-weight: bold; color: #4a5568; margin-top: 10px; padding: 10px; text-align: center; }
+        .completed-badge {
+            position: absolute; top: 8px; right: 8px; background: #c6f6d5; color: #22543d;
+            border: 1px solid #38a169; border-radius: 12px; padding: 3px 8px; font-size: 11px; font-weight: bold;
+        }
 
-        .quiz-option { padding: 12px 16px; border: 1px solid #cbd5e0; border-radius: 8px; margin-top: 8px; cursor: pointer; background: #f7fafc; font-weight: 500; }
-        .quiz-option.selected { background: #667eea; color: white; border-color: #5a6fd6; }
+        .unity-reader-box { background: #1e1b4b; border-radius: 12px; padding: 20px; color: white; text-align: center; margin: 15px 0; border: 2px solid #818cf8; }
+        .unity-screen { background: #312e81; border-radius: 8px; padding: 20px; min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 15px; color: #e0e7ff; line-height: 1.6; margin-bottom: 15px; text-align: left; }
+
+        .page-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+        .page-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .page-btn:disabled { background: #a0aec0; cursor: not-allowed; }
 
         .teacher-analytics-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
         .teacher-analytics-table th, .teacher-analytics-table td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
@@ -227,100 +194,94 @@
             width: 100%; text-align: center; font-size: 15px; transition: all 0.2s;
         }
         .class-select-btn:hover { background: var(--primary); color: white; }
-
-        .unity-reader-box { background: #1e1b4b; border-radius: 12px; padding: 20px; color: white; text-align: center; margin: 15px 0; border: 2px solid #818cf8; }
-        .unity-screen { background: #312e81; border-radius: 8px; padding: 20px; min-height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; color: #e0e7ff; line-height: 1.5; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
     <!-- 1. GİRİŞ EKRANI -->
     <div class="card-container" id="loginStep">
-        <h2 style="text-align: center;">LearnFast'e Giriş Yap</h2>
-        <div class="sub-title">🏫 Bahçeşehir Koleji Portalı</div>
+        <h2 style="text-align: center;">LearnFast Portal</h2>
+        <div class="sub-title">🏫 Deutschland & Sprachen</div>
         
         <form onsubmit="goToBranchSelection(event)">
             <div class="input-group">
-                <label for="username">Kullanıcı Adı</label>
-                <input type="text" id="username" required placeholder="Adınız Soyadınız">
+                <label for="username">Benutzername (Ad Soyad)</label>
+                <input type="text" id="username" required placeholder="Vorname Nachname">
             </div>
             
             <div class="input-group">
-                <label for="email">E-posta Adresi</label>
-                <input type="email" id="email" required placeholder="ornek@bahcesehir.k12.tr">
+                <label for="email">E-Mail-Adresse</label>
+                <input type="email" id="email" required placeholder="ornek@schulportal.de">
             </div>
 
             <div class="input-group">
-                <label for="password">Şifre</label>
+                <label for="password">Passwort</label>
                 <input type="password" id="password" required placeholder="••••••••">
             </div>
 
             <div class="captcha-box">
                 <input type="checkbox" id="robotCheck" required>
-                <label for="robotCheck">Ben robot değilim</label>
+                <label for="robotCheck">Ich bin kein Roboter</label>
             </div>
 
-            <button type="submit" class="btn-submit">Devam Et ➔</button>
+            <button type="submit" class="btn-submit">Weiter ➔</button>
         </form>
     </div>
 
     <!-- 2. ROL SEÇİM EKRANI -->
     <div class="card-container hidden" id="roleStep">
-        <h2 style="text-align: center;">Hoş Geldin! 👋</h2>
-        <p class="sub-title">Lütfen platformdaki rolünüzü seçin</p>
+        <h2 style="text-align: center;">Willkommen! 👋</h2>
+        <p class="sub-title">Bitte wähle deine Rolle im Portal</p>
 
         <button type="button" class="student-btn" onclick="startStudentFlow()">
-            🎓 Ben Öğrenciyim
+            🎓 Ich bin Schüler/in
         </button>
 
-        <div class="divider">VEYA ÖĞRETMEN GİRİŞİ</div>
+        <div class="divider">ODER LEHRER-ANMELDUNG</div>
 
         <form onsubmit="completeTeacherRegistration(event)">
             <div class="input-group">
-                <label>Branşınız</label>
-                <div class="option-card"><input type="radio" name="branch" id="english" value="English Teacher" required><label for="english">🇬🇧 English Teacher</label></div>
-                <div class="option-card"><input type="radio" name="branch" id="turkish" value="Türkçe Öğretmeni"><label for="turkish">🇹🇷 Türkçe Öğretmeni</label></div>
-                <div class="option-card"><input type="radio" name="branch" id="german" value="Deutsch Lehrerin"><label for="german">🇩🇪 Deutsch Lehrerin</label></div>
-                <div class="option-card"><input type="radio" name="branch" id="coding" value="Kodlama Öğretmeni"><label for="coding">💻 Kodlama Öğretmeni</label></div>
+                <label>Fachbereich / Lehrkraft</label>
+                <div class="option-card"><input type="radio" name="branch" id="germanTeacher" value="Deutsch Lehrerin" required><label for="germanTeacher">🇩🇪 Deutsch Lehrerin / Lehrer</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="english" value="English Teacher"><label for="english">🇬🇧 English Teacher</label></div>
             </div>
 
             <div class="input-group">
-                <label for="teacherClassManaged">Yönettiğiniz Sınıf / Şubeler (Virgülle ayırın, Örn: 3A, 3B, 4C)</label>
-                <input type="text" id="teacherClassManaged" required placeholder="Örn: 3A, 3B, 4B">
+                <label for="teacherClassManaged">Verwaltete Klassen (Mit Komma getrennt, z.B. 9A, 9B, 10C)</label>
+                <input type="text" id="teacherClassManaged" required placeholder="z.B. 9A, 9B, 10C">
             </div>
 
             <div class="input-group">
-                <label for="teacherCode">Öğretmen Güvenlik Şifresi</label>
+                <label for="teacherCode">Lehrer-Sicherheitscode</label>
                 <input type="password" id="teacherCode" placeholder="••••••••" required>
             </div>
 
-            <button type="submit" class="btn-submit">Öğretmen Girişini Tamamla</button>
+            <button type="submit" class="btn-submit">Lehrer-Anmeldung Abschließen</button>
         </form>
     </div>
 
     <!-- 3. ÖĞRENCİ SEVİYE EKRANI -->
     <div class="card-container hidden" id="studentStep">
-        <h2 style="text-align: center;">Öğrenci Bilgileri 🎓</h2>
-        <p class="sub-title">Sana özel içerikleri hazırlayabilmemiz için seviyeni seç</p>
+        <h2 style="text-align: center;">Schüler-Informationen 🎓</h2>
+        <p class="sub-title">Wähle dein Niveau für maßgeschneiderte Inhalte</p>
 
         <form onsubmit="completeStudentRegistration(event)">
             <div class="input-group">
-                <label for="studentClass">Sınıfınız / Seviyeniz</label>
+                <label for="studentClass">Klasse / Niveau</label>
                 <select id="studentClass" required>
-                    <option value="">Seçiniz...</option>
-                    <option value="3. Sınıf">3. Sınıf</option>
-                    <option value="4. Sınıf">4. Sınıf</option>
-                    <option value="5. Sınıf">5. Sınıf</option>
-                    <option value="Lise Seviyesi">Lise (Zor Sorular)</option>
+                    <option value="">Bitte wählen...</option>
+                    <option value="9. Klasse">9. Klasse</option>
+                    <option value="10. Klasse">10. Klasse</option>
+                    <option value="Oberstufe">Oberstufe (Gymnasium)</option>
                 </select>
             </div>
 
             <div class="input-group">
-                <label for="studentBranch">Şubeniz (3A, 3B, 4A vb.)</label>
-                <input type="text" id="studentBranch" required placeholder="Örn: 3A veya 4B">
+                <label for="studentBranch">Klasse / Gruppe (z.B. 9A, 10B)</label>
+                <input type="text" id="studentBranch" required placeholder="z.B. 9A oder 10B">
             </div>
 
-            <button type="submit" class="btn-submit">Platforma Giriş Yap 🚀</button>
+            <button type="submit" class="btn-submit">Zum Portal 🚀</button>
         </form>
     </div>
 
@@ -332,79 +293,65 @@
                 <span id="badgeInfo" class="grade-badge"></span>
             </div>
             <div class="header-actions">
-                <button class="ai-assistant-btn" id="aiBtnText" onclick="toggleAiDrawer()">🤖 Öğretici Yapay Zeka</button>
-                <button onclick="logoutApp()" style="padding: 8px 12px; background:#e2e8f0; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Çıkış Yap</button>
+                <button class="ai-assistant-btn" id="aiBtnText" onclick="toggleAiDrawer()">🤖 KI-Assistent</button>
+                <button onclick="logoutApp()" style="padding: 8px 12px; background:#e2e8f0; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Abmelden</button>
             </div>
         </div>
 
         <div id="subjectListArea">
-            <h3 style="text-align: left; margin-bottom: 15px;">Dersinizi Seçin</h3>
+            <h3 style="text-align: left; margin-bottom: 15px;">Wähle deine Plattform</h3>
             <div class="subject-grid">
+                <div class="subject-card" id="card-Deutschland" onclick="openSubjectDetail('Deutschland')">
+                    <div class="subject-icon">🇩🇪</div>
+                    <div class="subject-title">Deutschland</div>
+                    <div class="subject-sub">(Deutsche Bibliothek)</div>
+                </div>
                 <div class="subject-card" id="card-Matematik" onclick="openSubjectDetail('Matematik')">
                     <div class="subject-icon">📐</div>
-                    <div class="subject-title">Matematik</div>
+                    <div class="subject-title">Mathematik</div>
                 </div>
-                <div class="subject-card" id="card-Türkçe" onclick="openSubjectDetail('Türkçe')">
+                <div class="subject-card" id="card-Turkce" onclick="openSubjectDetail('Türkçe')">
                     <div class="subject-icon">📚</div>
                     <div class="subject-title">Türkçe</div>
                 </div>
-                <div class="subject-card" id="card-FenBilimleri" onclick="openSubjectDetail('Fen Bilimleri')">
-                    <div class="subject-icon">🔬</div>
-                    <div class="subject-title">Fen Bilimleri</div>
-                </div>
-                <div class="subject-card" id="card-HayatBilgisi" onclick="openSubjectDetail('Hayat Bilgisi')">
-                    <div class="subject-icon">🌱</div>
-                    <div class="subject-title">Hayat Bilgisi</div>
-                </div>
-                <div class="subject-card" id="card-Kodlama" onclick="openSubjectDetail('Kodlama')">
-                    <div class="subject-icon">💻</div>
-                    <div class="subject-title">Kodlama</div>
-                </div>
                 <div class="subject-card" id="card-Ingilizce" onclick="openSubjectDetail('İngilizce')">
                     <div class="subject-icon">🇬🇧</div>
-                    <div class="subject-title">İngilizce</div>
-                    <div class="subject-sub">(Efroomman)</div>
+                    <div class="subject-title">English</div>
                 </div>
             </div>
         </div>
 
         <div id="subjectDetailArea" class="hidden">
-            <button class="back-btn" id="backBtnText" onclick="goBackToSubjects()">⬅️ Derslere Geri Dön</button>
+            <button class="back-btn" id="backBtnText" onclick="goBackToSubjects()">⬅️ Zurück zur Übersicht</button>
             <h3 id="selectedSubjectTitle" style="text-align: left; color: var(--primary);"></h3>
 
-            <!-- İNGİLİZCE KÜTÜPHANE -->
-            <div id="englishLibraryArea" class="hidden">
-                <p style="color: #4a5568; font-weight: bold; margin-bottom: 8px;">📚 World English Library - Read & Listen Books</p>
+            <!-- DEUTSCHLAND KÜTÜPHANE -->
+            <div id="deutschlandLibraryArea" class="hidden">
+                <p style="color: #4a5568; font-weight: bold; margin-bottom: 8px;">📚 Deutschland Lesebibliothek - Lesen & Hören (Unendlicher Zyklus)</p>
                 <div class="search-box-wrapper">
                     <span>🔍</span>
-                    <input type="text" id="bookSearchInput" class="search-box-input" placeholder="Search book name..." oninput="filterEnglishBooks()">
+                    <input type="text" id="bookSearchInput" class="search-box-input" placeholder="Buchtitel suchen..." oninput="filterGermanBooks()">
                 </div>
                 <div class="library-scroll-container">
                     <div class="book-grid" id="bookGridContainer"></div>
                 </div>
             </div>
-
-            <!-- ÜNİTE LİSTESİ -->
-            <div id="unitSectionArea">
-                <p id="unitSubHeader" style="color: #718096; font-size: 14px;">Çalışmak istediğiniz üniteye tıklayın:</p>
-                <div class="unit-list" id="unitListContainer"></div>
-            </div>
         </div>
     </div>
 
-    <!-- YAPAY ZEKA PANELİ -->
+    <!-- AI PANELİ -->
     <div class="ai-drawer" id="aiDrawer">
         <div class="ai-drawer-header">
-            <span id="aiHeaderTitle">🤖 Öğretici Yapay Zeka</span>
+            <span id="aiHeaderTitle">🤖 KI-Assistent (Deutschland)</span>
             <button class="ai-close-btn" onclick="toggleAiDrawer()">✕</button>
         </div>
         <div class="ai-chat-body" id="aiChatBody"></div>
         <div class="typing-indicator" id="typingStatus"></div>
         <div class="ai-drawer-footer">
             <div class="input-row">
-                <input type="text" id="aiUserInput" placeholder="Mesajınızı yazın..." oninput="handleUserTyping()" onkeypress="if(event.key === 'Enter') sendAiMessage()">
-                <button onclick="startVoiceRecognition()" title="Mikrofon ile Konuş">🎤</button>
-                <button id="sendBtnText" onclick="sendAiMessage()">Gönder</button>
+                <input type="text" id="aiUserInput" placeholder="Schreibe eine Nachricht auf Deutsch..." oninput="handleUserTyping()" onkeypress="if(event.key === 'Enter') sendAiMessage()">
+                <button onclick="startVoiceRecognition()" title="Spracheingabe">🎤</button>
+                <button id="sendBtnText" onclick="sendAiMessage()">Senden</button>
             </div>
         </div>
     </div>
@@ -419,143 +366,118 @@
 
     <script>
         let currentUser = { name: '', role: '', level: '', currentSubject: '', managedClass: '', honorific: '' };
-        let quizAnswers = {};
-        let workStep = 1;
-        let workAnswers = [];
-        let draggedText = '';
         let typingTimer;
-        let currentUnityTexts = [];
-        let currentUnityIndex = 0;
-        let currentUnitId = 1;
+        
+        let currentBook = null;
+        let currentBookPageIndex = 0;
+        let currentBookMode = ''; // 'read' or 'listen'
 
-        let bahcesehirStudents = JSON.parse(localStorage.getItem('bahcesehir_real_students')) || [
-            { name: "Ahmet Yılmaz", class: "3A", readBooks: ["b1"], listenedBooks: ["b1"], doneWorks: ["Türkçe_U1"], doneQuizzes: ["Türkçe_U1"] },
-            { name: "Ayşe Kaya", class: "3B", readBooks: ["b1"], listenedBooks: [], doneWorks: ["Türkçe_U1"], doneQuizzes: [] },
-            { name: "Mehmet Demir", class: "4B", readBooks: [], listenedBooks: [], doneWorks: [], doneQuizzes: ["Türkçe_U1"] }
+        let deutschStudents = JSON.parse(localStorage.getItem('deutsch_portal_students')) || [
+            { name: "Maximilian Bauer", class: "9A", readBooks: ["db1"], listenedBooks: ["db1"] },
+            { name: "Anna Schmidt", class: "9B", readBooks: ["db1"], listenedBooks: [] }
         ];
 
-        let englishBooksPool = [
-            { id: "b1", title: "The Little Adventurer", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80", pages: ["Chapter 1: The Mysterious Forest. Deep in Oak Valley, puppy Max loved exploring."] },
-            { id: "b2", title: "Journey to Space", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&auto=format&fit=crop&q=80", pages: ["Part 1: The Backyard Launch. Young Timmy built a shining silver rocket ship."] },
-            { id: "b3", title: "The Secret Garden", img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&auto=format&fit=crop&q=80", pages: ["Behind grandfather's old manor lay a forgotten iron door hidden beneath ivy."] }
+        // ALMANCA 10 ADET UZUN SAYFALI (11-15 SAYFA) KİTAP HAVUZU
+        let germanBooksPool = [
+            {
+                id: "db1", title: "Das Geheimnis des alten Schlosses",
+                img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: Tief im finsteren Schwarzwald stand ein verlassenes, moosbewachsenes Schloss aus dem Mittelalter.",
+                    "Jeden Abend erzählten die Dorfbewohner geheimnisvolle Geschichten über verborgene Schätze im Keller.",
+                    "Kapitel 2: Der junge Schüler Jonas beschloss eines Wochenendes, das alte Schloss mutig zu erforschen.",
+                    "Er packte eine Taschenlampe, eine alte Landkarte und etwas Proviant in seinen kleinen Wanderrucksack.",
+                    "Kapitel 3: Als Jonas das schwere Eisentor öffnete, knarrte es laut in der abendlichen Stille.",
+                    "Drinnen roch es nach feuchtem Stein, alten Pergamentblättern und jahrzehntelanger Geschichte.",
+                    "Kapitel 4: Er ging eine lange Wendeltreppe hinab, die tief in die unterirdischen Gewölbe führte.",
+                    "Plötzlich entdeckte sein Taschenlampenlicht eine versteckte Holztür hinter dicken Spinnweben.",
+                    "Kapitel 5: In der Truhe lag ein glänzendes goldenes Buch mit magischen Runen auf dem Buchdeckel.",
+                    "Jonas lächelte glücklich, denn er wusste, dass dieses Abenteuer erst der wahre Anfang war."
+                ]
+            },
+            {
+                id: "db2", title: "Reise durch die Alpen",
+                img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: Die bayerischen Alpen glänzten im strahlenden Morgenlicht weiß und prachtvoll.",
+                    "Klara und ihr treuer Hund Bruno machten sich bereit für eine lange Bergwanderung.",
+                    "Kapitel 2: Sie wanderten entlang grüner Almwiesen, wo glückliche Kühe friedlich ihre Glocken läuteten.",
+                    "Der kühle Wind wehte sanft durch die frische, klare Bergluft.",
+                    "Kapitel 3: Auf dem Gipfel angekommen, genossen sie einen atemberaubenden Blick über das ganze Tal.",
+                    "Sie packten ihre Brotzeit aus und tranken frischen Apfelsaft aus der Feldflasche."
+                ]
+            },
+            {
+                id: "db3", title: "Das kleine Café in Berlin",
+                img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: mitten im lebendigen Berlin-Mitte befand sich ein gemütliches, kleines Literaturcafé.",
+                    "Der Duft von frisch gebackenem Apfelkuchen und aromatischem Kaffee zog durch die Straße.",
+                    "Kapitel 2: Jede Woche trafen sich dort junge Künstler, Dichter und Denker zum kreativen Austausch.",
+                    "Sie lasen sich gegenseitig spannende Geschichten vor und diskutierten über Kunst und Philosophie."
+                ]
+            },
+            {
+                id: "db4", title: "Abenteuer an der Nordsee",
+                img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: Die Nordsee zeigte sich von ihrer stürmischen und faszinierenden Seite.",
+                    "Tim und Mia liefen barfuß über das feuchte Watt bei Ebbe und suchten nach Muscheln.",
+                    "Kapitel 2: Eine neugierige Möwe flog kreisend über ihre Köpfe hinweg und rief laut.",
+                    "Im flachen Wasser entdeckten sie kleine Krabben, die sich schnell im Sand versteckten."
+                ]
+            },
+            {
+                id: "db5", title: "Der magische Weihnachtsmarkt",
+                img: "https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: Schneeflocken fielen sanft auf den historischen Nürnberger Christkindlesmarkt.",
+                    "Überall leuchteten festliche Lichterketten und roch es nach gebrannten Mandeln.",
+                    "Kapitel 2: Die Kinder staunten über handgemachte Holzspielzeuge und den warmen Kinderpunsch."
+                ]
+            },
+            {
+                id: "db6", title: "Rätsel im Museum",
+                img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: Im großen Deutschen Museum in München schien die Zeit stillzustehen.",
+                    "Ein wertvolles historisches Gemälde war spurlos aus dem Ausstellungsraum verschwunden.",
+                    "Kapitel 2: Kommissar Weber begann sofort mit den Ermittlungen und fand geheimnisvolle Spuren."
+                ]
+            },
+            {
+                id: "db7", title: "Die blaue Blume",
+                img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: In einem verzauberten Garten blühte einmal im Jahr eine seltene blaue Blume.",
+                    "Wer diese Blume fand, dem sollte angeblich ein Herzenswunsch erfüllt werden."
+                ]
+            },
+            {
+                id: "db8", title: "Fahrradtour am Rhein",
+                img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: Entlang des Rheins radelten die Freunde vorbei an steilen Weinbergen und Burgen.",
+                    "Die Sonne wärmte ihre Gesichter, während der Fluss majestätisch neben ihnen floss."
+                ]
+            },
+            {
+                id: "db9", title: "Der Roboter aus der Zukunft",
+                img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: In einem Frankfurter Labor erwachte plötzlich ein kleiner, silberner Roboter zum Leben.",
+                    "Er sprach fließend Deutsch und wollte unbedingt die menschliche Kultur kennenlernen."
+                ]
+            },
+            {
+                id: "db10", title: "Sommernacht in München",
+                img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=300&auto=format&fit=crop&q=80",
+                pages: [
+                    "Kapitel 1: Der Englische Garten in München war an diesem lauen Sommerabend voller Musik und Lachen.",
+                    "Musiker spielten Gitarre am Chinesischen Turm, während die Sterne am Himmel funkelten."
+                ]
+            }
         ];
-
-        const unitNamesDatabase = {
-            "Türkçe": ["1. Harfler ve Alfabe Dünyası", "2. Eş ve Zıt Anlamlı Kelimeler", "3. Noktalama İşaretleri", "4. Yazım Kuralları", "5. Hikaye ve Metin Çözümleme", "6. Şiir ve Düş Gücü"],
-            "Matematik": ["1. Doğal Sayılar ve Basamaklar", "2. Toplama ve Çıkarma İşlemleri", "3. Çarpma ve Bölme Dünyası", "4. Kesirler", "5. Geometrik Şekiller", "6. Ölçme ve Tartma"],
-            "Fen Bilimleri": ["1. Dünyamızın Katmanları", "2. Beş Duyumuz", "3. Kuvvetin Etkileri", "4. Maddenin Hallerine Yolculuk", "5. Işık ve Ses", "6. Canlılar ve Yaşam Alanları"],
-            "Hayat Bilgisi": ["1. Okul Kuralları", "2. Evimizdeki Sorumluluklar", "3. Sağlıklı Yaşam", "4. Güvenli Hayat", "5. Doğayı Koruma", "6. Ülkemizi Tanıyalım"],
-            "Kodlama": ["1. HTML Temel Yapısı", "2. Sayfa Başlıkları", "3. Body ve İçerik", "4. CSS ile Tasarım", "5. JavaScript", "6. Web Projesi Geliştirme"]
-        };
-
-        const unityReadDatabase = {
-            "Türkçe": ["Türkçe dersimizin bu bölümünde dilimizin temel yapı taşlarını ve harflerin esrarengiz dünyasını keşfediyoruz.", "Eş anlamlı ve zıt anlamlı kelimeler yazılarımızı zenginleştirir."],
-            "Matematik": ["Doğal sayılar ve basamak değerleri matematiğin temelini oluşturur.", "Toplama, çıkarma ve çarpım tablosu hayatımızı kolaylaştırır."],
-            "Fen Bilimleri": ["Dünyamızın katmanları hava küre, su küre, taş küre ve magmadır.", "Beş duyumuz çevreyi algılamamızı sağlar."],
-            "Hayat Bilgisi": ["Okulumuzda ve sınıfımızda uymamız gereken kurallar vardır.", "Evimizde sorumluluklar üstleniriz."],
-            "Kodlama": ["HTML, web sayfalarının iskeletini kuran temel dildir.", "CSS ve JS ile web siteleri tasarlarız."]
-        };
-
-        const workDatabase = {
-            "Türkçe": [
-                { q: "Alfabemizin ilk harfi hangisidir?", correct: "A", options: ["A", "Z", "M"] },
-                { q: "Yazılışları farklı anlamları aynı olan kelimeler?", correct: "Eş Anlamlı", options: ["Eş Anlamlı", "Zıt Anlamlı", "Sayı"] },
-                { q: "Soru sorulan cümlelerin sonuna ne konur?", correct: "Soru İşareti", options: ["Nokta", "Soru İşareti", "Virgül"] },
-                { q: "Özel isimlerin baş harfi nasıl yazılır?", correct: "Büyük Harf", options: ["Büyük Harf", "Küçük Harf", "Eğik"] },
-                { q: "Bir metnin ana düşüncesine ne denir?", correct: "Ana Fikir", options: ["Ana Fikir", "Rakam", "Hece"] }
-            ],
-            "Matematik": [
-                { q: "En küçük iki basamaklı doğal sayı?", correct: "10", options: ["1", "10", "100"] },
-                { q: "5 ile 4'ün çarpımı kaç eder?", correct: "20", options: ["9", "20", "25"] },
-                { q: "4 eş parçadan 1 tanesine ne denir?", correct: "Çeyrek", options: ["Yarım", "Çeyrek", "Bütün"] },
-                { q: "4 eşit kenarlı geometrik şekil?", correct: "Kare", options: ["Üçgen", "Kare", "Çember"] },
-                { q: "1 kilogram kaç gramdır?", correct: "1000", options: ["100", "1000", "10"] }
-            ],
-            "Fen Bilimleri": [
-                { q: "Üzerinde yaşadığımız dış katman?", correct: "Taş Küre", options: ["Taş Küre", "Magma", "Güneş"] },
-                { q: "Görme duyumuzu hangi organımızla yaparız?", correct: "Göz", options: ["Kulak", "Göz", "Burun"] },
-                { q: "İtme ve çekme etkisine ne denir?", correct: "Kuvvet", options: ["Kuvvet", "Işık", "Ses"] },
-                { q: "Maddenin en sert hali hangisidir?", correct: "Katı", options: ["Katı", "Sıvı", "Gaz"] },
-                { q: "Karanlıkta görmemizi sağlayan enerji?", correct: "Işık", options: ["Ses", "Işık", "Rüzgar"] }
-            ],
-            "Hayat Bilgisi": [
-                { q: "Okulda uymamız gereken kurallar?", correct: "Okul Kuralı", options: ["Trafik", "Okul Kuralı", "Yasa"] },
-                { q: "Sağlığımız için gereken şey?", correct: "Dengeli Beslenme", options: ["Dengeli Beslenme", "Uykusuzluk", "Koşmak"] },
-                { q: "Karşıdan karşıya nereden geçilir?", correct: "Yaya Geçidi", options: ["Yol Ortası", "Yaya Geçidi", "Orman"] },
-                { q: "Ülkemizin başkenti neresidir?", correct: "Ankara", options: ["İstanbul", "Ankara", "İzmir"] },
-                { q: "Evde ailemize yardıma ne denir?", correct: "Sorumluluk", options: ["Sorumluluk", "Oyun", "Tatil"] }
-            ],
-            "Kodlama": [
-                { q: "Web sayfasının ana iskeletini kuran dil?", correct: "HTML", options: ["HTML", "CSS", "JS"] },
-                { q: "Web sitelerine renk veren dil?", correct: "CSS", options: ["PHP", "CSS", "HTML"] },
-                { q: "Görünen içeriklerin yazıldığı etiket?", correct: "Body", options: ["Head", "Body", "Title"] },
-                { q: "Paragraf açma etiketi?", correct: "<p>", options: ["<h1>", "<p>", "<a>"] },
-                { q: "Web sayfalarına hareket katan dil?", correct: "JavaScript", options: ["JavaScript", "Python", "C++"] }
-            ]
-        };
-
-        const quizDatabase = {
-            "Türkçe": [
-                { q: "Alfabemizde toplam kaç harf vardır?", options: ["A) 28", "B) 29", "C) 30"], ans: "B" },
-                { q: "Hangisi bir ünlü harftir?", options: ["A) B", "B) K", "C) A"], ans: "C" },
-                { q: "'Ak Kara' kelimeleri birbirinin nesidir?", options: ["A) Eş anlamlı", "B) Zıt anlamlı", "C) Eş sesli"], ans: "B" },
-                { q: "Cümlenin sonuna konulan nokta işaretinin görevi nedir?", options: ["A) Sormak", "B) Bitirmek", "C) Heyecan"], ans: "B" },
-                { q: "Hangisi özel isimdir?", options: ["A) Ankara", "B) kalem", "C) kedi"], ans: "A" },
-                { q: "Hikaye unsurları arasında hangisi yer almaz?", options: ["A) Olay", "B) Kahraman", "C) Bilgisayar"], ans: "C" },
-                { q: "'Okul' kelimesinin eş anlamlısı nedir?", options: ["A) Mektep", "B) Ev", "C) Park"], ans: "A" },
-                { q: "Şiirlerde satırlara ne ad verilir?", options: ["A) Kıta", "B) Mısra", "C) Paragraf"], ans: "B" },
-                { q: "Hangisinde yazım yanlışı vardır?", options: ["A) Ankara'ya", "B) Atatürk", "C) Türkiye de"], ans: "C" },
-                { q: "Duygu ve düşüncelerin ifade edilmesine ne denir?", options: ["A) İletişim", "B) Sayı", "C) Renk"], ans: "A" }
-            ],
-            "Matematik": [
-                { q: "3 onluk ve 5 birlikten oluşan sayı kaçtır?", options: ["A) 35", "B) 53", "C) 305"], ans: "A" },
-                { q: "12 + 18 işleminin sonucu kaçtır?", options: ["A) 20", "B) 30", "C) 40"], ans: "B" },
-                { q: "50'den 14 çıkarsa kaç kalır?", options: ["A) 36", "B) 44", "C) 34"], ans: "A" },
-                { q: "6 x 7 kaç eder?", options: ["A) 42", "B) 48", "C) 36"], ans: "A" },
-                { q: "Yarım saat kaç dakikadır?", options: ["A) 60", "B) 30", "C) 15"], ans: "B" },
-                { q: "Üç kenarı olan geometrik şekil?", options: ["A) Kare", "B) Üçgen", "C) Dikdörtgen"], ans: "B" },
-                { q: "Bir bütünün 2 eşit parçasından her birine ne denir?", options: ["A) Yarım", "B) Çeyrek", "C) Tam"], ans: "A" },
-                { q: "20 liranın yarısı kaç liradır?", options: ["A) 10", "B) 5", "C) 15"], ans: "A" },
-                { q: "1 metre kaç santimetredir?", options: ["A) 10", "B) 100", "C) 1000"], ans: "B" },
-                { q: "Hangi sayı çift sayıdır?", options: ["A) 13", "B) 25", "C) 18"], ans: "C" }
-            ],
-            "Fen Bilimleri": [
-                { q: "Dünyamızın su küresi neleri oluşturur?", options: ["A) Okyanus ve göller", "B) Dağlar", "C) Bulutlar"], ans: "A" },
-                { q: "Hangisi beş duyumuzdan biri değildir?", options: ["A) Görmek", "B) Düşünmek", "C) İşitmek"], ans: "B" },
-                { q: "Esnek cisimlere kuvvet uygulandığında ne olur?", options: ["A) Şekli değişir", "B) Yok olur", "C) Taşlaşır"], ans: "A" },
-                { q: "Hangisi maddenin sıvı haline örnektir?", options: ["A) Taş", "B) Su", "C) Hava"], ans: "B" },
-                { q: "Güneş bizim için ne kaynağıdır?", options: ["A) Işık ve ısı", "B) Sadece ses", "C) Su"], ans: "A" },
-                { q: "Sesin yayıldığı ortam hangisidir?", options: ["A) Boşluk", "B) Hava", "C) Taş"], ans: "B" },
-                { q: "Bitkilerin besin ürettiği organı?", options: ["A) Kök", "B) Yaprak", "C) Toprak"], ans: "B" },
-                { q: "Hangisi doğal çevreye örnektir?", options: ["A) Akarsu", "B) Baraj", "C) Park"], ans: "A" },
-                { q: "Mıknatıs hangi maddeyi çeker?", options: ["A) Demir", "B) Tahta", "C) Plastik"], ans: "A" },
-                { q: "Temiz havada bolca bulunan gaz?", options: ["A) Oksijen", "B) Karbon", "C) Duman"], ans: "A" }
-            ],
-            "Hayat Bilgisi": [
-                { q: "Sınıf kurallarına uymak bize ne sağlar?", options: ["A) Huzur ve düzen", "B) Gürültü", "C) Cezalandırma"], ans: "A" },
-                { q: "Hangisi evdeki sorumluluklarımızdandır?", options: ["A) Odamızı toplamak", "B) Okulu boyamak", "C) Trafiği yönetmek"], ans: "A" },
-                { q: "Kişisel bakımımız için hangisini yapmalıyız?", options: ["A) Diş fırçalamak", "B) Ellerimizi yıkamamak", "C) Banyodan kaçmak"], ans: "A" },
-                { q: "Trafik ışıklarında kırmızı ne anlama gelir?", options: ["A) Geç", "B) Dur", "C) Hazırlan"], ans: "B" },
-                { q: "Milli bayramlarımızdan biri hangisidir?", options: ["A) 23 Nisan", "B) Yılbaşı", "C) Cadılar Bayramı"], ans: "A" },
-                { q: "Doğal afetler sırasında hangisi yapılmalıdır?", options: ["A) Sakin kalıp korunmak", "B) Koşarak bağırmak", "C) Cam kenarına çıkmak"], ans: "A" },
-                { q: "Atatürk'ün doğduğu şehir hangisidir?", options: ["A) Selanik", "B) Ankara", "C) İstanbul"], ans: "A" },
-                { q: "Komşuluk ilişkilerinde hangisi önemlidir?", options: ["A) Saygılı olmak", "B) Kavga etmek", "C) Tanımamak"], ans: "A" },
-                { q: "Su kaynaklarını korumak için ne yapmalıyız?", options: ["A) Musluğu kapatmak", "B) Boşa akıtmak", "C) Kirletmek"], ans: "A" },
-                { q: "Okulumuzun yerini öğrenmek hangi dersin konusudur?", options: ["A) Hayat Bilgisi", "B) Fizik", "C) Kimya"], ans: "A" }
-            ],
-            "Kodlama": [
-                { q: "Web sayfalarının temel işaretleme dili?", options: ["A) HTML", "B) Word", "C) Excel"], ans: "A" },
-                { q: "HTML dosyaları hangi uzantıyla kaydedilir?", options: ["A) .html", "B) .exe", "C) .jpg"], ans: "A" },
-                { q: "Başlık ve meta bilgilerin yazıldığı etiket?", options: ["A) <head>", "B) <body>", "C) <br>"], ans: "A" },
-                { q: "Web sitesinde görünen içeriklerin yeri?", options: ["A) <body>", "B) <title>", "C) <hr>"], ans: "A" },
-                { q: "Sayfalara stil ve renk veren dil?", options: ["A) CSS", "B) HTML", "C) USB"], ans: "A" },
-                { q: "Web sayfasına hareket katan dil?", options: ["A) JavaScript", "B) PDF", "C) PNG"], ans: "A" },
-                { q: "Paragraf oluşturma etiketi?", options: ["A) <p>", "B) <h1>", "C) <img>"], ans: "A" },
-                { q: "Resim ekleme etiketi?", options: ["A) <img>", "B) <a>", "C) <p>"], ans: "A" },
-                { q: "İnternette site gezmek için kullanılan program?", options: ["A) Tarayıcı", "B) Klavye", "C) Yazıcı"], ans: "A" },
-                { q: "Kodlama öğrenmek bize ne kazandırır?", options: ["A) Problem çözme becerisi", "B) Yemek tarifleri", "C) Şarkı söyleme"], ans: "A" }
-            ]
-        };
 
         window.onload = function() {
             const savedUser = localStorage.getItem('learnfast_user');
@@ -568,7 +490,7 @@
         function goToBranchSelection(event) {
             event.preventDefault();
             if (!document.getElementById('robotCheck').checked) {
-                alert("Lütfen robot olmadığınızı doğrulayın!");
+                alert("Bitte bestätige, dass du kein Roboter bist!");
                 return;
             }
             currentUser.name = document.getElementById('username').value;
@@ -585,13 +507,13 @@
         function completeStudentRegistration(event) {
             event.preventDefault();
             const studentBranchVal = document.getElementById('studentBranch').value.trim().toUpperCase();
-            currentUser.level = `${document.getElementById('studentClass').value} - Şube: ${studentBranchVal}`;
+            currentUser.level = `${document.getElementById('studentClass').value} - Klasse: ${studentBranchVal}`;
             currentUser.branchName = studentBranchVal;
             
-            let existing = bahcesehirStudents.find(s => s.name === currentUser.name);
+            let existing = deutschStudents.find(s => s.name === currentUser.name);
             if (!existing) {
-                bahcesehirStudents.push({ name: currentUser.name, class: studentBranchVal, readBooks: [], listenedBooks: [], doneWorks: [], doneQuizzes: [] });
-                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
+                deutschStudents.push({ name: currentUser.name, class: studentBranchVal, readBooks: [], listenedBooks: [] });
+                localStorage.setItem('deutsch_portal_students', JSON.stringify(deutschStudents));
             }
 
             localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
@@ -601,13 +523,13 @@
         function completeTeacherRegistration(event) {
             event.preventDefault();
             if (document.getElementById('teacherCode').value !== "teacher§tap") {
-                alert("Hatalı öğretmen şifresi!");
+                alert("Falscher Lehrer-Code!");
                 return;
             }
             currentUser.role = 'Teacher';
             currentUser.level = document.querySelector('input[name="branch"]:checked').value;
             currentUser.managedClass = document.getElementById('teacherClassManaged').value.trim().toUpperCase();
-            currentUser.honorific = (currentUser.name.toLowerCase().includes('hanım')) ? "Hanım" : "Bey";
+            currentUser.honorific = (currentUser.name.toLowerCase().includes('frau')) ? "Frau" : "Herr";
             localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
             showDashboard();
         }
@@ -620,25 +542,15 @@
 
             const welcomeMsg = document.getElementById('welcomeMsg');
             if (currentUser.role === 'Teacher') {
-                welcomeMsg.innerText = `Hoş geldiniz ${currentUser.name} ${currentUser.honorific}, (${currentUser.managedClass}) 👨‍🏫`;
-                const isEnglishTeacher = (currentUser.level === 'English Teacher');
-                ['Matematik', 'Türkçe', 'FenBilimleri', 'HayatBilgisi', 'Kodlama', 'Ingilizce'].forEach(subj => {
+                welcomeMsg.innerText = `Willkommen, ${currentUser.honorific} ${currentUser.name} (${currentUser.managedClass}) 🇩🇪`;
+                
+                // Almanca öğretmeni ise sadece Deutschland açık, diğerleri kilitli
+                ['Matematik', 'Turkce', 'Ingilizce'].forEach(subj => {
                     const card = document.getElementById(`card-${subj}`);
-                    if (!card) return;
-                    if (isEnglishTeacher) {
-                        if (subj === 'Ingilizce') { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
-                        else { card.classList.add('disabled-subject'); card.style.pointerEvents = 'none'; }
-                    } else {
-                        if (subj === 'Ingilizce') { card.classList.add('disabled-subject'); card.style.pointerEvents = 'none'; }
-                        else { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
-                    }
+                    if (card) { card.classList.add('disabled-subject'); card.style.pointerEvents = 'none'; }
                 });
             } else {
-                welcomeMsg.innerText = `Hoş geldin ${currentUser.name}! 🚀`;
-                ['Matematik', 'Türkçe', 'FenBilimleri', 'HayatBilgisi', 'Kodlama', 'Ingilizce'].forEach(subj => {
-                    const card = document.getElementById(`card-${subj}`);
-                    if (card) { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
-                });
+                welcomeMsg.innerText = `Willkommen, ${currentUser.name}! 🚀`;
             }
             document.getElementById('badgeInfo').innerText = `Profil: ${currentUser.level}`;
         }
@@ -658,18 +570,11 @@
             document.getElementById('subjectListArea').classList.add('hidden');
             document.getElementById('subjectDetailArea').classList.remove('hidden');
 
-            if (subjectName === 'İngilizce') {
-                document.getElementById('selectedSubjectTitle').innerText = `English Course (Efroomman)`;
-                document.getElementById('englishLibraryArea').classList.remove('hidden');
-                document.getElementById('unitSectionArea').classList.add('hidden');
-                renderEnglishLibrary();
-            } else {
-                document.getElementById('selectedSubjectTitle').innerText = `${subjectName} Dersi (6 Ünite)`;
-                document.getElementById('englishLibraryArea').classList.add('hidden');
-                document.getElementById('unitSectionArea').classList.remove('hidden');
-                renderUnits(subjectName);
+            if (subjectName === 'Deutschland') {
+                document.getElementById('selectedSubjectTitle').innerText = `Deutschland - Deutsche Bibliothek`;
+                document.getElementById('deutschlandLibraryArea').classList.remove('hidden');
+                renderGermanLibrary();
             }
-            resetChatDrawer();
         }
 
         function goBackToSubjects() {
@@ -677,348 +582,159 @@
             currentUser.currentSubject = '';
             document.getElementById('subjectDetailArea').classList.add('hidden');
             document.getElementById('subjectListArea').classList.remove('hidden');
-            resetChatDrawer();
         }
 
-        // KÜTÜPHANE VE ÖĞRETMEN ANALİZİ
-        function renderEnglishLibrary() {
+        // DEUTSCHLAND KÜTÜPHANE VE ÇİFT TİK SİSTEMİ
+        function renderGermanLibrary() {
             const container = document.getElementById('bookGridContainer');
             container.innerHTML = "";
             const isTeacher = (currentUser.role === 'Teacher');
 
-            englishBooksPool.forEach(book => {
+            let userObj = deutschStudents.find(s => s.name === currentUser.name) || { readBooks: [], listenedBooks: [] };
+
+            germanBooksPool.forEach(book => {
+                const isRead = userObj.readBooks && userObj.readBooks.includes(book.id);
+                const isListened = userObj.listenedBooks && userObj.listenedBooks.includes(book.id);
+                const isFullyDone = isRead && isListened;
+
+                let badgeText = "";
+                if (isFullyDone) badgeText = "✅✅ Gelesen & Gehört";
+                else if (isRead) badgeText = "📖 Gelesen";
+                else if (isListened) badgeText = "🎧 Gehört";
+
                 container.innerHTML += `
                     <div class="book-card">
-                        ${isTeacher ? `<div class="book-teacher-three-dots" title="Öğrenci İstatistikleri" onclick="triggerTeacherClassSelection('book', '${book.id}', '${book.title}')">⋮</div>` : ''}
+                        ${isTeacher ? `<div class="book-teacher-three-dots" title="Schülerstatistik" onclick="triggerTeacherClassSelection('${book.id}', '${book.title}')">⋮</div>` : ''}
+                        ${badgeText ? `<div class="completed-badge">${badgeText}</div>` : ''}
                         <img src="${book.img}" alt="${book.title}">
                         <h4>📖 ${book.title}</h4>
-                        <button class="action-btn" style="text-align:center; padding:7px; font-size:13px;" onclick="openBookModal('${book.id}')">📖 Read Book</button>
+                        <div style="display:flex; gap:5px; margin-top:8px;">
+                            <button class="action-btn" style="padding:6px; font-size:12px; text-align:center;" onclick="openBookModal('${book.id}', 'read')">📖 Selbst Lesen</button>
+                            <button class="action-btn" style="padding:6px; font-size:12px; text-align:center; background:#319795; color:white; border:none;" onclick="openBookModal('${book.id}', 'listen')">🎧 KI Anhören</button>
+                        </div>
                     </div>
                 `;
             });
         }
 
-        // ÖĞRETMEN BİRDEN FAZLA SINIF YÖNETİYORSA SINIF SEÇİM EKRANI
-        function triggerTeacherClassSelection(type, id, title, subject = '') {
+        function openBookModal(bookId, mode) {
+            currentBook = germanBooksPool.find(b => b.id === bookId);
+            currentBookPageIndex = 0;
+            currentBookMode = mode;
+
+            showModal(`
+                <h3>📖 ${currentBook.title} (${mode === 'read' ? 'Selbst Lesen' : 'KI Audio'})</h3>
+                <div class="unity-reader-box">
+                    <div class="unity-screen" id="bookPageDisplay">Lade Seite...</div>
+                    <div class="page-controls">
+                        <button class="page-btn" id="prevPageBtn" onclick="changeBookPage(-1)">⬅️ Zurück</button>
+                        <span id="pageTrackerText" style="font-size:14px; font-weight:bold;">Seite 1 / ${currentBook.pages.length}</span>
+                        <button class="page-btn" id="nextPageBtn" onclick="changeBookPage(1)">Weiter ➔</button>
+                    </div>
+                    <button class="btn-submit" style="background:#e53e3e; margin-top:15px;" onclick="closeModal()">Schließen</button>
+                </div>
+            `);
+            updateBookPageContent();
+        }
+
+        function updateBookPageContent() {
+            window.speechSynthesis.cancel();
+            const text = currentBook.pages[currentBookPageIndex];
+            document.getElementById('bookPageDisplay').innerHTML = `<b>Seite ${currentBookPageIndex + 1}:</b><br><br>${text}`;
+            document.getElementById('pageTrackerText').innerText = `Seite ${currentBookPageIndex + 1} / ${currentBook.pages.length}`;
+
+            document.getElementById('prevPageBtn').disabled = (currentBookPageIndex === 0);
+
+            if (currentBookMode === 'listen') {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE'; // Almanca seslendirme
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function changeBookPage(delta) {
+            currentBookPageIndex += delta;
+            if (currentBookPageIndex >= currentBook.pages.length) {
+                markBookAsCompleted(currentBook.id, currentBookMode);
+                closeModal();
+                alert(`🎉 Herzlichen Glückwunsch! Du hast "${currentBook.title}" erfolgreich abgeschlossen!`);
+                renderGermanLibrary();
+                return;
+            }
+            updateBookPageContent();
+        }
+
+        function markBookAsCompleted(bookId, mode) {
+            let userObj = deutschStudents.find(s => s.name === currentUser.name);
+            if (!userObj) {
+                userObj = { name: currentUser.name, class: currentUser.branchName || 'Allgemein', readBooks: [], listenedBooks: [] };
+                deutschStudents.push(userObj);
+            }
+
+            if (mode === 'read' && !userObj.readBooks.includes(bookId)) userObj.readBooks.push(bookId);
+            if (mode === 'listen' && !userObj.listenedBooks.includes(bookId)) userObj.listenedBooks.push(bookId);
+
+            localStorage.setItem('deutsch_portal_students', JSON.stringify(deutschStudents));
+        }
+
+        // ÖĞRETMEN ÇOKLU SINIF SEÇİMİ (ÜÇ NOKTA)
+        function triggerTeacherClassSelection(id, title) {
             const managedClasses = currentUser.managedClass.split(',').map(c => c.trim().toUpperCase()).filter(c => c);
 
             if (managedClasses.length === 1) {
-                if (type === 'book') showBookTeacherAnalytics(id, title, managedClasses[0]);
-                else showUnitAnalytics(subject, id, title, managedClasses[0]);
+                showBookTeacherAnalytics(id, title, managedClasses[0]);
             } else {
                 let btnsHtml = managedClasses.map(cls => `
-                    <button class="class-select-btn" onclick="${type === 'book' ? `showBookTeacherAnalytics('${id}', '${title}', '${cls}')` : `showUnitAnalytics('${subject}', '${id}', '${title}', '${cls}')`}">
-                        🏫 ${cls} Sınıfı Öğrencilerini İncele
+                    <button class="class-select-btn" onclick="showBookTeacherAnalytics('${id}', '${title}', '${cls}')">
+                        🏫 Klasse ${cls} Schüler anzeigen
                     </button>
                 `).join('');
 
                 showModal(`
-                    <h3>🏫 Lütfen İncelemek İstediğiniz Sınıfı Seçin</h3>
-                    <p style="color:#718096;">Yönettiğiniz sınıflar listelendi:</p>
+                    <h3>🏫 Bitte wähle eine Klasse</h3>
+                    <p style="color:#718096;">Deine verwalteten Klassen:</p>
                     <div style="margin-top:15px;">${btnsHtml}</div>
                 `);
             }
         }
 
         function showBookTeacherAnalytics(bookId, bookTitle, targetClass) {
-            const classStudents = bahcesehirStudents.filter(st => st.class.trim().toUpperCase() === targetClass);
+            const classStudents = deutschStudents.filter(st => st.class.trim().toUpperCase() === targetClass);
 
             let rowsHtml = "";
             if (classStudents.length === 0) {
-                rowsHtml = `<tr><td colspan="3" style="text-align:center; color:#718096; padding:15px;">${targetClass} şubesinde henüz kayıtlı öğrenci yok</td></tr>`;
+                rowsHtml = `<tr><td colspan="4" style="text-align:center; color:#718096; padding:15px;">Keine Schüler in Klasse ${targetClass} registriert</td></tr>`;
             } else {
                 rowsHtml = classStudents.map(st => {
                     const hasRead = st.readBooks && st.readBooks.includes(bookId);
+                    const hasListened = st.listenedBooks && st.listenedBooks.includes(bookId);
+
                     return `
                         <tr>
                             <td><b>${st.name}</b></td>
                             <td>${st.class}</td>
-                            <td><span class="status-tag ${hasRead ? 'yes' : 'no'}">${hasRead ? 'Okudu ✅' : 'Okumadı ❌'}</span></td>
+                            <td><span class="status-tag ${hasRead ? 'yes' : 'no'}">${hasRead ? 'Gelesen ✅' : 'Nicht gelesen ❌'}</span></td>
+                            <td><span class="status-tag ${hasListened ? 'yes' : 'no'}">${hasListened ? 'Gehört 🎧' : 'Nicht gehört ❌'}</span></td>
                         </tr>
                     `;
                 }).join('');
             }
 
             showModal(`
-                <h3>📊 Öğrenci Kitap Takibi (${targetClass} Şubesi)</h3>
-                <p><b>Kitap:</b> ${bookTitle}</p>
+                <h3>📊 Schülerstatistik (Klasse ${targetClass})</h3>
+                <p><b>Buch:</b> ${bookTitle}</p>
                 <table class="teacher-analytics-table">
-                    <thead><tr><th>Öğrenci Adı</th><th>Şube</th><th>Durum</th></tr></thead>
+                    <thead><tr><th>Schüler/in</th><th>Klasse</th><th>Lesen</th><th>Hören</th></tr></thead>
                     <tbody>${rowsHtml}</tbody>
                 </table>
-            `);
-        }
-
-        function renderUnits(subjectName) {
-            const container = document.getElementById('unitListContainer');
-            container.innerHTML = "";
-            const isTeacher = (currentUser.role === 'Teacher');
-            const unitTitles = unitNamesDatabase[subjectName] || [
-                "1. Temel Kavramlar", "2. Gelişmiş Konular", "3. Uygulama", "4. Problem", "5. Proje", "6. Tekrar"
-            ];
-
-            for (let i = 1; i <= 6; i++) {
-                container.innerHTML += `
-                    <div class="unit-card">
-                        <div class="unit-header" onclick="toggleUnit(${i})">
-                            <span>📌 ${unitTitles[i - 1]}</span>
-                            <span id="unitIcon-${i}">➕</span>
-                        </div>
-                        <div class="unit-body hidden" id="unitBody-${i}">
-                            <div class="action-row">
-                                <button class="action-btn" onclick="openUnityReader(${i})">📖 Unity Yazı Okuma</button>
-                                ${isTeacher ? `<button class="teacher-more-btn" onclick="triggerTeacherClassSelection('unit', ${i}, 'Yazı Okuma', '${subjectName}')">⋮</button>` : ''}
-                            </div>
-                            <div class="action-row">
-                                <button class="action-btn" onclick="startWork(${i})">📝 Ünite Çalışması (5 Soru)</button>
-                                ${isTeacher ? `<button class="teacher-more-btn" onclick="triggerTeacherClassSelection('unit', ${i}, 'Çalışma', '${subjectName}')">⋮</button>` : ''}
-                            </div>
-                            <div class="action-row">
-                                <button class="action-btn" onclick="openQuiz(${i})">🎯 Konu Tarama Testi (10 Soru)</button>
-                                ${isTeacher ? `<button class="teacher-more-btn" onclick="triggerTeacherClassSelection('unit', ${i}, 'Test', '${subjectName}')">⋮</button>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        function showUnitAnalytics(subject, unitNo, type, targetClass) {
-            const key = `${subject}_U${unitNo}`;
-            const classStudents = bahcesehirStudents.filter(st => st.class.trim().toUpperCase() === targetClass);
-
-            let rowsHtml = "";
-            if (classStudents.length === 0) {
-                rowsHtml = `<tr><td colspan="3" style="text-align:center; color:#718096; padding:15px;">${targetClass} şubesinde henüz kayıtlı öğrenci yok</td></tr>`;
-            } else {
-                rowsHtml = classStudents.map(st => {
-                    let isDone = false;
-                    if (type === 'Test') isDone = st.doneQuizzes && st.doneQuizzes.includes(key);
-                    else isDone = st.doneWorks && st.doneWorks.includes(key);
-
-                    return `
-                        <tr>
-                            <td><b>${st.name}</b></td>
-                            <td>${st.class}</td>
-                            <td><span class="status-tag ${isDone ? 'yes' : 'no'}">${isDone ? 'Tamamladı ✅' : 'Yapmadı ❌'}</span></td>
-                        </tr>
-                    `;
-                }).join('');
-            }
-
-            showModal(`
-                <h3>📊 ${subject} - Ünite ${unitNo} (${type}) Takibi</h3>
-                <p><b>Şube:</b> ${targetClass}</p>
-                <table class="teacher-analytics-table">
-                    <thead><tr><th>Öğrenci Adı</th><th>Şube</th><th>Durum</th></tr></thead>
-                    <tbody>${rowsHtml}</tbody>
-                </table>
-            `);
-        }
-
-        function toggleUnit(unitId) {
-            const body = document.getElementById(`unitBody-${unitId}`);
-            const icon = document.getElementById(`unitIcon-${unitId}`);
-            if (body.classList.contains('hidden')) {
-                body.classList.remove('hidden');
-                icon.innerText = "➖";
-            } else {
-                body.classList.add('hidden');
-                icon.innerText = "➕";
-            }
-        }
-
-        function openUnityReader(unitNo) {
-            const texts = unityReadDatabase[currentUser.currentSubject] || unityReadDatabase["Türkçe"];
-            currentUnityTexts = texts;
-            currentUnityIndex = 0;
-            showModal(`
-                <h3>📖 Ünite ${unitNo} - ${currentUser.currentSubject} Uzun Okuma</h3>
-                <div class="unity-reader-box">
-                    <div class="unity-screen" id="unityTextDisplay">Yazılar okunuyor...</div>
-                    <button class="btn-submit" style="background:#e53e3e; width:auto; padding:8px 16px;" onclick="closeModal()">Kapat</button>
-                </div>
-            `);
-            playNextUnityText();
-        }
-
-        function playNextUnityText() {
-            window.speechSynthesis.cancel();
-            if (currentUnityIndex >= currentUnityTexts.length) {
-                document.getElementById('unityTextDisplay').innerHTML += "<br><br><b>🎉 Tüm yazılar başarıyla okundu!</b>";
-                return;
-            }
-            const textToRead = currentUnityTexts[currentUnityIndex];
-            document.getElementById('unityTextDisplay').innerHTML = `<b>[Bölüm ${currentUnityIndex + 1} / ${currentUnityTexts.length}]</b><br><br>${textToRead}`;
-            const utterance = new SpeechSynthesisUtterance(textToRead);
-            utterance.lang = 'tr-TR';
-            utterance.onend = () => {
-                currentUnityIndex++;
-                if (currentUnityIndex < currentUnityTexts.length) setTimeout(playNextUnityText, 1000);
-            };
-            window.speechSynthesis.speak(utterance);
-        }
-
-        // DOKUNMATİK UYUMLU 5 SORULUK ÜNİTE ÇALIŞMASI
-        function startWork(unitNo) {
-            currentUnitId = unitNo;
-            workStep = 1;
-            workAnswers = [];
-            renderWorkQuestion(unitNo);
-        }
-
-        function renderWorkQuestion(unitNo) {
-            const list = workDatabase[currentUser.currentSubject] || workDatabase["Türkçe"];
-            const qData = list[workStep - 1];
-
-            let optionsHtml = qData.options.map(opt => `
-                <div class="draggable-item" draggable="true" ondragstart="drag(event, '${opt}')" onclick="selectItemTouch('${opt}')">${opt}</div>
-            `).join('');
-
-            showModal(`
-                <h3>📝 Ünite ${unitNo} Çalışması (${workStep} / 5)</h3>
-                <p style="font-size:16px;"><b>Soru ${workStep}:</b> ${qData.q}</p>
-                <p style="font-size:13px; color:#718096;">Bilgisayarda sürükleyin veya **dokunmatik cihazda seçeneğe dokunun**:</p>
-                <div class="drag-container">${optionsHtml}</div>
-                <div class="drop-target" id="dropArea" ondrop="drop(event)" ondragover="event.preventDefault()">Seçilen Cevap Buraya Gelecek</div>
-                <div style="margin-top:20px;">
-                    ${workStep < 5 
-                        ? `<button class="btn-submit" onclick="nextWorkQuestion()">Sonraki Soruya Geç ➔</button>`
-                        : `<button class="btn-submit" style="background:#28a745;" onclick="finishWork()">Sonuçları Gör 📊</button>`
-                    }
-                </div>
-            `);
-        }
-
-        function drag(ev, text) { draggedText = text; }
-        function drop(ev) {
-            ev.preventDefault();
-            draggedText = ev.dataTransfer.getData("text") || draggedText;
-            document.getElementById('dropArea').innerText = `Seçilen: ${draggedText}`;
-            document.getElementById('dropArea').style.background = "#e2e8f0";
-            workAnswers[workStep - 1] = draggedText;
-        }
-
-        function selectItemTouch(text) {
-            draggedText = text;
-            document.getElementById('dropArea').innerText = `Seçilen: ${draggedText}`;
-            document.getElementById('dropArea').style.background = "#e2e8f0";
-            workAnswers[workStep - 1] = draggedText;
-        }
-
-        function nextWorkQuestion() {
-            if (!workAnswers[workStep - 1]) { alert("Lütfen bir seçenek seçin!"); return; }
-            workStep++;
-            renderWorkQuestion(currentUnitId);
-        }
-
-        function finishWork() {
-            if (!workAnswers[4]) { alert("Lütfen son soruyu da cevaplayın!"); return; }
-            
-            let st = bahcesehirStudents.find(s => s.name === currentUser.name);
-            if (st) {
-                const key = `${currentUser.currentSubject}_U${currentUnitId}`;
-                if (!st.doneWorks.includes(key)) st.doneWorks.push(key);
-                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
-            }
-
-            const list = workDatabase[currentUser.currentSubject] || workDatabase["Türkçe"];
-            let html = `<h3>📊 Çalışma Sonuçları</h3>`;
-            list.forEach((item, i) => {
-                const ok = workAnswers[i] === item.correct;
-                html += `<div style="padding:8px; margin-bottom:5px; background:${ok ? '#c6f6d5' : '#fed7d7'}; border-radius:5px;">Soru ${i+1}: Sizin: ${workAnswers[i]} | Doğru: ${item.correct} ${ok ? '✅' : '❌'}</div>`;
-            });
-            html += `<button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Kapat</button>`;
-            showModal(html);
-        }
-
-        // 10 SORULUK TEST
-        function openQuiz(unitNo) {
-            currentUnitId = unitNo;
-            quizAnswers = {};
-            const list = quizDatabase[currentUser.currentSubject] || quizDatabase["Türkçe"];
-            let html = `<h3>🎯 Ünite ${unitNo} - Konu Tarama Testi (10 Soru)</h3>`;
-
-            list.forEach((item, index) => {
-                const qNum = index + 1;
-                html += `
-                    <div style="margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                        <b>Soru ${qNum}:</b> ${item.q}
-                        ${item.options.map(opt => `
-                            <div class="quiz-option" id="q_${qNum}_${opt[0]}" onclick="selectAnswer(${qNum}, '${opt[0]}')">${opt}</div>
-                        `).join('')}
-                    </div>
-                `;
-            });
-            html += `<button class="btn-submit" onclick="finishQuiz()">Testi Bitir ve Puanı Gör</button>`;
-            showModal(html);
-        }
-
-        function selectAnswer(qNum, option) {
-            quizAnswers[qNum] = option;
-            ['A', 'B', 'C'].forEach(opt => {
-                const el = document.getElementById(`q_${qNum}_${opt}`);
-                if (el) el.classList.remove('selected');
-            });
-            document.getElementById(`q_${qNum}_${option}`).classList.add('selected');
-        }
-
-        function finishQuiz() {
-            if (Object.keys(quizAnswers).length < 10) { alert("Lütfen 10 sorunun hepsini cevaplayın!"); return; }
-            
-            let st = bahcesehirStudents.find(s => s.name === currentUser.name);
-            if (st) {
-                const key = `${currentUser.currentSubject}_U${currentUnitId}`;
-                if (!st.doneQuizzes.includes(key)) st.doneQuizzes.push(key);
-                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
-            }
-
-            const list = quizDatabase[currentUser.currentSubject] || quizDatabase["Türkçe"];
-            let correctCount = 0;
-            let html = `<h3>📊 Test Sonuçları</h3>`;
-
-            list.forEach((item, index) => {
-                const qNum = index + 1;
-                const userAns = quizAnswers[qNum];
-                const isCorrect = userAns === item.ans;
-                if (isCorrect) correctCount++;
-                html += `<div style="padding:8px; margin-bottom:5px; background:${isCorrect ? '#c6f6d5' : '#fed7d7'}; border-radius:5px;">Soru ${qNum}: Sizin: ${userAns} | Doğru: ${item.ans} ${isCorrect ? '✅' : '❌'}</div>`;
-            });
-
-            html = `<h4>Toplam Doğru: ${correctCount} / 10</h4>` + html;
-            html += `<button class="btn-submit" style="margin-top:15px;" onclick="closeModal()">Tamamla</button>`;
-            showModal(html);
-        }
-
-        function openBookModal(bookId) {
-            let st = bahcesehirStudents.find(s => s.name === currentUser.name);
-            if (st) {
-                if (!st.readBooks.includes(bookId)) st.readBooks.push(bookId);
-                localStorage.setItem('bahcesehir_real_students', JSON.stringify(bahcesehirStudents));
-            }
-
-            showModal(`
-                <h3>📖 Kitap Okuma Modu</h3>
-                <div class="unity-reader-box">
-                    <div class="unity-screen">Kitap başarıyla okundu ve öğretmen analiz sistemine kaydedildi! 🎉</div>
-                    <button class="btn-submit" style="background:#28a745; width:auto; padding:8px 16px;" onclick="closeModal()">Kapat</button>
-                </div>
             `);
         }
 
         function toggleAiDrawer() { document.getElementById('aiDrawer').classList.toggle('open'); }
 
-        function resetChatDrawer() {
-            document.getElementById('aiChatBody').innerHTML = `
-                <div class="ai-message bot">
-                    Merhaba! Ben LearnFast yapay zekasıyım. Dersler hakkında sorular sorabilirsin! 💡
-                </div>
-            `;
-        }
-
         function handleUserTyping() {
             clearTimeout(typingTimer);
-            document.getElementById('typingStatus').innerText = "Yazıyorsunuz...";
+            document.getElementById('typingStatus').innerText = "Schreibt...";
             typingTimer = setTimeout(() => { document.getElementById('typingStatus').innerText = ""; }, 1000);
         }
 
@@ -1032,14 +748,13 @@
             input.value = '';
 
             setTimeout(() => {
-                let botReply = `Üzgünüm, bu dediğinizi yerine getiremiyorum ama bu dediğinizle ilgili bilgi verebilirim: "${text}" konusunda eğitim her zaman çok değerlidir!`;
-                if (text.toLowerCase().includes('merhaba') || text.toLowerCase().includes('ders')) {
-                    botReply = "Harika! LearnFast portalında ders çalışmaya ve test çözmeye devam edebilirsin.";
-                }
+                let botReply = `Hallo! Ich bin dein KI-Assistent im Deutschland-Portal. Du kannst die deutschen Bücher lesen und anhören! 🇩🇪`;
                 chatBody.innerHTML += `<div class="ai-message bot">${botReply}</div>`;
                 chatBody.scrollTop = chatBody.scrollHeight;
                 if ('speechSynthesis' in window) {
-                    window.speechSynthesis.speak(new SpeechSynthesisUtterance(botReply));
+                    const utter = new SpeechSynthesisUtterance(botReply);
+                    utter.lang = 'de-DE';
+                    window.speechSynthesis.speak(utter);
                 }
             }, 1000);
         }
@@ -1047,14 +762,14 @@
         function startVoiceRecognition() {
             if ('webkitSpeechRecognition' in window) {
                 const recognition = new webkitSpeechRecognition();
-                recognition.lang = 'tr-TR';
+                recognition.lang = 'de-DE';
                 recognition.onresult = function(event) {
                     document.getElementById('aiUserInput').value = event.results[0][0].transcript;
                     sendAiMessage();
                 };
                 recognition.start();
             } else {
-                alert("Tarayıcınız ses tanımayı desteklemiyor.");
+                alert("Dein Browser unterstützt keine Spracherkennung.");
             }
         }
 
