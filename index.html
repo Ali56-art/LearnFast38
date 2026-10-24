@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LearnFast - Deutschland Portal</title>
+    <title>LearnFast-EBA-BK-PORTAL.COM</title>
     <style>
         :root {
-            --primary: #2b6cb0;
-            --primary-dark: #2c5282;
-            --student-accent: #dd6b20;
-            --bg-gradient: linear-gradient(135deg, #2b6cb0 0%, #1a365d 100%);
+            --primary: #667eea;
+            --primary-dark: #5a6fd6;
+            --student-accent: #ff6b6b;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         body {
@@ -34,9 +34,22 @@
             transition: all 0.3s ease;
         }
 
-        .dashboard-container { max-width: 950px; }
+        .dashboard-container { max-width: 980px; }
 
         h2, h3, h4 { color: #2d3748; margin-top: 0; }
+
+        .portal-brand {
+            font-size: 20px;
+            font-weight: 800;
+            color: #2b6cb0;
+            letter-spacing: 0.5px;
+            text-align: center;
+            background: #edf2f7;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+            margin-bottom: 15px;
+        }
 
         .sub-title {
             text-align: center;
@@ -67,10 +80,10 @@
         .btn-submit:hover { background: var(--primary-dark); }
 
         .student-btn {
-            width: 100%; padding: 14px; background: linear-gradient(135deg, #dd6b20, #c05621);
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #ff6b6b, #ff8e53);
             border: none; border-radius: 8px; color: white;
             font-size: 16px; font-weight: bold; cursor: pointer; margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(221, 107, 32, 0.3);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
         }
 
         .hidden { display: none !important; }
@@ -91,29 +104,28 @@
         .header-actions { display: flex; gap: 10px; align-items: center; }
 
         .ai-assistant-btn {
-            background: linear-gradient(135deg, #319795, #285e61);
+            background: linear-gradient(135deg, #48bb78, #38a169);
             color: white; border: none; padding: 10px 15px; border-radius: 8px;
             font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px;
         }
 
         .subject-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 18px; margin-bottom: 25px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px; margin-bottom: 25px;
         }
 
         .subject-card {
             background: white; border: 2px solid #e2e8f0; border-radius: 12px;
-            padding: 25px 15px; text-align: center; cursor: pointer;
+            padding: 20px 10px; text-align: center; cursor: pointer;
             transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
             position: relative;
         }
-        .subject-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(43, 108, 176, 0.15); }
+        .subject-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15); }
         .subject-card.disabled-subject { background: #edf2f7; border-color: #cbd5e0; cursor: not-allowed; opacity: 0.4; transform: none !important; box-shadow: none !important; }
 
-        .subject-icon { font-size: 38px; margin-bottom: 10px; }
-        .subject-title { font-size: 18px; color: #2d3748; font-weight: bold; }
-        .subject-sub { font-size: 12px; color: #718096; font-weight: normal; }
-
+        .subject-icon { font-size: 34px; margin-bottom: 8px; }
+        .subject-title { font-size: 16px; color: #2d3748; font-weight: bold; }
+        
         .grade-badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: #4a5568; }
         .back-btn { background: #e2e8f0; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
 
@@ -153,7 +165,7 @@
         .input-row input { flex: 1; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 14px; }
         .input-row button { padding: 10px 14px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
-        /* DEUTSCHLAND KÜTÜPHANE */
+        /* KÜTÜPHANE VE DERSLER */
         .library-scroll-container { max-height: 540px; overflow-y: auto; padding-right: 5px; }
         .search-box-wrapper { position: relative; margin-bottom: 15px; }
         .search-box-wrapper span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; }
@@ -178,7 +190,7 @@
         .unity-screen { background: #312e81; border-radius: 8px; padding: 20px; min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 15px; color: #e0e7ff; line-height: 1.6; margin-bottom: 15px; text-align: left; }
 
         .page-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .page-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .page-btn { background: #667eea; color: white; border: none; padding: 8px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; }
         .page-btn:disabled { background: #a0aec0; cursor: not-allowed; }
 
         .teacher-analytics-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
@@ -194,140 +206,169 @@
             width: 100%; text-align: center; font-size: 15px; transition: all 0.2s;
         }
         .class-select-btn:hover { background: var(--primary); color: white; }
+
+        .unit-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .unit-card { border: 2px solid #e2e8f0; border-radius: 10px; background: #ffffff; overflow: hidden; }
+        .unit-header { background: #f8fafc; padding: 16px 20px; font-weight: bold; font-size: 16px; color: #2d3748; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .unit-body { padding: 20px; background: #faf5ff; border-top: 1px dashed #cbd5e0; }
+        .action-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        .action-btn { background: white; border: 2px solid var(--primary); color: var(--primary); padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; flex: 1; text-align: left; min-width: 180px; }
+        .action-btn:hover { background: var(--primary); color: white; }
     </style>
 </head>
 <body>
 
     <!-- 1. GİRİŞ EKRANI -->
     <div class="card-container" id="loginStep">
-        <h2 style="text-align: center;">LearnFast Portal</h2>
-        <div class="sub-title">🏫 Deutschland & Sprachen</div>
+        <div class="portal-brand">🌐 LearnFast-EBA-BK-PORTAL.COM</div>
+        <div class="sub-title">Giriş Yap ve Eğitime Başla</div>
         
         <form onsubmit="goToBranchSelection(event)">
             <div class="input-group">
-                <label for="username">Benutzername (Ad Soyad)</label>
-                <input type="text" id="username" required placeholder="Vorname Nachname">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text" id="username" required placeholder="Adınız Soyadınız">
             </div>
             
             <div class="input-group">
-                <label for="email">E-Mail-Adresse</label>
-                <input type="email" id="email" required placeholder="ornek@schulportal.de">
+                <label for="email">E-posta Adresi</label>
+                <input type="email" id="email" required placeholder="ornek@eba.gov.tr">
             </div>
 
             <div class="input-group">
-                <label for="password">Passwort</label>
+                <label for="password">Şifre</label>
                 <input type="password" id="password" required placeholder="••••••••">
             </div>
 
             <div class="captcha-box">
                 <input type="checkbox" id="robotCheck" required>
-                <label for="robotCheck">Ich bin kein Roboter</label>
+                <label for="robotCheck">Ben robot değilim</label>
             </div>
 
-            <button type="submit" class="btn-submit">Weiter ➔</button>
+            <button type="submit" class="btn-submit">Devam Et ➔</button>
         </form>
     </div>
 
     <!-- 2. ROL SEÇİM EKRANI -->
     <div class="card-container hidden" id="roleStep">
-        <h2 style="text-align: center;">Willkommen! 👋</h2>
-        <p class="sub-title">Bitte wähle deine Rolle im Portal</p>
+        <div class="portal-brand">🌐 LearnFast-EBA-BK-PORTAL.COM</div>
+        <p class="sub-title">Lütfen platformdaki rolünüzü seçin</p>
 
         <button type="button" class="student-btn" onclick="startStudentFlow()">
-            🎓 Ich bin Schüler/in
+            🎓 Ben Öğrenciyim
         </button>
 
-        <div class="divider">ODER LEHRER-ANMELDUNG</div>
+        <div class="divider">VEYA ÖĞRETMEN GİRİŞİ</div>
 
         <form onsubmit="completeTeacherRegistration(event)">
             <div class="input-group">
-                <label>Fachbereich / Lehrkraft</label>
-                <div class="option-card"><input type="radio" name="branch" id="germanTeacher" value="Deutsch Lehrerin" required><label for="germanTeacher">🇩🇪 Deutsch Lehrerin / Lehrer</label></div>
-                <div class="option-card"><input type="radio" name="branch" id="english" value="English Teacher"><label for="english">🇬🇧 English Teacher</label></div>
+                <label>Branşınız</label>
+                <div class="option-card"><input type="radio" name="branch" id="deutschTeacher" value="Deutsch Lehrerin" required><label for="deutschTeacher">🇩🇪 Almanca Öğretmeni (Deutschlance)</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="englishTeacher" value="English Teacher"><label for="englishTeacher">🇬🇧 İngilizce Öğretmeni</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="turkishTeacher" value="Türkçe Öğretmeni"><label for="turkishTeacher">📚 Türkçe Öğretmeni</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="mathTeacher" value="Matematik Öğretmeni"><label for="mathTeacher">📐 Matematik Öğretmeni</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="scienceTeacher" value="Fen Bilimleri Öğretmeni"><label for="scienceTeacher">🔬 Fen Bilimleri Öğretmeni</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="lifeTeacher" value="Hayat Bilgisi Öğretmeni"><label for="lifeTeacher">🌱 Hayat Bilgisi Öğretmeni</label></div>
+                <div class="option-card"><input type="radio" name="branch" id="codingTeacher" value="Kodlama Öğretmeni"><label for="codingTeacher">💻 Kodlama Öğretmeni</label></div>
             </div>
 
             <div class="input-group">
-                <label for="teacherClassManaged">Verwaltete Klassen (Mit Komma getrennt, z.B. 9A, 9B, 10C)</label>
-                <input type="text" id="teacherClassManaged" required placeholder="z.B. 9A, 9B, 10C">
+                <label for="teacherClassManaged">Yönettiğiniz Sınıf / Şubeler (Virgülle ayırın, Örn: 3A, 3B, 9C)</label>
+                <input type="text" id="teacherClassManaged" required placeholder="Örn: 3A, 3B, 9C">
             </div>
 
             <div class="input-group">
-                <label for="teacherCode">Lehrer-Sicherheitscode</label>
+                <label for="teacherCode">Öğretmen Güvenlik Şifresi</label>
                 <input type="password" id="teacherCode" placeholder="••••••••" required>
             </div>
 
-            <button type="submit" class="btn-submit">Lehrer-Anmeldung Abschließen</button>
+            <button type="submit" class="btn-submit">Öğretmen Girişini Tamamla</button>
         </form>
     </div>
 
     <!-- 3. ÖĞRENCİ SEVİYE EKRANI -->
     <div class="card-container hidden" id="studentStep">
-        <h2 style="text-align: center;">Schüler-Informationen 🎓</h2>
-        <p class="sub-title">Wähle dein Niveau für maßgeschneiderte Inhalte</p>
+        <div class="portal-brand">🌐 LearnFast-EBA-BK-PORTAL.COM</div>
+        <p class="sub-title">Sana özel içerikleri hazırlayabilmemiz için seviyeni seç</p>
 
         <form onsubmit="completeStudentRegistration(event)">
             <div class="input-group">
-                <label for="studentClass">Klasse / Niveau</label>
+                <label for="studentClass">Sınıfınız / Seviyeniz</label>
                 <select id="studentClass" required>
-                    <option value="">Bitte wählen...</option>
-                    <option value="9. Klasse">9. Klasse</option>
-                    <option value="10. Klasse">10. Klasse</option>
-                    <option value="Oberstufe">Oberstufe (Gymnasium)</option>
+                    <option value="">Seçiniz...</option>
+                    <option value="3. Sınıf">3. Sınıf</option>
+                    <option value="4. Sınıf">4. Sınıf</option>
+                    <option value="5. Sınıf">5. Sınıf</option>
+                    <option value="9. Sınıf">9. Sınıf</option>
+                    <option value="10. Sınıf">10. Sınıf</option>
                 </select>
             </div>
 
             <div class="input-group">
-                <label for="studentBranch">Klasse / Gruppe (z.B. 9A, 10B)</label>
-                <input type="text" id="studentBranch" required placeholder="z.B. 9A oder 10B">
+                <label for="studentBranch">Şubeniz (3A, 9B vb.)</label>
+                <input type="text" id="studentBranch" required placeholder="Örn: 3A veya 9B">
             </div>
 
-            <button type="submit" class="btn-submit">Zum Portal 🚀</button>
+            <button type="submit" class="btn-submit">Platforma Giriş Yap 🚀</button>
         </form>
     </div>
 
     <!-- 4. ANA DERS EKRANI -->
     <div class="card-container dashboard-container hidden" id="dashboardStep">
+        <div class="portal-brand" style="text-align: left; background: transparent; border: none; padding: 0; margin-bottom: 10px;">
+            🌐 LearnFast-EBA-BK-PORTAL.COM
+        </div>
         <div class="welcome-header">
             <div>
                 <h3 id="welcomeMsg" style="margin:0; text-align:left;"></h3>
                 <span id="badgeInfo" class="grade-badge"></span>
             </div>
             <div class="header-actions">
-                <button class="ai-assistant-btn" id="aiBtnText" onclick="toggleAiDrawer()">🤖 KI-Assistent</button>
-                <button onclick="logoutApp()" style="padding: 8px 12px; background:#e2e8f0; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Abmelden</button>
+                <button class="ai-assistant-btn" id="aiBtnText" onclick="toggleAiDrawer()">🤖 Öğretici Yapay Zeka</button>
+                <button onclick="logoutApp()" style="padding: 8px 12px; background:#e2e8f0; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Çıkış Yap</button>
             </div>
         </div>
 
         <div id="subjectListArea">
-            <h3 style="text-align: left; margin-bottom: 15px;">Wähle deine Plattform</h3>
+            <h3 style="text-align: left; margin-bottom: 15px;">Dersler ve Platformlar</h3>
             <div class="subject-grid">
-                <div class="subject-card" id="card-Deutschland" onclick="openSubjectDetail('Deutschland')">
+                <div class="subject-card" id="card-Deutschlance" onclick="openSubjectDetail('Deutschlance')">
                     <div class="subject-icon">🇩🇪</div>
-                    <div class="subject-title">Deutschland</div>
-                    <div class="subject-sub">(Deutsche Bibliothek)</div>
+                    <div class="subject-title">Deutschlance</div>
                 </div>
                 <div class="subject-card" id="card-Matematik" onclick="openSubjectDetail('Matematik')">
                     <div class="subject-icon">📐</div>
-                    <div class="subject-title">Mathematik</div>
+                    <div class="subject-title">Matematik</div>
                 </div>
-                <div class="subject-card" id="card-Turkce" onclick="openSubjectDetail('Türkçe')">
+                <div class="subject-card" id="card-Türkçe" onclick="openSubjectDetail('Türkçe')">
                     <div class="subject-icon">📚</div>
                     <div class="subject-title">Türkçe</div>
                 </div>
-                <div class="subject-card" id="card-Ingilizce" onclick="openSubjectDetail('İngilizce')">
+                <div class="subject-card" id="card-FenBilimleri" onclick="openSubjectDetail('Fen Bilimleri')">
+                    <div class="subject-icon">🔬</div>
+                    <div class="subject-title">Fen Bilimleri</div>
+                </div>
+                <div class="subject-card" id="card-HayatBilgisi" onclick="openSubjectDetail('Hayat Bilgisi')">
+                    <div class="subject-icon">🌱</div>
+                    <div class="subject-title">Hayat Bilgisi</div>
+                </div>
+                <div class="subject-card" id="card-İngilizce" onclick="openSubjectDetail('İngilizce')">
                     <div class="subject-icon">🇬🇧</div>
-                    <div class="subject-title">English</div>
+                    <div class="subject-title">İngilizce</div>
+                </div>
+                <div class="subject-card" id="card-Kodlama" onclick="openSubjectDetail('Kodlama')">
+                    <div class="subject-icon">💻</div>
+                    <div class="subject-title">Kodlama</div>
                 </div>
             </div>
         </div>
 
         <div id="subjectDetailArea" class="hidden">
-            <button class="back-btn" id="backBtnText" onclick="goBackToSubjects()">⬅️ Zurück zur Übersicht</button>
+            <button class="back-btn" id="backBtnText" onclick="goBackToSubjects()">⬅️ Platformlara Geri Dön</button>
             <h3 id="selectedSubjectTitle" style="text-align: left; color: var(--primary);"></h3>
 
-            <!-- DEUTSCHLAND KÜTÜPHANE -->
+            <!-- DEUTSCHLANCE KÜTÜPHANE -->
             <div id="deutschlandLibraryArea" class="hidden">
-                <p style="color: #4a5568; font-weight: bold; margin-bottom: 8px;">📚 Deutschland Lesebibliothek - Lesen & Hören (Unendlicher Zyklus)</p>
+                <p style="color: #4a5568; font-weight: bold; margin-bottom: 8px;">📚 Deutschlance Lesebibliothek - Lesen & Hören (Unendlicher Zyklus)</p>
                 <div class="search-box-wrapper">
                     <span>🔍</span>
                     <input type="text" id="bookSearchInput" class="search-box-input" placeholder="Buchtitel suchen..." oninput="filterGermanBooks()">
@@ -336,22 +377,28 @@
                     <div class="book-grid" id="bookGridContainer"></div>
                 </div>
             </div>
+
+            <!-- DİĞER DERSLER İÇİN ÜNİTELER -->
+            <div id="unitSectionArea" class="hidden">
+                <p style="color: #718096; font-size: 14px;">Çalışmak istediğiniz üniteye tıklayın:</p>
+                <div class="unit-list" id="unitListContainer"></div>
+            </div>
         </div>
     </div>
 
-    <!-- AI PANELİ -->
+    <!-- YAPAY ZEKA PANELİ -->
     <div class="ai-drawer" id="aiDrawer">
         <div class="ai-drawer-header">
-            <span id="aiHeaderTitle">🤖 KI-Assistent (Deutschland)</span>
+            <span id="aiHeaderTitle">🤖 Öğretici Yapay Zeka</span>
             <button class="ai-close-btn" onclick="toggleAiDrawer()">✕</button>
         </div>
         <div class="ai-chat-body" id="aiChatBody"></div>
         <div class="typing-indicator" id="typingStatus"></div>
         <div class="ai-drawer-footer">
             <div class="input-row">
-                <input type="text" id="aiUserInput" placeholder="Schreibe eine Nachricht auf Deutsch..." oninput="handleUserTyping()" onkeypress="if(event.key === 'Enter') sendAiMessage()">
-                <button onclick="startVoiceRecognition()" title="Spracheingabe">🎤</button>
-                <button id="sendBtnText" onclick="sendAiMessage()">Senden</button>
+                <input type="text" id="aiUserInput" placeholder="Mesajınızı yazın..." oninput="handleUserTyping()" onkeypress="if(event.key === 'Enter') sendAiMessage()">
+                <button onclick="startVoiceRecognition()" title="Sesli Konuşma">🎤</button>
+                <button id="sendBtnText" onclick="sendAiMessage()">Gönder</button>
             </div>
         </div>
     </div>
@@ -367,32 +414,31 @@
     <script>
         let currentUser = { name: '', role: '', level: '', currentSubject: '', managedClass: '', honorific: '' };
         let typingTimer;
-        
         let currentBook = null;
         let currentBookPageIndex = 0;
-        let currentBookMode = ''; // 'read' or 'listen'
+        let currentBookMode = '';
 
-        let deutschStudents = JSON.parse(localStorage.getItem('deutsch_portal_students')) || [
-            { name: "Maximilian Bauer", class: "9A", readBooks: ["db1"], listenedBooks: ["db1"] },
-            { name: "Anna Schmidt", class: "9B", readBooks: ["db1"], listenedBooks: [] }
+        let deutschStudents = JSON.parse(localStorage.getItem('deutschlance_portal_students')) || [
+            { name: "Ahmet Yılmaz", class: "3A", readBooks: ["db1"], listenedBooks: ["db1"] },
+            { name: "Maximilian Bauer", class: "9A", readBooks: ["db1"], listenedBooks: [] }
         ];
 
-        // ALMANCA 10 ADET UZUN SAYFALI (11-15 SAYFA) KİTAP HAVUZU
+        // 10 ADET ALMANCA KİTAP (DEUTSCHLANCE)
         let germanBooksPool = [
             {
                 id: "db1", title: "Das Geheimnis des alten Schlosses",
                 img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80",
                 pages: [
-                    "Kapitel 1: Tief im finsteren Schwarzwald stand ein verlassenes, moosbewachsenes Schloss aus dem Mittelalter.",
-                    "Jeden Abend erzählten die Dorfbewohner geheimnisvolle Geschichten über verborgene Schätze im Keller.",
-                    "Kapitel 2: Der junge Schüler Jonas beschloss eines Wochenendes, das alte Schloss mutig zu erforschen.",
-                    "Er packte eine Taschenlampe, eine alte Landkarte und etwas Proviant in seinen kleinen Wanderrucksack.",
-                    "Kapitel 3: Als Jonas das schwere Eisentor öffnete, knarrte es laut in der abendlichen Stille.",
-                    "Drinnen roch es nach feuchtem Stein, alten Pergamentblättern und jahrzehntelanger Geschichte.",
-                    "Kapitel 4: Er ging eine lange Wendeltreppe hinab, die tief in die unterirdischen Gewölbe führte.",
-                    "Plötzlich entdeckte sein Taschenlampenlicht eine versteckte Holztür hinter dicken Spinnweben.",
-                    "Kapitel 5: In der Truhe lag ein glänzendes goldenes Buch mit magischen Runen auf dem Buchdeckel.",
-                    "Jonas lächelte glücklich, denn er wusste, dass dieses Abenteuer erst der wahre Anfang war."
+                    "Kapitel 1: Tief im finsteren Schwarzwald stand ein verlassenes Schloss aus dem Mittelalter.",
+                    "Jeden Abend erzählten die Dorfbewohner geheimnisvolle Geschichten über Schätze im Keller.",
+                    "Kapitel 2: Der junge Schüler Jonas beschloss eines Wochenendes, das alte Schloss zu erforschen.",
+                    "Er packte eine Taschenlampe, eine alte Landkarte und Proviant in seinen Rucksack.",
+                    "Kapitel 3: Als Jonas das schwere Eisentor öffnete, knarrte es laut in der Abendstille.",
+                    "Drinnen roch es nach feuchtem Stein und jahrzehntelanger Geschichte.",
+                    "Kapitel 4: Er ging eine lange Wendeltreppe hinab in die unterirdischen Gewölbe.",
+                    "Plötzlich entdeckte sein Lichtstrahl eine versteckte Holztür hinter Spinnweben.",
+                    "Kapitel 5: In der Truhe lag ein glänzendes goldenes Buch mit magischen Runen.",
+                    "Jonas lächelte glücklich über den Beginn seines großen Abenteuers."
                 ]
             },
             {
@@ -400,81 +446,73 @@
                 img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&auto=format&fit=crop&q=80",
                 pages: [
                     "Kapitel 1: Die bayerischen Alpen glänzten im strahlenden Morgenlicht weiß und prachtvoll.",
-                    "Klara und ihr treuer Hund Bruno machten sich bereit für eine lange Bergwanderung.",
-                    "Kapitel 2: Sie wanderten entlang grüner Almwiesen, wo glückliche Kühe friedlich ihre Glocken läuteten.",
+                    "Klara und ihr Hund Bruno machten sich bereit für eine lange Bergwanderung.",
+                    "Kapitel 2: Sie wanderten entlang grüner Almwiesen mit friedlichen Kuhglocken.",
                     "Der kühle Wind wehte sanft durch die frische, klare Bergluft.",
-                    "Kapitel 3: Auf dem Gipfel angekommen, genossen sie einen atemberaubenden Blick über das ganze Tal.",
-                    "Sie packten ihre Brotzeit aus und tranken frischen Apfelsaft aus der Feldflasche."
+                    "Kapitel 3: Auf dem Gipfel genossen sie den atemberaubenden Blick über das Tal."
                 ]
             },
             {
                 id: "db3", title: "Das kleine Café in Berlin",
                 img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=300&auto=format&fit=crop&q=80",
                 pages: [
-                    "Kapitel 1: mitten im lebendigen Berlin-Mitte befand sich ein gemütliches, kleines Literaturcafé.",
-                    "Der Duft von frisch gebackenem Apfelkuchen und aromatischem Kaffee zog durch die Straße.",
-                    "Kapitel 2: Jede Woche trafen sich dort junge Künstler, Dichter und Denker zum kreativen Austausch.",
-                    "Sie lasen sich gegenseitig spannende Geschichten vor und diskutierten über Kunst und Philosophie."
+                    "Kapitel 1: Mitten in Berlin-Mitte befand sich ein gemütliches Literaturcafé.",
+                    "Der Duft von Apfelkuchen und Kaffee zog durch die Straße.",
+                    "Kapitel 2: Junge Künstler trafen sich dort zum kreativen Gedankenaustausch."
                 ]
             },
             {
                 id: "db4", title: "Abenteuer an der Nordsee",
                 img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&auto=format&fit=crop&q=80",
                 pages: [
-                    "Kapitel 1: Die Nordsee zeigte sich von ihrer stürmischen und faszinierenden Seite.",
-                    "Tim und Mia liefen barfuß über das feuchte Watt bei Ebbe und suchten nach Muscheln.",
-                    "Kapitel 2: Eine neugierige Möwe flog kreisend über ihre Köpfe hinweg und rief laut.",
-                    "Im flachen Wasser entdeckten sie kleine Krabben, die sich schnell im Sand versteckten."
+                    "Kapitel 1: Die Nordsee zeigte sich von ihrer stürmischen Seite.",
+                    "Tim und Mia liefen barfuß über das feuchte Watt und suchten Muscheln.",
+                    "Kapitel 2: Eine neugierige Möwe flog kreisend über ihre Köpfe."
                 ]
             },
             {
                 id: "db5", title: "Der magische Weihnachtsmarkt",
                 img: "https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?w=300&auto=format&fit=crop&q=80",
                 pages: [
-                    "Kapitel 1: Schneeflocken fielen sanft auf den historischen Nürnberger Christkindlesmarkt.",
-                    "Überall leuchteten festliche Lichterketten und roch es nach gebrannten Mandeln.",
-                    "Kapitel 2: Die Kinder staunten über handgemachte Holzspielzeuge und den warmen Kinderpunsch."
+                    "Kapitel 1: Schneeflocken fielen auf den Nürnberger Christkindlesmarkt.",
+                    "Überall leuchteten Lichterketten und es roch nach gebrannten Mandeln."
                 ]
             },
             {
                 id: "db6", title: "Rätsel im Museum",
                 img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&auto=format&fit=crop&q=80",
                 pages: [
-                    "Kapitel 1: Im großen Deutschen Museum in München schien die Zeit stillzustehen.",
-                    "Ein wertvolles historisches Gemälde war spurlos aus dem Ausstellungsraum verschwunden.",
-                    "Kapitel 2: Kommissar Weber begann sofort mit den Ermittlungen und fand geheimnisvolle Spuren."
+                    "Kapitel 1: Im Deutschen Museum in München schien die Zeit stillzustehen.",
+                    "Ein wertvolles Gemälde war spurlos verschwunden."
                 ]
             },
             {
                 id: "db7", title: "Die blaue Blume",
                 img: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&auto=format&fit=crop&q=80",
                 pages: [
-                    "Kapitel 1: In einem verzauberten Garten blühte einmal im Jahr eine seltene blaue Blume.",
-                    "Wer diese Blume fand, dem sollte angeblich ein Herzenswunsch erfüllt werden."
+                    "Kapitel 1: In einem verzauberten Garten blühte eine seltene blaue Blume.",
+                    "Wer sie fand, dem wurde ein Wunsch erfüllt."
                 ]
             },
             {
                 id: "db8", title: "Fahrradtour am Rhein",
                 img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80",
                 pages: [
-                    "Kapitel 1: Entlang des Rheins radelten die Freunde vorbei an steilen Weinbergen und Burgen.",
-                    "Die Sonne wärmte ihre Gesichter, während der Fluss majestätisch neben ihnen floss."
+                    "Kapitel 1: Entlang des Rheins radelten Freunde vorbei an Burgen und Weinbergen."
                 ]
             },
             {
                 id: "db9", title: "Der Roboter aus der Zukunft",
                 img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&auto=format&fit=crop&q=80",
                 pages: [
-                    "Kapitel 1: In einem Frankfurter Labor erwachte plötzlich ein kleiner, silberner Roboter zum Leben.",
-                    "Er sprach fließend Deutsch und wollte unbedingt die menschliche Kultur kennenlernen."
+                    "Kapitel 1: In einem Labor erwachte ein silberner Roboter zum Leben und sprach Deutsch."
                 ]
             },
             {
                 id: "db10", title: "Sommernacht in München",
                 img: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=300&auto=format&fit=crop&q=80",
                 pages: [
-                    "Kapitel 1: Der Englische Garten in München war an diesem lauen Sommerabend voller Musik und Lachen.",
-                    "Musiker spielten Gitarre am Chinesischen Turm, während die Sterne am Himmel funkelten."
+                    "Kapitel 1: Der Englische Garten war voller Musik, Gitarrenklängen und Lachen."
                 ]
             }
         ];
@@ -490,7 +528,7 @@
         function goToBranchSelection(event) {
             event.preventDefault();
             if (!document.getElementById('robotCheck').checked) {
-                alert("Bitte bestätige, dass du kein Roboter bist!");
+                alert("Lütfen robot olmadığınızı doğrulayın!");
                 return;
             }
             currentUser.name = document.getElementById('username').value;
@@ -507,13 +545,13 @@
         function completeStudentRegistration(event) {
             event.preventDefault();
             const studentBranchVal = document.getElementById('studentBranch').value.trim().toUpperCase();
-            currentUser.level = `${document.getElementById('studentClass').value} - Klasse: ${studentBranchVal}`;
+            currentUser.level = `${document.getElementById('studentClass').value} - Şube: ${studentBranchVal}`;
             currentUser.branchName = studentBranchVal;
             
             let existing = deutschStudents.find(s => s.name === currentUser.name);
             if (!existing) {
                 deutschStudents.push({ name: currentUser.name, class: studentBranchVal, readBooks: [], listenedBooks: [] });
-                localStorage.setItem('deutsch_portal_students', JSON.stringify(deutschStudents));
+                localStorage.setItem('deutschlance_portal_students', JSON.stringify(deutschStudents));
             }
 
             localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
@@ -523,13 +561,13 @@
         function completeTeacherRegistration(event) {
             event.preventDefault();
             if (document.getElementById('teacherCode').value !== "teacher§tap") {
-                alert("Falscher Lehrer-Code!");
+                alert("Hatalı öğretmen şifresi!");
                 return;
             }
             currentUser.role = 'Teacher';
             currentUser.level = document.querySelector('input[name="branch"]:checked').value;
             currentUser.managedClass = document.getElementById('teacherClassManaged').value.trim().toUpperCase();
-            currentUser.honorific = (currentUser.name.toLowerCase().includes('frau')) ? "Frau" : "Herr";
+            currentUser.honorific = (currentUser.name.toLowerCase().includes('hanım') || currentUser.name.toLowerCase().includes('frau')) ? "Hanım" : "Bey";
             localStorage.setItem('learnfast_user', JSON.stringify(currentUser));
             showDashboard();
         }
@@ -541,16 +579,35 @@
             document.getElementById('dashboardStep').classList.remove('hidden');
 
             const welcomeMsg = document.getElementById('welcomeMsg');
+            const allSubjects = ['Deutschlance', 'Matematik', 'Türkçe', 'FenBilimleri', 'HayatBilgisi', 'İngilizce', 'Kodlama'];
+
             if (currentUser.role === 'Teacher') {
-                welcomeMsg.innerText = `Willkommen, ${currentUser.honorific} ${currentUser.name} (${currentUser.managedClass}) 🇩🇪`;
-                
-                // Almanca öğretmeni ise sadece Deutschland açık, diğerleri kilitli
-                ['Matematik', 'Turkce', 'Ingilizce'].forEach(subj => {
-                    const card = document.getElementById(`card-${subj}`);
-                    if (card) { card.classList.add('disabled-subject'); card.style.pointerEvents = 'none'; }
+                welcomeMsg.innerText = `Hoş geldiniz ${currentUser.name} ${currentUser.honorific}, (${currentUser.managedClass}) 👨‍🏫`;
+                const teacherBranch = currentUser.level;
+
+                allSubjects.forEach(subj => {
+                    const cardId = `card-${subj === 'Fen Bilimleri' ? 'FenBilimleri' : subj === 'Hayat Bilgisi' ? 'HayatBilgisi' : subj}`;
+                    const card = document.getElementById(cardId);
+                    if (!card) return;
+
+                    if (teacherBranch === 'Deutsch Lehrerin') {
+                        if (subj === 'Deutschlance') { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
+                        else { card.classList.add('disabled-subject'); card.style.pointerEvents = 'none'; }
+                    } else if (teacherBranch === 'English Teacher') {
+                        if (subj === 'İngilizce') { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
+                        else { card.classList.add('disabled-subject'); card.style.pointerEvents = 'none'; }
+                    } else {
+                        if (subj === teacherBranch.split(' ')[0]) { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
+                        else { card.classList.add('disabled-subject'); card.style.pointerEvents = 'none'; }
+                    }
                 });
             } else {
-                welcomeMsg.innerText = `Willkommen, ${currentUser.name}! 🚀`;
+                welcomeMsg.innerText = `Hoş geldin ${currentUser.name}! 🚀`;
+                allSubjects.forEach(subj => {
+                    const cardId = `card-${subj === 'Fen Bilimleri' ? 'FenBilimleri' : subj === 'Hayat Bilgisi' ? 'HayatBilgisi' : subj}`;
+                    const card = document.getElementById(cardId);
+                    if (card) { card.classList.remove('disabled-subject'); card.style.pointerEvents = 'auto'; }
+                });
             }
             document.getElementById('badgeInfo').innerText = `Profil: ${currentUser.level}`;
         }
@@ -570,10 +627,16 @@
             document.getElementById('subjectListArea').classList.add('hidden');
             document.getElementById('subjectDetailArea').classList.remove('hidden');
 
-            if (subjectName === 'Deutschland') {
-                document.getElementById('selectedSubjectTitle').innerText = `Deutschland - Deutsche Bibliothek`;
+            if (subjectName === 'Deutschlance') {
+                document.getElementById('selectedSubjectTitle').innerText = `Deutschlance - Deutsche Bibliothek`;
                 document.getElementById('deutschlandLibraryArea').classList.remove('hidden');
+                document.getElementById('unitSectionArea').classList.add('hidden');
                 renderGermanLibrary();
+            } else {
+                document.getElementById('selectedSubjectTitle').innerText = `${subjectName} Dersi (EBA Modülü)`;
+                document.getElementById('deutschlandLibraryArea').classList.add('hidden');
+                document.getElementById('unitSectionArea').classList.remove('hidden');
+                renderGenericUnits(subjectName);
             }
         }
 
@@ -584,7 +647,6 @@
             document.getElementById('subjectListArea').classList.remove('hidden');
         }
 
-        // DEUTSCHLAND KÜTÜPHANE VE ÇİFT TİK SİSTEMİ
         function renderGermanLibrary() {
             const container = document.getElementById('bookGridContainer');
             container.innerHTML = "";
@@ -610,7 +672,7 @@
                         <h4>📖 ${book.title}</h4>
                         <div style="display:flex; gap:5px; margin-top:8px;">
                             <button class="action-btn" style="padding:6px; font-size:12px; text-align:center;" onclick="openBookModal('${book.id}', 'read')">📖 Selbst Lesen</button>
-                            <button class="action-btn" style="padding:6px; font-size:12px; text-align:center; background:#319795; color:white; border:none;" onclick="openBookModal('${book.id}', 'listen')">🎧 KI Anhören</button>
+                            <button class="action-btn" style="padding:6px; font-size:12px; text-align:center; background:#48bb78; color:white; border:none;" onclick="openBookModal('${book.id}', 'listen')">🎧 KI Anhören</button>
                         </div>
                     </div>
                 `;
@@ -642,12 +704,11 @@
             const text = currentBook.pages[currentBookPageIndex];
             document.getElementById('bookPageDisplay').innerHTML = `<b>Seite ${currentBookPageIndex + 1}:</b><br><br>${text}`;
             document.getElementById('pageTrackerText').innerText = `Seite ${currentBookPageIndex + 1} / ${currentBook.pages.length}`;
-
             document.getElementById('prevPageBtn').disabled = (currentBookPageIndex === 0);
 
             if (currentBookMode === 'listen') {
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'de-DE'; // Almanca seslendirme
+                utterance.lang = 'de-DE';
                 window.speechSynthesis.speak(utterance);
             }
         }
@@ -674,10 +735,9 @@
             if (mode === 'read' && !userObj.readBooks.includes(bookId)) userObj.readBooks.push(bookId);
             if (mode === 'listen' && !userObj.listenedBooks.includes(bookId)) userObj.listenedBooks.push(bookId);
 
-            localStorage.setItem('deutsch_portal_students', JSON.stringify(deutschStudents));
+            localStorage.setItem('deutschlance_portal_students', JSON.stringify(deutschStudents));
         }
 
-        // ÖĞRETMEN ÇOKLU SINIF SEÇİMİ (ÜÇ NOKTA)
         function triggerTeacherClassSelection(id, title) {
             const managedClasses = currentUser.managedClass.split(',').map(c => c.trim().toUpperCase()).filter(c => c);
 
@@ -708,7 +768,6 @@
                 rowsHtml = classStudents.map(st => {
                     const hasRead = st.readBooks && st.readBooks.includes(bookId);
                     const hasListened = st.listenedBooks && st.listenedBooks.includes(bookId);
-
                     return `
                         <tr>
                             <td><b>${st.name}</b></td>
@@ -730,11 +789,26 @@
             `);
         }
 
+        function renderGenericUnits(subjectName) {
+            const container = document.getElementById('unitListContainer');
+            container.innerHTML = "";
+            for (let i = 1; i <= 6; i++) {
+                container.innerHTML += `
+                    <div class="unit-card">
+                        <div class="unit-header"><span>📌 ${subjectName} - ${i}. Ünite</span></div>
+                        <div class="unit-body">
+                            <button class="action-btn" onclick="alert('${subjectName} ${i}. ünite çalışması yüklendi!')">📖 Ünite İçeriği ve Konu Anlatımı</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
         function toggleAiDrawer() { document.getElementById('aiDrawer').classList.toggle('open'); }
 
         function handleUserTyping() {
             clearTimeout(typingTimer);
-            document.getElementById('typingStatus').innerText = "Schreibt...";
+            document.getElementById('typingStatus').innerText = "Yazıyorsunuz...";
             typingTimer = setTimeout(() => { document.getElementById('typingStatus').innerText = ""; }, 1000);
         }
 
@@ -748,13 +822,11 @@
             input.value = '';
 
             setTimeout(() => {
-                let botReply = `Hallo! Ich bin dein KI-Assistent im Deutschland-Portal. Du kannst die deutschen Bücher lesen und anhören! 🇩🇪`;
+                let botReply = `Merhaba! LearnFast-EBA-BK-PORTAL.COM üzerinden ders çalışmaya ve kitap okumaya devam edebilirsin! 💡`;
                 chatBody.innerHTML += `<div class="ai-message bot">${botReply}</div>`;
                 chatBody.scrollTop = chatBody.scrollHeight;
                 if ('speechSynthesis' in window) {
-                    const utter = new SpeechSynthesisUtterance(botReply);
-                    utter.lang = 'de-DE';
-                    window.speechSynthesis.speak(utter);
+                    window.speechSynthesis.speak(new SpeechSynthesisUtterance(botReply));
                 }
             }, 1000);
         }
@@ -762,14 +834,14 @@
         function startVoiceRecognition() {
             if ('webkitSpeechRecognition' in window) {
                 const recognition = new webkitSpeechRecognition();
-                recognition.lang = 'de-DE';
+                recognition.lang = 'tr-TR';
                 recognition.onresult = function(event) {
                     document.getElementById('aiUserInput').value = event.results[0][0].transcript;
                     sendAiMessage();
                 };
                 recognition.start();
             } else {
-                alert("Dein Browser unterstützt keine Spracherkennung.");
+                alert("Tarayıcınız ses tanımayı desteklemiyor.");
             }
         }
 
